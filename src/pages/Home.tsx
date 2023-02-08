@@ -1,5 +1,11 @@
+import PopularTags from '../components/PopularTags';
+
 const Home = () => {
-  return <div></div>;
+  return (
+    <div>
+      <PopularTags />
+    </div>
+  );
 };
 
 export default Home;
