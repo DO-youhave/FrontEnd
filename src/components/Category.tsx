@@ -5,7 +5,7 @@ import { COLORS } from '../constants/colors';
 import { ROUTES } from '../constants/routes';
 import { currentPath } from '../utils/currentPath';
 
-const categorys = [
+const categorys: { id: string; name: string }[] = [
   { id: 'total', name: '전체' },
   { id: 'item', name: '물건' },
   { id: 'medical', name: '의료' },
