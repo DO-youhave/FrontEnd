@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
+import { COLORS } from '../constants/colors';
 import { ROUTES } from '../constants/routes';
 import { currentPath } from '../utils/currentPath';
 
@@ -61,7 +62,7 @@ const Item = styled.li`
     content: '';
     display: block;
     padding-bottom: 5px;
-    border-bottom: 3px solid #049669;
+    border-bottom: 3px solid ${COLORS.MAIN};
     transform: scaleX(0);
     transition: transform 250ms ease-in-out;
     transform-origin: 0% 50%;
