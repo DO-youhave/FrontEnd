@@ -32,6 +32,10 @@ const style = css`
     height: 0;
     overflow: visible;
   }
+  ul {
+    list-style: none;
+    padding: 0;
+  }
   pre {
     font-size: 1em;
   }
