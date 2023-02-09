@@ -1,6 +1,6 @@
 export const ROUTES = {
   HOME: '/', // 메인 페이지
-  STREET: (id: string) => `/street/${id}`, // 전단지 골목 페이지
+  STREET: '/street', // 전단지 골목 페이지
   FLYER: '/flyer', // 전단지 상세 페이지
   POSTING: '/posting', // 전단지 등록 페이지
   EDITING: '/editing', // 전단지 수정 페이지

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { COLORS } from '../constants/colors';
 import { ROUTES } from '../constants/routes';
-import { currentPath } from '../utils/currentPath';
+import { currentParam } from '../utils/currentPath';
 
 const categorys: { id: string; name: string }[] = [
   { id: 'total', name: '전체' },
@@ -25,8 +25,8 @@ const Category = () => {
       {categorys.map(({ id, name }) => (
         <Item
           key={id}
-          id={currentPath(id)}
-          onClick={() => navigate(ROUTES.STREET(id))}>
+          id={currentParam('category', id)}
+          onClick={() => navigate(`${ROUTES.STREET}/?category=${id}`)}>
           {name}
         </Item>
       ))}
