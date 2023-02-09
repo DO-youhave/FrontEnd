@@ -1,4 +1,4 @@
 export const COLORS = {
-  MAIN: '',
+  MAIN: '#049669',
   SUB: '',
 };
