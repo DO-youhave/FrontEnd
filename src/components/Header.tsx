@@ -29,7 +29,7 @@ export default Header;
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 26px 75px;
+  padding: 26px 0;
 `;
 
 const MainLogo = styled.div`

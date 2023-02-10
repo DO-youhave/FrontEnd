@@ -13,9 +13,10 @@ const style = css`
     font-family: 'Noto Sans KR', sans-serif;
   }
   body {
-    margin: 0;
+    margin: 0 auto;
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 500;
+    width: 90%;
   }
   main {
     display: block;

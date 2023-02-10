@@ -7,10 +7,14 @@ import Search from '../components/Search';
 const FlyerStreet = () => {
   return (
     <Container>
-      <TagsNSearch>
-        <PopularTags />
-        <Search />
-      </TagsNSearch>
+      <PageTop>
+        <PageTopPicture>그림 삽입 공간</PageTopPicture>
+        <TagsNSearch>
+          <PopularTags />
+          <Search />
+        </TagsNSearch>
+      </PageTop>
+
       <Category />
     </Container>
   );
@@ -19,9 +23,24 @@ const FlyerStreet = () => {
 export default FlyerStreet;
 
 const Container = styled.div``;
-
+const PageTop = styled.div`
+  width: 95%;
+  height: 520px;
+  margin: 0 auto;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+const PageTopPicture = styled.div`
+  width: 100%;
+  height: 400px;
+  border: 1px solid blue;
+`;
 const TagsNSearch = styled.div`
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 0 75px;
+  margin-top: auto;
 `;

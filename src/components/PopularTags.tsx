@@ -51,7 +51,8 @@ const Tags = styled.form`
 `;
 
 const Title = styled.div`
-  font-size: 24px;
+  font-size: 20px;
+  font-weight: 600;
 `;
 
 const Label = styled.label`
