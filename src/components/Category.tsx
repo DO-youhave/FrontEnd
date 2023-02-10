@@ -20,7 +20,7 @@ const categorys: { id: string; name: string }[] = [
 const Category = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const searchValue = searchParams.get('q');
+  const searchValue: string = searchParams.get('q') || '';
 
   return (
     <Categorys>
@@ -28,9 +28,7 @@ const Category = () => {
         <Item
           key={id}
           id={currentParam('category', id)}
-          onClick={() =>
-            navigate(`${ROUTES.STREET}/?category=${id}&q=${searchValue}`)
-          }>
+          onClick={() => navigate(ROUTES.STREET.DETAIL(id, searchValue))}>
           {name}
         </Item>
       ))}

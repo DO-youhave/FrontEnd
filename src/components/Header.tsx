@@ -1,12 +1,14 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-const Header = () => {
-  const navigate = useNavigate();
+import { ROUTES } from '../constants/routes';
 
+const Header = () => {
+  const { HOME, STREET } = ROUTES;
+  const navigate = useNavigate();
   return (
     <Container>
-      <MainLogo onClick={() => navigate('/')}>
+      <MainLogo onClick={() => navigate(HOME)}>
         <div>
           <img src='' alt='' />
         </div>
@@ -14,7 +16,7 @@ const Header = () => {
       </MainLogo>
 
       <MenuList>
-        <Menu onClick={() => navigate('/street?category=total&q=')}>
+        <Menu onClick={() => navigate(STREET.DETAIL('total', ''))}>
           전단지 골목 가기
         </Menu>
         <Menu>전단지 붙이기</Menu>
