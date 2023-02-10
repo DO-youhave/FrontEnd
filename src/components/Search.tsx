@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import useSearch from '../hooks/useSearch';
 
 const Search = () => {
-  const { navigate, searchValue, setSearchValue, handleEnter } = useSearch();
+  const { route, navigate, setSearchValue, handleEnter } = useSearch();
 
   return (
     <Container>
@@ -13,7 +13,7 @@ const Search = () => {
         onChange={(e) => setSearchValue(e.target.value)}
         onKeyDown={(e) => handleEnter(e)}
       />
-      <SearchBtn onClick={() => navigate(`/street?q=${searchValue}`)} />
+      <SearchBtn onClick={() => navigate(route)} />
     </Container>
   );
 };

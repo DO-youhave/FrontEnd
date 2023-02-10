@@ -12,7 +12,7 @@ const App = () => {
       <Header />
       <Routes>
         <Route path={ROUTES.HOME} element={<Home />} />
-        <Route path={ROUTES.STREET} element={<FlyerStreet />} />
+        <Route path={ROUTES.STREET.ROOT} element={<FlyerStreet />} />
         <Route path={ROUTES.MY_PAGE.ROOT} element={<MyInfo />}>
           <Route index element={<div>MyInfo</div>} />
           <Route path={ROUTES.MY_PAGE.RECENT} element={<div>Recent</div>} />
