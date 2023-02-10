@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 const Profile = () => {
   return (
     <>
-      <img src='/profile.svg' alt='profile' />
+      <img src='/img/profile.svg' alt='profile' />
       이영진님
       <MyPosting>
         <Count>10</Count>

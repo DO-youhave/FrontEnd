@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { COLORS } from '../constants/colors';
 import { ROUTES } from '../constants/routes';
@@ -19,6 +19,8 @@ const categorys: { id: string; name: string }[] = [
 
 const Category = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const searchValue = searchParams.get('q');
 
   return (
     <Categorys>
@@ -26,7 +28,9 @@ const Category = () => {
         <Item
           key={id}
           id={currentParam('category', id)}
-          onClick={() => navigate(`${ROUTES.STREET}/?category=${id}`)}>
+          onClick={() =>
+            navigate(`${ROUTES.STREET}/?category=${id}&q=${searchValue}`)
+          }>
           {name}
         </Item>
       ))}
