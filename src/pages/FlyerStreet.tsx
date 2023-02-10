@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
 
-import Category from '../components/Category';
-import PopularTags from '../components/PopularTags';
-import Search from '../components/Search';
+import Category from '../components/Street/Category';
+import PopularTags from '../components/Street/PopularTags';
+import Search from '../components/Street/Search';
+import Sort from '../components/Street/Sort';
 
 const FlyerStreet = () => {
   return (
@@ -15,7 +16,10 @@ const FlyerStreet = () => {
         </TagsNSearch>
       </PageTop>
 
-      <Category />
+      <MainContents>
+        <Sort />
+        <Category />
+      </MainContents>
     </Container>
   );
 };
@@ -24,7 +28,7 @@ export default FlyerStreet;
 
 const Container = styled.div``;
 const PageTop = styled.div`
-  width: 95%;
+  width: 85%;
   height: 520px;
   margin: 0 auto;
   background: #fff;
@@ -43,4 +47,13 @@ const TagsNSearch = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: auto;
+`;
+
+const MainContents = styled.div`
+  width: 100%;
+  background-color: #f5f5f5;
+  margin-top: 50px;
+  padding: 3% 7.5%;
+  display: flex;
+  flex-direction: column;
 `;

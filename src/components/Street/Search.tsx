@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import useSearch from '../hooks/useSearch';
+import useSearch from '../../hooks/useSearch';
 
 const Search = () => {
   const { route, navigate, setSearchValue, handleEnter } = useSearch();

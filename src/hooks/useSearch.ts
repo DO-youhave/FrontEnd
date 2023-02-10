@@ -8,7 +8,8 @@ const useSearch = () => {
   const [searchValue, setSearchValue] = useState<string>('');
   const [searchParams] = useSearchParams();
   const category: string = searchParams.get('category') || '';
-  const route = ROUTES.STREET.DETAIL(category, searchValue);
+  const sort: string = searchParams.get('sort') || '';
+  const route = ROUTES.STREET.DETAIL(category, sort, searchValue);
 
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {

@@ -16,7 +16,7 @@ const Header = () => {
       </MainLogo>
 
       <MenuList>
-        <Menu onClick={() => navigate(STREET.DETAIL('total', ''))}>
+        <Menu onClick={() => navigate(STREET.DETAIL('total', 'new', ''))}>
           전단지 골목 가기
         </Menu>
         <Menu>전단지 붙이기</Menu>
@@ -29,6 +29,8 @@ const Header = () => {
 export default Header;
 
 const Container = styled.div`
+  width: 90%;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   padding: 26px 0;

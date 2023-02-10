@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import { COLORS } from '../constants/colors';
-import { ROUTES } from '../constants/routes';
-import { currentParam } from '../utils/currentPath';
+import { COLORS } from '../../constants/colors';
+import { ROUTES } from '../../constants/routes';
+import { currentParam } from '../../utils/currentPath';
 
 const categorys: { id: string; name: string }[] = [
   { id: 'total', name: '전체' },
