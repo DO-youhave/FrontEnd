@@ -18,7 +18,11 @@ const FlyerStreet = () => {
 
       <MainContents>
         <Sort />
-        <Category />
+
+        <div>
+          <Category />
+          <div></div>
+        </div>
       </MainContents>
     </Container>
   );

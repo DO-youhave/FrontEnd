@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
 import { Fragment } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { ROUTES } from '../../constants/routes';
+import getParams from '../../hooks/getParams';
 
 const sortList = [
   {
@@ -20,13 +21,8 @@ const sortList = [
 ];
 
 const Sort = () => {
+  const { category, sort, searchValue } = getParams();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-
-  const category = searchParams.get('category') || '';
-
-  const searchValue = searchParams.get('q') || '';
-  const sort = searchParams.get('sort');
 
   const handleSort = (value: string) => {
     const id = value === sort ? 'selected' : undefined;
