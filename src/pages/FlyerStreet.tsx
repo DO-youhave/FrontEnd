@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 import Category from '../components/Street/Category';
+import FlyerList from '../components/Street/FlyerList';
 import PopularTags from '../components/Street/PopularTags';
 import Search from '../components/Street/Search';
 import Sort from '../components/Street/Sort';
@@ -19,10 +20,10 @@ const FlyerStreet = () => {
       <MainContents>
         <Sort />
 
-        <div>
+        <CategoryNList>
           <Category />
-          <div></div>
-        </div>
+          <FlyerList />
+        </CategoryNList>
       </MainContents>
     </Container>
   );
@@ -60,4 +61,10 @@ const MainContents = styled.div`
   padding: 3% 7.5%;
   display: flex;
   flex-direction: column;
+`;
+
+const CategoryNList = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
 `;
