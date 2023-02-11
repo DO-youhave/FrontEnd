@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-import { COLORS } from '../constants/colors';
-import { ROUTES } from '../constants/routes';
-import { currentParam } from '../utils/currentPath';
+import { COLORS } from '../../constants/colors';
+import { ROUTES } from '../../constants/routes';
+import getParams from '../../hooks/getParams';
+import { currentParam } from '../../utils/currentPath';
 
 const categorys: { id: string; name: string }[] = [
   { id: 'total', name: '전체' },
@@ -19,8 +20,7 @@ const categorys: { id: string; name: string }[] = [
 
 const Category = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const searchValue: string = searchParams.get('q') || '';
+  const { sort, searchValue } = getParams();
 
   return (
     <Categorys>
@@ -28,7 +28,7 @@ const Category = () => {
         <Item
           key={id}
           id={currentParam('category', id)}
-          onClick={() => navigate(ROUTES.STREET.DETAIL(id, searchValue))}>
+          onClick={() => navigate(ROUTES.STREET.DETAIL(id, sort, searchValue))}>
           {name}
         </Item>
       ))}
