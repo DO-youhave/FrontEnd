@@ -18,11 +18,10 @@ const FlyerStreet = () => {
       </PageTop>
 
       <MainContents>
-        <Sort />
-
         <CategoryNList>
-          <Category />
+          <Sort />
           <FlyerList />
+          <Category />
         </CategoryNList>
       </MainContents>
     </Container>
@@ -31,11 +30,16 @@ const FlyerStreet = () => {
 
 export default FlyerStreet;
 
-const Container = styled.div``;
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 const PageTop = styled.div`
-  width: 85%;
+  width: 75%;
+  max-width: 1200px;
   height: 520px;
-  margin: 0 auto;
+
   background: #fff;
   display: flex;
   flex-direction: column;
@@ -51,6 +55,7 @@ const TagsNSearch = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-top: auto;
 `;
 
@@ -58,13 +63,16 @@ const MainContents = styled.div`
   width: 100%;
   background-color: #f5f5f5;
   margin-top: 50px;
-  padding: 3% 7.5%;
   display: flex;
+  align-items: center;
   flex-direction: column;
 `;
 
 const CategoryNList = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   margin-top: 30px;
+  width: 75%;
+  max-width: 1200px;
 `;

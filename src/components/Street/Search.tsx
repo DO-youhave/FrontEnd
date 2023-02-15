@@ -27,7 +27,7 @@ const Container = styled.div`
 `;
 
 const Input = styled.input`
-  width: 553px;
+  width: 450px;
   padding: 14px 0;
   border: none;
   background-size: 4% auto;

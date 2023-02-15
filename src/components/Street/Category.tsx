@@ -42,7 +42,10 @@ const Categorys = styled.ul`
   display: inline-flex;
   flex-direction: column;
   list-style: none;
-  gap: 30px;
+  gap: 35px;
+  position: absolute;
+  left: 5%;
+  top: 800px;
 `;
 
 const Item = styled.li`

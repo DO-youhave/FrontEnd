@@ -29,7 +29,8 @@ const Header = () => {
 export default Header;
 
 const Container = styled.div`
-  width: 90%;
+  width: 80%;
+  max-width: 1280px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
