@@ -42,7 +42,7 @@ export default PopularTags;
 const Container = styled.div`
   display: flex;
   align-items: center;
-  gap: 54px;
+  gap: 30px;
 `;
 
 const Tags = styled.form`
@@ -51,15 +51,16 @@ const Tags = styled.form`
 `;
 
 const Title = styled.div`
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
 `;
 
 const Label = styled.label`
-  padding: 10px 24px;
+  padding: 9px 20px;
   border: 2px solid #d1d1d1;
   border-radius: 29.5px;
   cursor: pointer;
+  font-size: 15px;
 `;
 
 const Tag = styled.input`
