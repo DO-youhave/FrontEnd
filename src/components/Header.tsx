@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../constants/routes';
 
 const Header = () => {
-  const { HOME, STREET } = ROUTES;
+  const { HOME, STREET, POSTING } = ROUTES;
   const navigate = useNavigate();
   return (
     <Container>
@@ -19,7 +19,7 @@ const Header = () => {
         <Menu onClick={() => navigate(STREET.DETAIL('total', 'new', ''))}>
           전단지 골목 가기
         </Menu>
-        <Menu>전단지 붙이기</Menu>
+        <Menu onClick={() => navigate(POSTING)}>전단지 붙이기</Menu>
         <Menu>로그인 / 회원가입</Menu>
       </MenuList>
     </Container>
