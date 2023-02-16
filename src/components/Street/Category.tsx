@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
-import getParams from '../../hooks/getParams';
+import useGetParams from '../../hooks/useGetParams';
 import { currentParam } from '../../utils/currentPath';
 
 const categorys: { id: string; name: string }[] = [
@@ -20,7 +20,7 @@ const categorys: { id: string; name: string }[] = [
 
 const Category = () => {
   const navigate = useNavigate();
-  const { sort, searchValue } = getParams();
+  const { sort, searchValue } = useGetParams();
 
   return (
     <Categorys>
