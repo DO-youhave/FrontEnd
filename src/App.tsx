@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import Header from './components/Header';
 import { ROUTES } from './constants/routes';
 import HeaderOff from './layouts/HeaderOff';
 import HeaderOn from './layouts/HeaderOn';
