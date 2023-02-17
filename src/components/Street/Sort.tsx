@@ -3,7 +3,7 @@ import { Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ROUTES } from '../../constants/routes';
-import getParams from '../../hooks/getParams';
+import useGetParams from '../../hooks/useGetParams';
 
 const sortList = [
   {
@@ -21,7 +21,7 @@ const sortList = [
 ];
 
 const Sort = () => {
-  const { category, sort, searchValue } = getParams();
+  const { category, sort, searchValue } = useGetParams();
   const navigate = useNavigate();
 
   const handleSort = (value: string) => {

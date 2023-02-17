@@ -1,12 +1,14 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import Recent from './components/MyInfo/Recent';
 import { ROUTES } from './constants/routes';
 import HeaderOff from './layouts/HeaderOff';
 import HeaderOn from './layouts/HeaderOn';
-import MyInfo from './layouts/MyInfo';
+import FlyerDetail from './pages/FlyerDetail';
 import FlyerStreet from './pages/FlyerStreet';
 import Home from './pages/Home';
 import MakeFlyer from './pages/MakeFlyer';
+import MyInfo from './pages/MyInfo';
 
 const App = () => {
   return (
@@ -16,7 +18,7 @@ const App = () => {
           <Route index element={<Home />} />
           <Route path={ROUTES.STREET.ROOT} element={<FlyerStreet />} />
           <Route path={ROUTES.MY_PAGE.ROOT} element={<MyInfo />}>
-            <Route index element={<div>MyInfo</div>} />
+            <Route index element={<Recent />} />
             <Route path={ROUTES.MY_PAGE.RECENT} element={<div>Recent</div>} />
             <Route path={ROUTES.MY_PAGE.POSTING} element={<div>Posting</div>} />
             <Route path={ROUTES.MY_PAGE.COMMENT} element={<div>Comment</div>} />
@@ -28,8 +30,9 @@ const App = () => {
           </Route>
         </Route>
 
-        <Route path={ROUTES.POSTING} element={<HeaderOff />}>
-          <Route index element={<MakeFlyer />} />
+        <Route element={<HeaderOff />}>
+          <Route path={ROUTES.POSTING} element={<MakeFlyer />} />
+          <Route path={ROUTES.FLYER} element={<FlyerDetail />} />
         </Route>
       </Routes>
     </BrowserRouter>

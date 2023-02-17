@@ -16,12 +16,11 @@ const menus: { id: string; name: string }[] = [
 const Menus = () => {
   const navigate = useNavigate();
   const handleClick = (id: string) => {
-    if (id === 'logout') {
-      alert('로그아웃');
-    } else {
-      navigate(id);
-    }
+    const isLogout = id === 'logout';
+    if (isLogout) return alert('로그아웃');
+    navigate(id);
   };
+
   return (
     <Navigation>
       {menus.map(({ id, name }) => (

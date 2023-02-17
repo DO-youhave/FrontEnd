@@ -3,17 +3,16 @@ import styled from '@emotion/styled';
 import useSearch from '../../hooks/useSearch';
 
 const Search = () => {
-  const { route, navigate, setSearchValue, handleEnter } = useSearch();
+  const { input, handleClick, handleEnter } = useSearch();
 
   return (
     <Container>
       <Input
-        type='text'
+        ref={input}
         placeholder='찾고싶은 전단지가 있나요?'
-        onChange={(e) => setSearchValue(e.target.value)}
-        onKeyDown={(e) => handleEnter(e)}
+        onKeyDown={handleEnter}
       />
-      <SearchBtn onClick={() => navigate(route)} />
+      <SearchBtn onClick={handleClick} />
     </Container>
   );
 };
@@ -36,6 +35,7 @@ const Input = styled.input`
     color: #cdcdcd;
   }
 `;
+
 const SearchBtn = styled.button`
   width: 23px;
   height: 23px;

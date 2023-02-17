@@ -30,6 +30,9 @@ const ProfileBox = styled.div`
 
 const Container = styled.div`
   display: flex;
+  width: 90%;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const SeperateLine = styled.div`
