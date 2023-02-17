@@ -1,4 +1,5 @@
 export type CategoryName =
+  | '전체'
   | '고민'
   | '물건'
   | '학습'
@@ -11,7 +12,7 @@ export type CategoryName =
 interface Categorys {
   id: string;
   name: CategoryName;
-  tag: string;
+  tag?: string;
 }
 
 export const CategoryItem: Categorys[] = [
@@ -55,4 +56,9 @@ export const CategoryItem: Categorys[] = [
     name: '홍보',
     tag: '#음식점오픈 #학원홍보 #쇼핑몰홍보',
   },
+];
+
+export const StreetCategory: Categorys[] = [
+  { id: 'total', name: '전체' },
+  ...CategoryItem,
 ];

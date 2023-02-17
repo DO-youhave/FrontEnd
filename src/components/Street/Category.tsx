@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import { CategoryItem } from '../../constants/categorys';
+import { StreetCategory } from '../../constants/categorys';
 import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
 import getParams from '../../hooks/getParams';
@@ -13,7 +13,7 @@ const Category = () => {
 
   return (
     <Categorys>
-      {CategoryItem.map(({ id, name }) => (
+      {StreetCategory.map(({ id, name }) => (
         <Item
           key={id}
           id={currentParam('category', id)}

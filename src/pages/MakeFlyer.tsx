@@ -8,8 +8,8 @@ import { COLORS } from '../constants/colors';
 const MakeFlyer = () => {
   const navigate = useNavigate();
   const [category, setCategory] = useState<CategoryName>();
-  const [title, setTitle] = useState<string>('');
-  const [mainText, setMainText] = useState<string>('');
+  const [, setTitle] = useState<string>('');
+  const [, setMainText] = useState<string>('');
   const [tag, setTag] = useState<string>('');
   const [tagList, setTagList] = useState<string[]>([]);
   const [contact, setContact] = useState<string[]>([]);
