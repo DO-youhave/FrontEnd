@@ -81,7 +81,7 @@ const AlertBox = styled.div`
   background: url('/img/flyerBg.png') no-repeat center center;
   background-size: cover;
   transition: box-shadow 0.1s ease;
-  box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
   &:hover {
     box-shadow: 0px 0px 0px;
   }
