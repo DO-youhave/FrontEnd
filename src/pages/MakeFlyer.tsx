@@ -1,10 +1,11 @@
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import AttachImage from '../components/MakeFlyer/AttachImage';
 import { CategoryItem, CategoryName } from '../constants/categorys';
 import { COLORS } from '../constants/colors';
+import usePreventLeave from '../hooks/usePreventLeave';
 
 const MakeFlyer = () => {
   const navigate = useNavigate();
@@ -14,8 +15,19 @@ const MakeFlyer = () => {
   const [tag, setTag] = useState<string>('');
   const [tagList, setTagList] = useState<string[]>([]);
   const [contact, setContact] = useState<string[]>([]);
+  const { enablePrevent } = usePreventLeave();
 
-  const backPage = () => navigate(-1);
+  // 뒤로가기 아이콘
+  const backPage = () => {
+    if (confirm('전단지 작성을 취소하시겠어요?')) {
+      navigate(-1);
+    }
+  };
+
+  // 새로고침 방지
+  useEffect(() => {
+    enablePrevent();
+  }, []);
 
   const handleChangeRadio = (e: React.ChangeEvent<HTMLFormElement>) => {
     const value: CategoryName = e.target.value;
@@ -56,6 +68,7 @@ const MakeFlyer = () => {
   };
   const isEmailOn = contact.includes('email');
   const isChatOn = contact.includes('chatting');
+
   return (
     <Container>
       <Category>
