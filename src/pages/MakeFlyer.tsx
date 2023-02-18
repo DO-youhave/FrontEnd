@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import AttachImage from '../components/MakeFlyer/AttachImage';
 import { CategoryItem, CategoryName } from '../constants/categorys';
 import { COLORS } from '../constants/colors';
 
@@ -89,7 +90,7 @@ const MakeFlyer = () => {
           name='title'
           onChange={handleChangeTitle}
         />
-
+        <AttachImage />
         <SetTextArea
           placeholder='본문을 입력해주세요.'
           name='content'
