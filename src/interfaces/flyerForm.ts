@@ -26,9 +26,6 @@ export interface FlyerFormProps {
     suggestTags: string;
     tagList: string[];
     tag: string;
-    formRef: {
-      current: HTMLInputElement | null;
-    }[];
     image: ImageUploadProps;
   };
 }
