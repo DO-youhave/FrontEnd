@@ -25,6 +25,7 @@ const Container = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   cursor: default;
   background: url('/img/flyerBg.png') no-repeat center center;
   background-size: cover;
