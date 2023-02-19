@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 
-import useGetMain from '../../hooks/useGetMain';
+import useGetImage from '../../hooks/useGetImage';
 import ImageUpload from './ImageUpload';
 
 const AttachImage = () => {
-  const { data, isLoading } = useGetMain();
+  const { data, isLoading } = useGetImage();
   if (isLoading) return <div>이미지 파일 로딩 중</div>;
   return (
     <Container>

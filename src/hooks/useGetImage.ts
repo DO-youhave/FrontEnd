@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { getImg } from '../apis/image';
 import { ImageData } from '../interfaces/imageData';
 
-const useGetMain = () => {
-  const [main, setMain] = useState<ImageData>({ cloud: '' });
+const useGetImage = () => {
+  const [image, setImage] = useState<ImageData>({ cloud: '' });
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -12,7 +12,7 @@ const useGetMain = () => {
       setIsLoading(true);
       try {
         const data = await getImg();
-        setMain(data);
+        setImage(data);
       } catch (error) {
         console.log(error);
       } finally {
@@ -21,7 +21,7 @@ const useGetMain = () => {
     };
     getData();
   }, []);
-  return { data: main, isLoading };
+  return { data: image, isLoading };
 };
 
-export default useGetMain;
+export default useGetImage;

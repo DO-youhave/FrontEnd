@@ -1,82 +1,35 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import AttachImage from '../components/MakeFlyer/AttachImage';
-import { CategoryItem, CategoryName } from '../constants/categorys';
+import { CategoryItem } from '../constants/categorys';
 import { COLORS } from '../constants/colors';
-import usePreventLeave from '../hooks/usePreventLeave';
+import useMakeFlyer from '../hooks/useMakeFlyer';
 
 const MakeFlyer = () => {
-  const navigate = useNavigate();
-  const [category, setCategory] = useState<CategoryName>();
-  const [, setTitle] = useState<string>('');
-  const [, setMainText] = useState<string>('');
-  const [tag, setTag] = useState<string>('');
-  const [tagList, setTagList] = useState<string[]>([]);
-  const [contact, setContact] = useState<string[]>([]);
-  const { enablePrevent } = usePreventLeave();
-
-  // 뒤로가기 아이콘
-  const backPage = () => {
-    if (confirm('전단지 작성을 취소하시겠어요?')) {
-      navigate(-1);
-    }
-  };
-
-  // 새로고침 방지
-  useEffect(() => {
-    enablePrevent();
-  }, []);
-
-  const handleChangeRadio = (e: React.ChangeEvent<HTMLFormElement>) => {
-    const value: CategoryName = e.target.value;
-    setCategory(value);
-  };
-  const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setTitle(value);
-  };
-  const handleChangeMainText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const value = e.target.value;
-    setMainText(value);
-  };
-  const suggestTags = () => {
-    return CategoryItem.find(({ id }) => id === category)?.tag;
-  };
-  const handleTag = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setTag(value);
-  };
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      if (tagList.length === 3) return alert('태그는 3개까지 추가 가능합니다.');
-      setTagList((prev) => [...prev, tag]);
-      setTag('');
-    }
-  };
-  const handleDeleteTag = (v: string) => {
-    setTagList((prev) => prev.filter((tag) => v !== tag));
-  };
-  const handleContact = (e: React.FormEvent<HTMLFormElement>) => {
-    const { checked, value } = e.target as HTMLInputElement;
-    if (checked) {
-      setContact([...contact, value]);
-    } else {
-      setContact(contact.filter((item) => value !== item));
-    }
-  };
-  const isEmailOn = contact.includes('email');
-  const isChatOn = contact.includes('chatting');
+  const {
+    backPage,
+    handleChangeRadio,
+    handleChangeTitle,
+    handleChangeMainText,
+    handleTag,
+    handleKeyDown,
+    handleDeleteTag,
+    handleContact,
+    handleSubmit,
+    handleAddress,
+    suggestTags,
+    isChatOn,
+    isEmailOn,
+    tagList,
+    tag,
+  } = useMakeFlyer();
 
   return (
     <Container>
       <Category>
         <BackArrow onClick={backPage} />
 
-        <div style={{ margin: '60px 0 60px 0', fontWeight: '600' }}>
-          카테고리 설정
-        </div>
+        <div style={{ margin: '60px 0', fontWeight: '600' }}>카테고리 설정</div>
 
         <CategoryForm onChange={handleChangeRadio}>
           {CategoryItem.map(({ name, id }) => (
@@ -93,7 +46,9 @@ const MakeFlyer = () => {
           <FormTitle>전단지 만들기</FormTitle>
           <div>
             <SaveBtn type='button'>임시 저장</SaveBtn>
-            <PostBtn type='button'>전단지 붙이기</PostBtn>
+            <PostBtn type='button' onClick={handleSubmit}>
+              전단지 붙이기
+            </PostBtn>
           </div>
         </TitleNButtons>
 
@@ -103,7 +58,9 @@ const MakeFlyer = () => {
           name='title'
           onChange={handleChangeTitle}
         />
+
         <AttachImage />
+
         <SetTextArea
           placeholder='본문을 입력해주세요.'
           name='content'
@@ -118,7 +75,7 @@ const MakeFlyer = () => {
           <Suggestion>
             이런 태그는 어때요?
             <br />
-            {suggestTags()}
+            {suggestTags}
           </Suggestion>
 
           <TagLabel>
@@ -176,13 +133,21 @@ const MakeFlyer = () => {
             {isChatOn && (
               <AddressContainer>
                 오픈채팅 주소 입력{' '}
-                <AddressInput placeholder='https://open.kakao.com/...' />
+                <AddressInput
+                  placeholder='https://open.kakao.com/...'
+                  name='chatting'
+                  onChange={handleAddress}
+                />
               </AddressContainer>
             )}
             {isEmailOn && (
               <AddressContainer>
                 이메일 주소 입력{' '}
-                <AddressInput placeholder='example@example.com' />
+                <AddressInput
+                  placeholder='example@example.com'
+                  name='email'
+                  onChange={handleAddress}
+                />
               </AddressContainer>
             )}
           </form>
