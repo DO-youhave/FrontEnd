@@ -34,7 +34,7 @@ const Flyer = styled.li`
   font-weight: 600;
   cursor: pointer;
   transition: box-shadow 0.1s ease;
-  box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
   &:hover {
     box-shadow: 0px 0px 0px;
   }
