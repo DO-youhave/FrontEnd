@@ -1,31 +1,36 @@
 import styled from '@emotion/styled';
 
 import { COLORS } from '../../constants/colors';
-import useMakeFlyer from '../../hooks/useMakeFlyer';
-import AttachImage from './AttachImage';
+import { FlyerFormProps } from '../../interfaces/flyerForm';
+import ImageUpload from './ImageUpload';
 
-const FillOutForm = () => {
+const FlyerForm = ({ controller }: FlyerFormProps) => {
   const {
     handleChangeTitle,
     handleChangeMainText,
-    suggestTags,
     handleTag,
     handleKeyDown,
     handleDeleteTag,
     handleContact,
+    handleSubmit,
+    handleAddress,
+    image,
     isChatOn,
     isEmailOn,
+    suggestTags,
     tagList,
     tag,
-  } = useMakeFlyer();
+  } = controller;
 
   return (
-    <FlyerForm>
+    <Container>
       <TitleNButtons>
         <FormTitle>전단지 만들기</FormTitle>
         <div>
           <SaveBtn type='button'>임시 저장</SaveBtn>
-          <PostBtn type='button'>전단지 붙이기</PostBtn>
+          <PostBtn type='button' onClick={handleSubmit}>
+            전단지 붙이기
+          </PostBtn>
         </div>
       </TitleNButtons>
 
@@ -36,7 +41,9 @@ const FillOutForm = () => {
         onChange={handleChangeTitle}
       />
 
-      <AttachImage />
+      <ImageContainer>
+        <ImageUpload image={image} />
+      </ImageContainer>
 
       <SetTextArea
         placeholder='본문을 입력해주세요.'
@@ -110,24 +117,32 @@ const FillOutForm = () => {
           {isChatOn && (
             <AddressContainer>
               오픈채팅 주소 입력{' '}
-              <AddressInput placeholder='https://open.kakao.com/...' />
+              <AddressInput
+                placeholder='https://open.kakao.com/...'
+                name='chatting'
+                onChange={handleAddress}
+              />
             </AddressContainer>
           )}
           {isEmailOn && (
             <AddressContainer>
               이메일 주소 입력{' '}
-              <AddressInput placeholder='example@example.com' />
+              <AddressInput
+                placeholder='example@example.com'
+                name='email'
+                onChange={handleAddress}
+              />
             </AddressContainer>
           )}
         </form>
       </div>
-    </FlyerForm>
+    </Container>
   );
 };
 
-export default FillOutForm;
+export default FlyerForm;
 
-const FlyerForm = styled.div`
+const Container = styled.div`
   padding: 50px;
   width: 100%;
 `;
@@ -308,4 +323,9 @@ const AddressInput = styled.input`
   outline: none;
   font-size: 12px;
   width: 300px;
+`;
+
+const ImageContainer = styled.div`
+  padding: 30px 0;
+  border-bottom: 1px solid #d9d9d9;
 `;

@@ -1,14 +1,9 @@
 import styled from '@emotion/styled';
 
-import { useFetchImage } from '../../hooks/useFetchImage';
+import { ImageUploadProps } from '../../interfaces/flyerForm';
 
-interface ImageUploadProps {
-  oldImage: string[];
-}
-
-const ImageUpload = ({ oldImage }: ImageUploadProps) => {
-  const { images, inputRef, setFile, handleClick, handleDelete } =
-    useFetchImage(oldImage);
+const ImageUpload = ({ image }: { image: ImageUploadProps }) => {
+  const { images, inputRef, handleChange, handleClick, handleDelete } = image;
   return (
     <Container>
       {/* 연동 INPUT (hidden) */}
@@ -17,7 +12,7 @@ const ImageUpload = ({ oldImage }: ImageUploadProps) => {
         accept='image/*'
         ref={inputRef}
         hidden
-        onChange={(e) => setFile(e.target.files)}
+        onChange={handleChange}
       />
 
       {/* 사진 추가 버튼 */}
@@ -28,11 +23,11 @@ const ImageUpload = ({ oldImage }: ImageUploadProps) => {
 
       {/* 사진 미리보기 */}
       <Container id='imgList'>
-        {images.map((item) => (
-          <ImgBox src={item.url} key={item.image.name}>
+        {images.map(({ url, image }) => (
+          <ImgBox src={url} key={image.name}>
             <RemoveButton
               src='/img/close.png'
-              onClick={() => handleDelete(item.image)}
+              onClick={() => handleDelete(image)}
             />
           </ImgBox>
         ))}

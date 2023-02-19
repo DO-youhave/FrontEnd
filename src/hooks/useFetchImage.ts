@@ -9,6 +9,11 @@ export const useFetchImage = (oldImage: string[]) => {
   const [file, setFile] = useState<FileList | null>();
   const [images, setImages] = useState<{ image: File; url: string }[]>([]);
 
+  // 이미지 선택 시 실행되는 함수
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFile(e.target.files);
+  };
+
   // 이미지 추가 함수
   const handleClick = () => {
     if (images.length >= 2)
@@ -44,5 +49,5 @@ export const useFetchImage = (oldImage: string[]) => {
     }
   }, [file]);
 
-  return { images, inputRef, setFile, handleClick, handleDelete };
+  return { images, inputRef, handleChange, handleClick, handleDelete };
 };

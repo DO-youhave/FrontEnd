@@ -62,7 +62,7 @@ export default Recent;
 
 const Container = styled.div`
   height: 100%;
-  width: 75%;
+  width: 80%;
   background-color: #f5f6f8;
   border-radius: 8px;
   padding: 55px 50px;

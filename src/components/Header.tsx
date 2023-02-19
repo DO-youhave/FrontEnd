@@ -1,13 +1,15 @@
 import styled from '@emotion/styled';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { ROUTES } from '../constants/routes';
 
 const Header = () => {
-  const { HOME, STREET, POSTING } = ROUTES;
   const navigate = useNavigate();
+  const { pathname: path } = useLocation();
+  const { HOME, STREET, POSTING } = ROUTES;
+
   return (
-    <Container>
+    <Container id={path === '/' ? 'fix' : ''}>
       <MainLogo onClick={() => navigate(HOME)}>
         <div>
           <img src='' alt='' />
@@ -35,6 +37,13 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 26px 0;
+  &#fix {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+  }
 `;
 
 const MainLogo = styled.div`

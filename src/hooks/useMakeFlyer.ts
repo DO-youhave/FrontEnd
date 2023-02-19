@@ -3,10 +3,14 @@ import { useNavigate } from 'react-router-dom';
 
 import { CategoryItem, CategoryName } from '../constants/categorys';
 import usePreventLeave from '../hooks/usePreventLeave';
+import { useFetchImage } from './useFetchImage';
 
 const useMakeFlyer = () => {
   const navigate = useNavigate();
-
+  const image = useFetchImage([
+    /* 서버에서 불러오는 이미지 */
+  ]);
+  const { images } = image;
   const [category, setCategory] = useState<CategoryName>();
   const [title, setTitle] = useState<string>('');
   const [mainText, setMainText] = useState<string>('');
@@ -33,6 +37,7 @@ const useMakeFlyer = () => {
       tagList,
       contact,
       address,
+      image: images.map(({ image }) => image),
     };
     console.log(formData);
   };
@@ -43,7 +48,7 @@ const useMakeFlyer = () => {
   };
 
   // 선택한 카테고리에 따라 추천태그가 바뀜
-  const suggestTags = CategoryItem.find(({ id }) => id === category)?.tag;
+  const suggestTags = CategoryItem.find(({ id }) => id === category)?.tag || '';
 
   // 제목 작성
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -106,21 +111,23 @@ const useMakeFlyer = () => {
   }, []);
 
   return {
-    backPage,
-    handleChangeRadio,
-    handleChangeTitle,
-    handleChangeMainText,
-    suggestTags,
-    handleTag,
-    handleKeyDown,
-    handleDeleteTag,
-    handleContact,
-    handleSubmit,
-    handleAddress,
-    isChatOn,
-    isEmailOn,
-    tagList,
-    tag,
+    category: { backPage, handleChangeRadio },
+    form: {
+      handleChangeTitle,
+      handleChangeMainText,
+      handleTag,
+      handleKeyDown,
+      handleDeleteTag,
+      handleContact,
+      handleSubmit,
+      handleAddress,
+      isChatOn,
+      isEmailOn,
+      suggestTags,
+      image,
+      tagList,
+      tag,
+    },
   };
 };
 
