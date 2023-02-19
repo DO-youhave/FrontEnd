@@ -35,6 +35,11 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 26px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
 `;
 
 const MainLogo = styled.div`

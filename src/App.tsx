@@ -19,7 +19,7 @@ const App = () => {
           <Route path={ROUTES.STREET.ROOT} element={<FlyerStreet />} />
           <Route path={ROUTES.MY_PAGE.ROOT} element={<MyInfo />}>
             <Route index element={<Recent />} />
-            <Route path={ROUTES.MY_PAGE.RECENT} element={<div>Recent</div>} />
+            <Route path={ROUTES.MY_PAGE.RECENT} element={<Recent />} />
             <Route path={ROUTES.MY_PAGE.POSTING} element={<div>Posting</div>} />
             <Route path={ROUTES.MY_PAGE.COMMENT} element={<div>Comment</div>} />
             <Route

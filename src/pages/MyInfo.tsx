@@ -19,6 +19,15 @@ const MyInfo = () => {
 
 export default MyInfo;
 
+const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  padding: 0;
+  margin: 0 auto;
+`;
+
 const ProfileBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -26,13 +35,6 @@ const ProfileBox = styled.div`
   gap: 30px;
   width: 20%;
   margin-top: 30px;
-`;
-
-const Container = styled.div`
-  display: flex;
-  width: 90%;
-  justify-content: space-between;
-  align-items: center;
 `;
 
 const SeperateLine = styled.div`
