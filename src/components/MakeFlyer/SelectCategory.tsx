@@ -2,10 +2,10 @@ import styled from '@emotion/styled';
 
 import { CategoryItem } from '../../constants/categorys';
 import { COLORS } from '../../constants/colors';
-import useMakeFlyer from '../../hooks/useMakeFlyer';
+import { SelectCategoryProps } from '../../interfaces/flyerForm';
 
-const SelectCategory = () => {
-  const { backPage, handleChangeRadio } = useMakeFlyer();
+const SelectCategory = ({ controller }: SelectCategoryProps) => {
+  const { backPage, handleChangeRadio } = controller;
 
   return (
     <Category>
