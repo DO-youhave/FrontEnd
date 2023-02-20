@@ -85,7 +85,7 @@ const FlyerForm = ({ controller }: FlyerFormProps) => {
       </TagSetting>
 
       <div>
-        <div onChange={handleContact}>
+        <form onChange={handleContact}>
           <div style={{ fontWeight: '400', marginBottom: '25px' }}>
             연락 수단 설정<SubExplain>* 중복 선택 가능</SubExplain>
           </div>
@@ -134,7 +134,7 @@ const FlyerForm = ({ controller }: FlyerFormProps) => {
               />
             </AddressContainer>
           )}
-        </div>
+        </form>
       </div>
     </Container>
   );
