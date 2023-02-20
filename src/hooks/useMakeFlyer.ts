@@ -2,6 +2,15 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { CategoryItem, CategoryName } from '../constants/categorys';
+import {
+  checkCategory,
+  checkChattingUrl,
+  checkContact,
+  checkEmailUrl,
+  checkMainText,
+  checkTags,
+  checkTitle,
+} from '../utils/validateFlyerForm';
 import { useFetchImage } from './useFetchImage';
 
 const useMakeFlyer = () => {
@@ -20,6 +29,11 @@ const useMakeFlyer = () => {
     chatting: '',
     email: '',
   });
+  // 카카오톡 오픈채팅 주소 입력 input 띄우기
+  const isChatOn = contact.includes('chatting');
+
+  // 이메일 주소 입력 input 띄우기
+  const isEmailOn = contact.includes('email');
 
   // 뒤로가기 confirm 창
   const backPage = () => {
@@ -42,107 +56,16 @@ const useMakeFlyer = () => {
 
   // 유효성 검사
   const checkAll = () => {
-    if (!checkCategory(category)) {
-      return false;
-    }
-    if (!checkTitle(title)) {
-      return false;
-    }
-    if (!checkMainText(mainText)) {
-      return false;
-    }
-    if (!checkTags(tagList)) {
-      return false;
-    }
-    if (!checkContact(contact)) {
-      return false;
-    }
-    if (contact.includes('chatting')) {
+    if (!checkCategory(category)) return false;
+    if (!checkTitle(title)) return false;
+    if (!checkMainText(mainText)) return false;
+    if (!checkTags(tagList)) return false;
+    if (!checkContact(contact)) return false;
+    if (isChatOn) {
       if (!checkChattingUrl(address.chatting)) return false;
     }
-    if (contact.includes('email')) {
+    if (isEmailOn) {
       if (!checkEmailUrl(address.email)) return false;
-    }
-    return true;
-  };
-
-  // 공백확인 함수
-  const checkExistData = (value: string, dataName: string) => {
-    if (value === '') {
-      alert(dataName + ' 입력해주세요!');
-      return false;
-    }
-    return true;
-  };
-
-  // 카테고리 유효성 검사: 필수로 체크해야 함
-  const checkCategory = (category: undefined | CategoryName) => {
-    if (category === undefined) {
-      alert('카테고리를 설정해주세요!');
-      return false;
-    }
-    return true;
-  };
-
-  // 제목 유효성 검사: 공백 금지, 7자 이상 30자 이하
-  const checkTitle = (title: string) => {
-    if (!checkExistData(title, '제목을')) return false;
-    if (title.length < 7) {
-      alert('제목을 7자 이상으로 작성해주세요 😳');
-      return false;
-    }
-    return true;
-  };
-
-  // 본문 유효성 검사: 공백 금지, 최대 1000자
-  const checkMainText = (mainText: string) => {
-    if (!checkExistData(mainText, '본문을')) return false;
-    return true;
-  };
-
-  // 태그 입력 유효성 검사: 최소 한 개의 태그 설정해야 함.
-  const checkTags = (tag: string[]) => {
-    if (tag.length === 0) {
-      alert('최소 한 개의 태그를 설정해주세요 😳');
-      return false;
-    }
-    return true;
-  };
-
-  // 연락수단 유효성 검사: 최소 한 개의 연락수단을 설정해야 함.
-  const checkContact = (contact: string[]) => {
-    if (contact.length === 0) {
-      alert('최소 한 개의 연락 수단을 설정해주세요!');
-      return false;
-    }
-    return true;
-  };
-
-  // 카카오톡 오픈채팅 주소 유효성 검사: 공백 금지, https://open.kakao.com/... 형식
-  const checkChattingUrl = (url: string) => {
-    if (url.length === 0) {
-      alert('오픈채팅방 주소를 입력해주세요!');
-      return false;
-    }
-    const urlForm = /^(https:\/\/)(open)(\.)(kakao)(\.)(com)(\/)([a-zA-z0-9])/g;
-    if (!urlForm.test(url)) {
-      alert('오픈채팅방 주소를 정확히 입력해주세요!');
-      return false;
-    }
-    return true;
-  };
-
-  // 이메일 주소 유효성 검사: 공백 금지, 올바른 이메일 형식
-  const checkEmailUrl = (url: string) => {
-    if (url.length === 0) {
-      alert('이메일 주소를 입력해주세요!');
-      return false;
-    }
-    const urlForm =
-      /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
-    if (!urlForm.test(url)) {
-      alert('이메일 주소를 정확히 입력해주세요!');
-      return false;
     }
     return true;
   };
@@ -208,11 +131,6 @@ const useMakeFlyer = () => {
       [name]: value,
     });
   };
-  // 카카오톡 오픈채팅 주소 입력 input 띄우기
-  const isChatOn = contact.includes('chatting');
-
-  // 이메일 주소 입력 input 띄우기
-  const isEmailOn = contact.includes('email');
 
   return {
     category: { backPage, handleChangeRadio },
