@@ -27,18 +27,17 @@ const FlyerForm = ({ controller }: FlyerFormProps) => {
       <TitleNButtons>
         <FormTitle>전단지 만들기</FormTitle>
         <div>
-          <SaveBtn type='button'>임시 저장</SaveBtn>
-          <PostBtn type='button' onClick={handleSubmit}>
-            전단지 붙이기
-          </PostBtn>
+          <SaveBtn>임시 저장</SaveBtn>
+          <PostBtn onClick={handleSubmit}>전단지 붙이기</PostBtn>
         </div>
       </TitleNButtons>
 
       <SetTitle
         type='text'
-        placeholder='제목'
+        placeholder='제목 (7자 이상 30자 미만)'
         name='title'
         onChange={handleChangeTitle}
+        maxLength={30}
       />
 
       <ImageContainer>
@@ -46,15 +45,16 @@ const FlyerForm = ({ controller }: FlyerFormProps) => {
       </ImageContainer>
 
       <SetTextArea
-        placeholder='본문을 입력해주세요.'
+        placeholder='본문을 입력해주세요. (최대 1000자)'
         name='content'
         onChange={handleChangeMainText}
+        maxLength={1000}
       />
 
       <TagSetting>
         <div style={{ fontWeight: '400' }}>
           태그 설정
-          <SubExplain>최대 3개</SubExplain>
+          <SubExplain>* 최대 3개</SubExplain>
         </div>
         <Suggestion>
           이런 태그는 어때요?
@@ -85,9 +85,9 @@ const FlyerForm = ({ controller }: FlyerFormProps) => {
       </TagSetting>
 
       <div>
-        <form onChange={handleContact}>
+        <div onChange={handleContact}>
           <div style={{ fontWeight: '400', marginBottom: '25px' }}>
-            연락 수단 설정<SubExplain>중복 선택 가능</SubExplain>
+            연락 수단 설정<SubExplain>* 중복 선택 가능</SubExplain>
           </div>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <ContactInput
@@ -134,7 +134,7 @@ const FlyerForm = ({ controller }: FlyerFormProps) => {
               />
             </AddressContainer>
           )}
-        </form>
+        </div>
       </div>
     </Container>
   );

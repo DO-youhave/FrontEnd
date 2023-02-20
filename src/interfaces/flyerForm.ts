@@ -18,9 +18,10 @@ export interface FlyerFormProps {
     handleTag: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     handleDeleteTag: (tag: string) => void;
-    handleContact: (e: React.ChangeEvent<HTMLFormElement>) => void;
+    handleContact: (e: React.ChangeEvent<HTMLDivElement>) => void;
     handleSubmit: () => void;
     handleAddress: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    checkAll: () => boolean;
     isChatOn: boolean;
     isEmailOn: boolean;
     suggestTags: string;
