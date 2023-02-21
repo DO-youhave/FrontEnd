@@ -40,6 +40,6 @@ export interface SelectCategoryProps {
   controller: {
     backPage: () => void;
     handleChangeRadio: (e: React.ChangeEvent<HTMLFormElement>) => void;
-    category: string;
+    category: string | undefined;
   };
 }
