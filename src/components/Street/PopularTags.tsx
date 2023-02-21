@@ -24,7 +24,15 @@ const PopularTags = () => {
 
   return (
     <Container>
-      <Title>인기 태그 🔥</Title>
+      <Title>
+        인기 태그
+        <img
+          src='/img/popular.png'
+          alt='인기 태그'
+          width={18}
+          style={{ marginLeft: '5px' }}
+        />
+      </Title>
       <Tags onChange={(e) => handleChange(e)}>
         {TagData.map((tag) => (
           <Fragment key={tag}>
@@ -42,7 +50,7 @@ export default PopularTags;
 const Container = styled.div`
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 20px;
 `;
 
 const Tags = styled.form`
@@ -51,16 +59,18 @@ const Tags = styled.form`
 `;
 
 const Title = styled.div`
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 600;
+  display: flex;
+  align-items: center;
 `;
 
 const Label = styled.label`
-  padding: 9px 20px;
+  padding: 10px 18px;
   border: 2px solid #d1d1d1;
   border-radius: 29.5px;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 13px;
 `;
 
 const Tag = styled.input`

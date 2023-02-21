@@ -51,12 +51,12 @@ const Sort = () => {
 export default Sort;
 
 const SortContainer = styled.ul`
-  margin-left: auto;
   display: flex;
   font-size: 13px;
   color: #a3a3a3;
   font-weight: 400;
   gap: 15px;
+  margin: 16px 0 40px auto;
 `;
 const SortList = styled.li`
   cursor: pointer;

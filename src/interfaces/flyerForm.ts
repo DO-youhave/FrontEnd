@@ -21,6 +21,7 @@ export interface FlyerFormProps {
     handleContact: (e: React.ChangeEvent<HTMLFormElement>) => void;
     handleSubmit: () => void;
     handleAddress: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleSave: () => void;
     checkAll: () => boolean;
     isChatOn: boolean;
     isEmailOn: boolean;
@@ -28,6 +29,10 @@ export interface FlyerFormProps {
     tagList: string[];
     tag: string;
     image: ImageUploadProps;
+    title: string;
+    mainText: string;
+    contact: string[];
+    address: { chatting: string; email: string };
   };
 }
 
@@ -35,5 +40,6 @@ export interface SelectCategoryProps {
   controller: {
     backPage: () => void;
     handleChangeRadio: (e: React.ChangeEvent<HTMLFormElement>) => void;
+    category: string;
   };
 }

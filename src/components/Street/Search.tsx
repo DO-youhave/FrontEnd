@@ -26,19 +26,20 @@ const Container = styled.div`
 `;
 
 const Input = styled.input`
-  width: 450px;
-  padding: 14px 0;
+  width: 400px;
+  padding: 13px 0;
   border: none;
   background-size: 4% auto;
   outline: none;
+  font-size: 13px;
   &::placeholder {
     color: #cdcdcd;
   }
 `;
 
 const SearchBtn = styled.button`
-  width: 23px;
-  height: 23px;
+  width: 20px;
+  height: 20px;
   border: none;
   background: url('/img/search.svg') no-repeat center center;
   background-size: contain;
