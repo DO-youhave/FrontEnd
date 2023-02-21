@@ -1,12 +1,13 @@
 import styled from '@emotion/styled';
 
 import MainSection from '../components/Home/MainSection';
+import PromotionSection from '../components/Home/PromotionSection';
 
 const Home = () => {
   return (
     <div>
       <MainSection />
-      <Section id='second'></Section>
+      <PromotionSection />
       <Section id='last'></Section>
     </div>
   );

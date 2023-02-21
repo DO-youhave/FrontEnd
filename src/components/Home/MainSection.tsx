@@ -8,6 +8,7 @@ import Flyer from '../shared/Flyer';
 
 const MainSection = () => {
   const navigate = useNavigate();
+  const goStreet = () => navigate(ROUTES.STREET.DETAIL('total', 'new', ''));
   const count = useCountNumber(77);
 
   return (
@@ -28,9 +29,7 @@ const MainSection = () => {
           <span>#남자 발 사이즈 270</span>
         </Tags>
       </Flyer>
-      <Button onClick={() => navigate(ROUTES.STREET.ROOT)}>
-        전단지골목가기
-      </Button>
+      <Button onClick={goStreet}>전단지골목가기</Button>
     </Section>
   );
 };
