@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
+import { Fragment } from 'react';
 
 import { COLORS } from '../../constants/colors';
+import { contacts } from '../../constants/contacts';
 import { FlyerFormProps } from '../../interfaces/flyerForm';
 import ImageUpload from './ImageUpload';
 
@@ -14,12 +16,17 @@ const FlyerForm = ({ controller }: FlyerFormProps) => {
     handleContact,
     handleSubmit,
     handleAddress,
+    handleSave,
     image,
     isChatOn,
     isEmailOn,
     suggestTags,
     tagList,
     tag,
+    title,
+    mainText,
+    contact,
+    address,
   } = controller;
 
   return (
@@ -27,15 +34,16 @@ const FlyerForm = ({ controller }: FlyerFormProps) => {
       <TitleNButtons>
         <FormTitle>전단지 만들기</FormTitle>
         <div>
-          <SaveBtn>임시 저장</SaveBtn>
+          <SaveBtn onClick={handleSave}>임시 저장</SaveBtn>
           <PostBtn onClick={handleSubmit}>전단지 붙이기</PostBtn>
         </div>
       </TitleNButtons>
 
       <SetTitle
         type='text'
-        placeholder='제목 (7자 이상 30자 미만)'
+        placeholder='제목 (7자 이상 30자 이내 작성)'
         name='title'
+        value={title}
         onChange={handleChangeTitle}
         maxLength={30}
       />
@@ -45,8 +53,9 @@ const FlyerForm = ({ controller }: FlyerFormProps) => {
       </ImageContainer>
 
       <SetTextArea
-        placeholder='본문을 입력해주세요. (최대 1000자)'
+        placeholder='본문을 최대 1000자 이내로 작성해주세요.'
         name='content'
+        value={mainText}
         onChange={handleChangeMainText}
         maxLength={1000}
       />
@@ -54,7 +63,7 @@ const FlyerForm = ({ controller }: FlyerFormProps) => {
       <TagSetting>
         <div style={{ fontWeight: '400' }}>
           태그 설정
-          <SubExplain>* 최대 3개</SubExplain>
+          <SubExplain>최대 3개</SubExplain>
         </div>
         <Suggestion>
           이런 태그는 어때요?
@@ -87,49 +96,41 @@ const FlyerForm = ({ controller }: FlyerFormProps) => {
       <div>
         <form onChange={handleContact}>
           <div style={{ fontWeight: '400', marginBottom: '25px' }}>
-            연락 수단 설정<SubExplain>* 중복 선택 가능</SubExplain>
+            연락 수단 설정<SubExplain>중복 선택 가능</SubExplain>
           </div>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <ContactInput
-              id='comment'
-              type='checkbox'
-              name='contact'
-              value='comment'
-            />
-            <ContactLabel htmlFor='comment'>댓글</ContactLabel>
-
-            <ContactInput
-              id='chatting'
-              type='checkbox'
-              name='contact'
-              value='chatting'
-            />
-            <ContactLabel htmlFor='chatting'>카카오톡 오픈채팅</ContactLabel>
-
-            <ContactInput
-              id='email'
-              type='checkbox'
-              name='contact'
-              value='email'
-            />
-            <ContactLabel htmlFor='email'>이메일</ContactLabel>
+            {contacts.map(({ id, name }) => (
+              <Fragment key={id}>
+                <ContactInput
+                  id={id}
+                  type='checkbox'
+                  name='contact'
+                  value={id}
+                  checked={contact.includes(id)}
+                  readOnly
+                />
+                <ContactLabel htmlFor={id}>{name}</ContactLabel>
+              </Fragment>
+            ))}
           </div>
           {isChatOn && (
             <AddressContainer>
-              오픈채팅 주소 입력{' '}
+              오픈채팅 주소 입력
               <AddressInput
                 placeholder='https://open.kakao.com/...'
                 name='chatting'
+                value={address.chatting}
                 onChange={handleAddress}
               />
             </AddressContainer>
           )}
           {isEmailOn && (
             <AddressContainer>
-              이메일 주소 입력{' '}
+              이메일 주소 입력
               <AddressInput
                 placeholder='example@example.com'
                 name='email'
+                value={address.email}
                 onChange={handleAddress}
               />
             </AddressContainer>
@@ -188,6 +189,9 @@ const SetTitle = styled.input`
   width: 100%;
   font-size: 20px;
   font-weight: 600;
+  &::placeholder {
+    color: #adadad;
+  }
 `;
 const SetTextArea = styled.textarea`
   border: none;
@@ -199,6 +203,9 @@ const SetTextArea = styled.textarea`
   height: 300px;
   resize: none;
   line-height: 1.8;
+  &::placeholder {
+    color: #adadad;
+  }
 `;
 
 const TagSetting = styled.div`

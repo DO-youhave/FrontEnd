@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { CategoryItem, CategoryName } from '../constants/categorys';
+import { getLocalStorage, setLocalStorage } from '../utils/storage';
 import {
   checkCategory,
   checkChattingUrl,
@@ -29,6 +30,26 @@ const useMakeFlyer = () => {
     chatting: '',
     email: '',
   });
+  // 임시저장 데이터
+  interface TmpInfo {
+    category: CategoryName | undefined;
+    title: string;
+    mainText: string;
+    tagList: string[];
+    contact: string[];
+    chatting: string;
+    email: string;
+  }
+  const temporaryInfo: TmpInfo = {
+    category,
+    title,
+    mainText,
+    tagList,
+    contact,
+    chatting: address.chatting,
+    email: address.email,
+  };
+
   // 카카오톡 오픈채팅 주소 입력 input 띄우기
   const isChatOn = contact.includes('chatting');
 
@@ -41,6 +62,13 @@ const useMakeFlyer = () => {
       navigate(-1);
     }
   };
+  // 임시저장 버튼 클릭
+  const handleSave = () => {
+    alert('임시 저장되었습니다');
+    setLocalStorage('tmp', temporaryInfo);
+  };
+
+  // 제출 버튼 클릭
   const handleSubmit = () => {
     const formData = {
       category,
@@ -124,6 +152,7 @@ const useMakeFlyer = () => {
     }
   };
 
+  // 오픈채팅 주소, 이메일 주소 입력
   const handleAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     setAddress({
@@ -132,8 +161,20 @@ const useMakeFlyer = () => {
     });
   };
 
+  useEffect(() => {
+    const tmp: TmpInfo = getLocalStorage('tmp');
+    if (tmp && confirm('임시 저장된 글이 있어요! 불러올까요?')) {
+      setCategory(tmp.category);
+      setTitle(tmp.title);
+      setMainText(tmp.mainText);
+      setTagList(tmp.tagList);
+      setContact(tmp.contact);
+      setAddress({ chatting: tmp.chatting, email: tmp.email });
+    }
+  }, []);
+
   return {
-    category: { backPage, handleChangeRadio },
+    category: { backPage, handleChangeRadio, category },
     form: {
       handleChangeTitle,
       handleChangeMainText,
@@ -144,12 +185,17 @@ const useMakeFlyer = () => {
       handleSubmit,
       handleAddress,
       checkAll,
+      handleSave,
       isChatOn,
       isEmailOn,
       suggestTags,
       image,
       tagList,
       tag,
+      title,
+      mainText,
+      contact,
+      address,
     },
   };
 };

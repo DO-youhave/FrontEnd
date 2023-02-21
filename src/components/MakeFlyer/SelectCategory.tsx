@@ -5,18 +5,27 @@ import { COLORS } from '../../constants/colors';
 import { SelectCategoryProps } from '../../interfaces/flyerForm';
 
 const SelectCategory = ({ controller }: SelectCategoryProps) => {
-  const { backPage, handleChangeRadio } = controller;
+  const { backPage, handleChangeRadio, category } = controller;
 
   return (
     <Category>
       <BackArrow onClick={backPage} />
 
-      <div style={{ margin: '60px 0', fontWeight: '600' }}>카테고리 설정</div>
+      <div style={{ margin: '60px 0 40px', fontWeight: '600' }}>
+        카테고리 설정
+      </div>
 
       <CategoryForm onChange={handleChangeRadio}>
         {CategoryItem.map(({ name, id }) => (
           <div key={name} style={{ display: 'flex' }}>
-            <CategoryInput id={name} type='radio' name='item' value={id} />
+            <CategoryInput
+              id={name}
+              checked={category === id}
+              readOnly
+              type='radio'
+              name='item'
+              value={id}
+            />
             <CategoryLabel htmlFor={name}>{name}</CategoryLabel>
           </div>
         ))}
