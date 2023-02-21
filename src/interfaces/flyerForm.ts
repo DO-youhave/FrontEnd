@@ -21,6 +21,7 @@ export interface FlyerFormProps {
     handleContact: (e: React.ChangeEvent<HTMLFormElement>) => void;
     handleSubmit: () => void;
     handleAddress: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    checkAll: () => boolean;
     isChatOn: boolean;
     isEmailOn: boolean;
     suggestTags: string;

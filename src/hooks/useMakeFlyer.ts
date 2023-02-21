@@ -1,8 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { CategoryItem, CategoryName } from '../constants/categorys';
-import usePreventLeave from '../hooks/usePreventLeave';
+import {
+  checkCategory,
+  checkChattingUrl,
+  checkContact,
+  checkEmailUrl,
+  checkMainText,
+  checkTags,
+  checkTitle,
+} from '../utils/validateFlyerForm';
 import { useFetchImage } from './useFetchImage';
 
 const useMakeFlyer = () => {
@@ -17,11 +25,15 @@ const useMakeFlyer = () => {
   const [tag, setTag] = useState<string>('');
   const [tagList, setTagList] = useState<string[]>([]);
   const [contact, setContact] = useState<string[]>([]);
-  const { enablePrevent } = usePreventLeave();
   const [address, setAddress] = useState({
     chatting: '',
     email: '',
   });
+  // 카카오톡 오픈채팅 주소 입력 input 띄우기
+  const isChatOn = contact.includes('chatting');
+
+  // 이메일 주소 입력 input 띄우기
+  const isEmailOn = contact.includes('email');
 
   // 뒤로가기 confirm 창
   const backPage = () => {
@@ -39,8 +51,25 @@ const useMakeFlyer = () => {
       address,
       image: images.map(({ image }) => image),
     };
-    console.log(formData);
+    checkAll() && console.log(formData);
   };
+
+  // 유효성 검사
+  const checkAll = () => {
+    if (!checkCategory(category)) return false;
+    if (!checkTitle(title)) return false;
+    if (!checkMainText(mainText)) return false;
+    if (!checkTags(tagList)) return false;
+    if (!checkContact(contact)) return false;
+    if (isChatOn) {
+      if (!checkChattingUrl(address.chatting)) return false;
+    }
+    if (isEmailOn) {
+      if (!checkEmailUrl(address.email)) return false;
+    }
+    return true;
+  };
+
   // 카테고리 선택 시
   const handleChangeRadio = (e: React.ChangeEvent<HTMLFormElement>) => {
     const value: CategoryName = e.target.value;
@@ -54,6 +83,9 @@ const useMakeFlyer = () => {
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setTitle(value);
+    if (value.length > 30) {
+      alert('제목은 30자까지만 쓸 수 있어요 😥');
+    }
   };
 
   //본문 작성
@@ -99,16 +131,6 @@ const useMakeFlyer = () => {
       [name]: value,
     });
   };
-  // 카카오톡 오픈채팅 주소 입력 input 띄우기
-  const isChatOn = contact.includes('chatting');
-
-  // 이메일 주소 입력 input 띄우기
-  const isEmailOn = contact.includes('email');
-
-  // 새로고침 방지
-  useEffect(() => {
-    enablePrevent();
-  }, []);
 
   return {
     category: { backPage, handleChangeRadio },
@@ -121,6 +143,7 @@ const useMakeFlyer = () => {
       handleContact,
       handleSubmit,
       handleAddress,
+      checkAll,
       isChatOn,
       isEmailOn,
       suggestTags,
