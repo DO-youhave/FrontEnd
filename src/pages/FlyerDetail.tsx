@@ -1,17 +1,43 @@
 import styled from '@emotion/styled';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import Comment from '../components/FlyerDetail/Comment';
+import { COLORS } from '../constants/colors';
 
 const tags = ['#운동화', '#나이키', '#맥북'];
 const FlyerDetail = () => {
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const handleBack = () => {
+    navigate(-1);
+  };
+  const handleDots = () => {
+    setOpen(!open);
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <Container>
       <Flyer>
         <Header>
-          <div>{'<'}</div>
-          <div>수학 문제 좀 풀어주세요!</div>
-          <img src='/img/dots.svg' alt='dots' />
+          <BackButton onClick={handleBack} />
+          <h1>수학 문제 좀 풀어주세요!</h1>
+          <Dots onClick={handleDots}>
+            {open && (
+              <DotsMenu>
+                <div>수정</div>
+                <div>삭제</div>
+              </DotsMenu>
+            )}
+          </Dots>
         </Header>
         <Category>이 [문제] 풀어줄 사람 있어요?</Category>
-        <ViewsNTime>조회수 10 | 1시간 전</ViewsNTime>
+        <ViewsNTime>
+          조회수 10 &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 1시간 전
+        </ViewsNTime>
         <Imgs />
         <Content>
           가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하
@@ -21,6 +47,8 @@ const FlyerDetail = () => {
             <Tag key={tag}>{tag}</Tag>
           ))}
         </Tags>
+        <ContactButton>글쓴이에게 연락하기</ContactButton>
+        <Comment />
       </Flyer>
     </Container>
   );
@@ -29,6 +57,7 @@ const FlyerDetail = () => {
 export default FlyerDetail;
 
 const Container = styled.div`
+  background: url('/img/wall.png');
   background-color: #f5f5f5;
   min-height: 100vh;
   display: flex;
@@ -41,11 +70,14 @@ const Flyer = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: #fff;
-  padding: 100px;
+  margin: 50px 0px;
+  padding: 50px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 `;
 
 const Header = styled.div`
   display: flex;
+  align-items: center;
   width: 100%;
   justify-content: space-between;
   margin-bottom: 25px;
@@ -54,6 +86,8 @@ const Header = styled.div`
 const Category = styled.div`
   color: #adadad;
   margin-bottom: 25px;
+  text-decoration: underline;
+  cursor: default;
 `;
 
 const ViewsNTime = styled.div`
@@ -83,6 +117,7 @@ const Tags = styled.div`
   display: flex;
   gap: 10px;
   margin-right: auto;
+  margin-bottom: 100px;
 `;
 
 const Tag = styled.div`
@@ -92,4 +127,43 @@ const Tag = styled.div`
   cursor: pointer;
   font-size: 14px;
   font-weight: 400;
+`;
+
+const BackButton = styled.div`
+  background: url('/img/back.png') no-repeat;
+  background-size: contain;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+`;
+
+const Dots = styled.div`
+  position: relative;
+  background: url('/img/dots.svg') no-repeat;
+  background-size: contain;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+`;
+
+const DotsMenu = styled.div`
+  position: absolute;
+  top: 40px;
+  right: 20px;
+  width: 60px;
+  text-align: center;
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  padding: 10px;
+`;
+
+const ContactButton = styled.button`
+  padding: 15px 100px;
+  background-color: ${COLORS.MAIN};
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-weight: 400;
+  cursor: pointer;
 `;

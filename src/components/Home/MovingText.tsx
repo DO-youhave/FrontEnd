@@ -60,8 +60,8 @@ const Half = styled.div`
   width: 600%;
   display: flex;
   align-items: center;
-  animation: ${marquee} 15s linear infinite;
+  animation: ${marquee} 30s linear infinite;
   &#reverse {
-    animation: ${reverseMarquee} 15s linear infinite;
+    animation: ${reverseMarquee} 30s linear infinite;
   }
 `;

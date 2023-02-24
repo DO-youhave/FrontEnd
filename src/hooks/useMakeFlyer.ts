@@ -163,14 +163,16 @@ const useMakeFlyer = () => {
 
   useEffect(() => {
     const tmp: TmpInfo = getLocalStorage('tmp');
-    if (tmp && confirm('임시 저장된 글이 있어요! 불러올까요?')) {
-      setCategory(tmp.category);
-      setTitle(tmp.title);
-      setMainText(tmp.mainText);
-      setTagList(tmp.tagList);
-      setContact(tmp.contact);
-      setAddress({ chatting: tmp.chatting, email: tmp.email });
-    }
+    setTimeout(() => {
+      if (tmp && confirm('임시 저장된 글이 있어요! 불러올까요?')) {
+        setCategory(tmp.category);
+        setTitle(tmp.title);
+        setMainText(tmp.mainText);
+        setTagList(tmp.tagList);
+        setContact(tmp.contact);
+        setAddress({ chatting: tmp.chatting, email: tmp.email });
+      }
+    }, 500);
   }, []);
 
   return {
