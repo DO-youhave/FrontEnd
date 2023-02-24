@@ -42,14 +42,17 @@ const recentExample = [
     createdAt: '2023-01-01',
   },
 ];
-const alertTitle = '누군가가 회원님의 전단지에 댓글을 달았습니다.';
+
 const Recent = () => {
   return (
     <Container>
       {recentExample.map(({ id, content, createdAt }) => (
         <AlertBox key={id}>
           <BoxTape src='/img/tape.svg' alt='tape' />
-          <Title>{alertTitle}</Title>
+          <Title>
+            회원님의 전단지에
+            <br /> 새로운 댓글이 달렸어요.
+          </Title>
           <Content>{`"${content}"`}</Content>
           <Date>{createdAt}</Date>
         </AlertBox>
@@ -73,15 +76,17 @@ const Container = styled.div`
 
 const AlertBox = styled.div`
   height: 220px;
-  padding: 20px 10px;
+  padding: 30px 10px;
   position: relative;
+  text-align: center;
   display: flex;
   flex-direction: column;
   cursor: pointer;
   background: url('/img/flyerBg.png') no-repeat center center;
   background-size: cover;
   transition: box-shadow 0.1s ease;
-  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
   &:hover {
     box-shadow: 0px 0px 0px;
   }
@@ -89,14 +94,15 @@ const AlertBox = styled.div`
 
 const BoxTape = styled.img`
   position: absolute;
-  top: -15px;
+  width: 35%;
+  top: -12px;
   left: 50%;
   transform: translate(-50%, 0%);
 `;
 
 const Title = styled.div`
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 400;
   margin-bottom: 20px;
 `;
 
@@ -104,13 +110,14 @@ const Content = styled.div`
   font-size: 14px;
   font-weight: 400;
   height: 80px;
-  color: #a3a3a3;
+  color: #6e6e6e;
   line-height: 1.3;
 `;
 
 const Date = styled.div`
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 400;
   text-align: right;
   margin-top: auto;
+  color: #6e6e6e;
 `;

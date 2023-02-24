@@ -1,9 +1,14 @@
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
+
+import { ROUTES } from '../../constants/routes';
 
 const FlyerList = () => {
+  const navigate = useNavigate();
+  const goDetail = () => navigate(ROUTES.FLYER);
   return (
     <Container>
-      <Flyer>
+      <Flyer onClick={goDetail}>
         <Title>나이키 신발 찾아요</Title>
         <Tags>
           <Tag>#나이키</Tag>
@@ -11,7 +16,6 @@ const FlyerList = () => {
           <Tag id='none'>#사이즈240</Tag>
         </Tags>
       </Flyer>
-
       <Flyer>
         <Title>ㅇㅇㅇ가 입은 이 옷 제품명 좀 알려주세요!</Title>
         <Tags>
