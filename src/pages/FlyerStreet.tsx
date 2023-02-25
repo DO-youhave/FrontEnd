@@ -10,24 +10,29 @@ const FlyerStreet = () => {
   return (
     <Container>
       <PageTop>
-        <PageTopPicture>
-          <div>
-            <PageName>전단지 골목</PageName>
-            <span>내가 찾는 전단지를 모두 모아놓은 골목</span>
+        <div>
+          <div style={{ fontSize: '42px', fontWeight: '600' }}>전단지 골목</div>
+          <div
+            style={{ marginTop: '20px', fontWeight: '400', fontSize: '20px' }}>
+            내가 찾는 전단지를 모두 모아놓은 골목
           </div>
-        </PageTopPicture>
-        <TagsNSearch>
-          <PopularTags />
+        </div>
+
+        <CategoryNSearch>
+          <Category />
           <Search />
-        </TagsNSearch>
+        </CategoryNSearch>
       </PageTop>
 
       <MainContents>
-        <CategoryNList>
-          <Sort />
+        <MainContentsInner>
+          <TagsNSort>
+            <PopularTags />
+            <Sort />
+          </TagsNSort>
+
           <FlyerList />
-          <Category />
-        </CategoryNList>
+        </MainContentsInner>
       </MainContents>
     </Container>
   );
@@ -43,52 +48,38 @@ const Container = styled.div`
 const PageTop = styled.div`
   width: 75%;
   max-width: 1200px;
-  height: 520px;
   background: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  margin-top: 30px;
 `;
-const PageTopPicture = styled.div`
-  width: 100%;
-  height: 400px;
-  background: url('/img/streetBg.png') no-repeat center center;
-  background-size: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-`;
-const TagsNSearch = styled.div`
+
+const CategoryNSearch = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: auto;
-`;
-
-const PageName = styled.span`
-  font-size: 32px;
-  display: block;
-  font-weight: 600;
-  margin-bottom: 20px;
+  margin: 50px 0 30px;
 `;
 
 const MainContents = styled.div`
   width: 100%;
   background-color: #f5f5f5;
-  margin-top: 50px;
   display: flex;
   align-items: center;
   flex-direction: column;
 `;
 
-const CategoryNList = styled.div`
+const MainContentsInner = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin-top: 30px;
   width: 75%;
   max-width: 1200px;
+`;
+
+const TagsNSort = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0 30px;
 `;

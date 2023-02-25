@@ -66,17 +66,17 @@ const Title = styled.div`
 `;
 
 const Label = styled.label`
-  padding: 10px 18px;
-  border: 2px solid #d1d1d1;
+  padding: 10px 22px;
   border-radius: 29.5px;
   cursor: pointer;
   font-size: 13px;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 `;
 
 const Tag = styled.input`
   &:checked + ${Label} {
     background: #049669;
     color: #fff;
-    border: 2px solid #049669;
   }
 `;
