@@ -10,7 +10,12 @@ const FlyerStreet = () => {
   return (
     <Container>
       <PageTop>
-        <PageTopPicture>그림 삽입 공간</PageTopPicture>
+        <PageTopPicture>
+          <div>
+            <PageName>전단지 골목</PageName>
+            <span>내가 찾는 전단지를 모두 모아놓은 골목</span>
+          </div>
+        </PageTopPicture>
         <TagsNSearch>
           <PopularTags />
           <Search />
@@ -39,7 +44,6 @@ const PageTop = styled.div`
   width: 75%;
   max-width: 1200px;
   height: 520px;
-
   background: #fff;
   display: flex;
   flex-direction: column;
@@ -49,7 +53,12 @@ const PageTop = styled.div`
 const PageTopPicture = styled.div`
   width: 100%;
   height: 400px;
-  border: 1px solid blue;
+  background: url('/img/streetBg.png') no-repeat center center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 `;
 const TagsNSearch = styled.div`
   width: 100%;
@@ -57,6 +66,13 @@ const TagsNSearch = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-top: auto;
+`;
+
+const PageName = styled.span`
+  font-size: 32px;
+  display: block;
+  font-weight: 600;
+  margin-bottom: 20px;
 `;
 
 const MainContents = styled.div`

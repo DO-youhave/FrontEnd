@@ -111,8 +111,8 @@ const useMakeFlyer = () => {
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setTitle(value);
-    if (value.length > 30) {
-      alert('제목은 30자까지만 쓸 수 있어요 😥');
+    if (value.length > 35) {
+      alert('제목은 35자까지만 쓸 수 있어요 😥');
     }
   };
 
