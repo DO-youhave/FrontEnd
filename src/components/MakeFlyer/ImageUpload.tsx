@@ -18,7 +18,7 @@ const ImageUpload = ({ image }: { image: ImageUploadProps }) => {
       {/* 사진 추가 버튼 */}
       <Container id='add' onClick={handleClick}>
         <img src='/img/image.svg' alt='이미지추가' />
-        상세 사진 추가 (선택사항, 최대 2개)
+        상세 사진 추가 (선택 사항, 최대 2개)
       </Container>
 
       {/* 사진 미리보기 */}

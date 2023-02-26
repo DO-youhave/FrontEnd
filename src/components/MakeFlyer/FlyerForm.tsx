@@ -41,11 +41,11 @@ const FlyerForm = ({ controller }: FlyerFormProps) => {
 
       <SetTitle
         type='text'
-        placeholder='제목 (7자 이상 30자 이내 작성)'
+        placeholder='제목 (7자 이상 35자 이내 작성)'
         name='title'
         value={title}
         onChange={handleChangeTitle}
-        maxLength={30}
+        maxLength={35}
       />
 
       <ImageContainer>
