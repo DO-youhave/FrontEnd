@@ -2,18 +2,32 @@ import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Comment from '../components/FlyerDetail/Comment';
+import Comment from '../components/FlyerDetail/Comments';
 import { COLORS } from '../constants/colors';
 
 const tags = ['#운동화', '#나이키', '#맥북'];
 const FlyerDetail = () => {
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
+  const [openDots, setOpenDots] = useState(false);
+  const [openContact, setOpenContact] = useState(false);
+
   const handleBack = () => {
     navigate(-1);
   };
   const handleDots = () => {
-    setOpen(!open);
+    setOpenDots(!openDots);
+  };
+  const handleContact = () => {
+    setOpenContact(!openContact);
+  };
+
+  const handleOpenChat = () => {
+    window.open('');
+  };
+  const handleCopyClipboard = () => {
+    const email = 'aaaaa';
+    navigator.clipboard.writeText(email);
+    alert('이메일 주소가 복사되었습니다.');
   };
 
   useEffect(() => {
@@ -26,7 +40,7 @@ const FlyerDetail = () => {
           <BackButton onClick={handleBack} />
           <h1>수학 문제 좀 풀어주세요!</h1>
           <Dots onClick={handleDots}>
-            {open && (
+            {openDots && (
               <DotsMenu>
                 <div>수정</div>
                 <div>삭제</div>
@@ -47,7 +61,21 @@ const FlyerDetail = () => {
             <Tag key={tag}>{tag}</Tag>
           ))}
         </Tags>
-        <ContactButton>글쓴이에게 연락하기</ContactButton>
+        <div style={{ position: 'relative' }}>
+          <ContactButton id={String(openContact)} onClick={handleContact}>
+            글쓴이에게 연락하기
+          </ContactButton>
+          {openContact && (
+            <>
+              <ContactMenu id='chat' onClick={handleOpenChat}>
+                카카오톡 오픈채팅방 들어가기
+              </ContactMenu>
+              <ContactMenu id='mail' onClick={handleCopyClipboard}>
+                글쓴이 이메일 주소 복사하기
+              </ContactMenu>
+            </>
+          )}
+        </div>
         <Comment />
       </Flyer>
     </Container>
@@ -159,11 +187,50 @@ const DotsMenu = styled.div`
 `;
 
 const ContactButton = styled.button`
-  padding: 15px 100px;
+  display: block;
+  padding: 15px 0px;
+  width: 350px;
   background-color: ${COLORS.MAIN};
   color: #fff;
   border: none;
   border-radius: 12px;
   font-weight: 400;
   cursor: pointer;
+  &:hover {
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  }
+  &#true {
+    background: url('/img/close.svg') no-repeat;
+    background-color: ${COLORS.MAIN};
+    background-size: 15px;
+    background-position: 95% 50%;
+  }
+`;
+
+const ContactMenu = styled.div`
+  position: absolute;
+  padding: 15px 30px;
+  width: 350px;
+  text-align: left;
+  color: ${COLORS.MAIN};
+  border: 1px solid #d9d9d9;
+  border-radius: 12px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  &#chat {
+    top: 60px;
+    right: 0px;
+    background: url('/img/chat.svg') no-repeat;
+    background-color: #fff;
+    background-size: 15px;
+    background-position: 95% 50%;
+  }
+  &#mail {
+    top: 120px;
+    right: 0px;
+    background: url('/img/mail.svg') no-repeat;
+    background-color: #fff;
+    background-size: 15px;
+    background-position: 95% 50%;
+  }
 `;

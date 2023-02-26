@@ -27,6 +27,9 @@ const style = css`
     font-size: 2em;
     margin: 0.67em 0;
   }
+  textarea {
+    resize: none;
+  }
   hr {
     box-sizing: content-box;
     height: 0;
