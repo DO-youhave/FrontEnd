@@ -4,9 +4,10 @@ import { Fragment } from 'react';
 import { COLORS } from '../../constants/colors';
 import { contacts } from '../../constants/contacts';
 import { FlyerFormProps } from '../../interfaces/flyerForm';
+import Categorys from './Categorys';
 import ImageUpload from './ImageUpload';
 
-const FlyerForm = ({ controller }: FlyerFormProps) => {
+const FlyerForm = ({ controller, mobile }: FlyerFormProps) => {
   const {
     handleChangeTitle,
     handleChangeMainText,
@@ -29,16 +30,22 @@ const FlyerForm = ({ controller }: FlyerFormProps) => {
     address,
   } = controller;
 
+  const { backPage, handleChangeRadio, category } = mobile;
+
   return (
     <Container>
+      <BackArrow onClick={backPage} />
       <TitleNButtons>
         <FormTitle>전단지 만들기</FormTitle>
-        <div>
+        <ButtonContainer>
           <SaveBtn onClick={handleSave}>임시 저장</SaveBtn>
           <PostBtn onClick={handleSubmit}>전단지 붙이기</PostBtn>
-        </div>
+        </ButtonContainer>
       </TitleNButtons>
-
+      <CategoryContainer>
+        <FormTitle id='category'>카테고리 설정</FormTitle>
+        <Categorys handleChangeRadio={handleChangeRadio} category={category} />
+      </CategoryContainer>
       <SetTitle
         type='text'
         placeholder='제목 (7자 이상 35자 이내 작성)'
@@ -93,7 +100,7 @@ const FlyerForm = ({ controller }: FlyerFormProps) => {
         </TagContainer>
       </TagSetting>
 
-      <div>
+      <div style={{ margin: '30px 0px' }}>
         <form onChange={handleContact}>
           <div style={{ fontWeight: '400', marginBottom: '25px' }}>
             연락 수단 설정<SubExplain>중복 선택 가능</SubExplain>
@@ -137,6 +144,10 @@ const FlyerForm = ({ controller }: FlyerFormProps) => {
           )}
         </form>
       </div>
+      <ButtonContainer id='mobile'>
+        <SaveBtn onClick={handleSave}>임시 저장</SaveBtn>
+        <PostBtn onClick={handleSubmit}>전단지 붙이기</PostBtn>
+      </ButtonContainer>
     </Container>
   );
 };
@@ -146,6 +157,9 @@ export default FlyerForm;
 const Container = styled.div`
   padding: 50px;
   width: 100%;
+  @media screen and (max-width: 768px) {
+    padding: 50px 20px;
+  }
 `;
 
 const TitleNButtons = styled.div`
@@ -154,11 +168,51 @@ const TitleNButtons = styled.div`
   align-items: center;
   padding-bottom: 50px;
   border-bottom: 1px solid #d9d9d9;
+  @media screen and (max-width: 768px) {
+    padding-bottom: 30px;
+  }
 `;
 
 const FormTitle = styled.div`
   font-size: 23px;
   font-weight: 600;
+  &#category {
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 20px;
+  }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+  &#mobile {
+    display: none;
+    @media screen and (max-width: 768px) {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      margin-top: 40px;
+    }
+  }
+`;
+
+const BackArrow = styled.div`
+  display: none;
+  @media screen and (max-width: 768px) {
+    display: block;
+    width: 25px;
+    height: 25px;
+    background: url('/img/back.png') no-repeat center center;
+    background-size: contain;
+    cursor: pointer;
+    margin-bottom: 40px;
+  }
 `;
 
 const SaveBtn = styled.button`
@@ -169,7 +223,12 @@ const SaveBtn = styled.button`
   font-size: 12px;
   border-radius: 6px;
   cursor: pointer;
+  @media screen and (max-width: 768px) {
+    padding: 10px;
+    width: 25%;
+  }
 `;
+
 const PostBtn = styled.button`
   border: none;
   background: ${COLORS.MAIN};
@@ -179,7 +238,13 @@ const PostBtn = styled.button`
   border-radius: 6px;
   margin-left: 15px;
   cursor: pointer;
+  @media screen and (max-width: 768px) {
+    padding: 10px;
+    margin-left: 0;
+    width: 70%;
+  }
 `;
+
 const SetTitle = styled.input`
   display: block;
   border: none;
@@ -191,6 +256,10 @@ const SetTitle = styled.input`
   font-weight: 600;
   &::placeholder {
     color: #adadad;
+  }
+  @media screen and (max-width: 768px) {
+    padding: 30px 0;
+    font-size: 16px;
   }
 `;
 const SetTextArea = styled.textarea`
@@ -206,11 +275,19 @@ const SetTextArea = styled.textarea`
   &::placeholder {
     color: #adadad;
   }
+  @media screen and (max-width: 768px) {
+    padding: 20px 0;
+    height: 200px;
+  }
 `;
 
 const TagSetting = styled.div`
   padding: 50px 0;
+  @media screen and (max-width: 768px) {
+    padding: 30px 0;
+  }
 `;
+
 const SubExplain = styled.span`
   font-size: 12px;
   color: #adadad;
@@ -225,6 +302,7 @@ const Suggestion = styled.div`
   line-height: 1.8;
   margin: 15px 0;
 `;
+
 const TagLabel = styled.label`
   position: relative;
   &::after {
@@ -235,6 +313,7 @@ const TagLabel = styled.label`
     left: 8px;
   }
 `;
+
 const InputTags = styled.input`
   width: 180px;
   padding: 10px 20px;
@@ -246,11 +325,14 @@ const InputTags = styled.input`
     color: #adadad;
   }
 `;
+
 const TagContainer = styled.div`
   display: flex;
   gap: 10px;
   margin-top: 15px;
+  flex-wrap: wrap;
 `;
+
 const PushedTag = styled.div`
   padding: 5px 25px 6px 10px;
   background: ${COLORS.MAIN};
@@ -265,6 +347,7 @@ const PushedTag = styled.div`
   gap: 5px;
   cursor: default;
 `;
+
 const DeleteTagBtn = styled.div`
   position: absolute;
   top: 7px;
@@ -275,6 +358,7 @@ const DeleteTagBtn = styled.div`
   background-size: cover;
   cursor: pointer;
 `;
+
 const ContactInput = styled.input`
   appearance: none;
   border: 1px solid #adadad;
@@ -309,11 +393,16 @@ const ContactInput = styled.input`
     border: none;
   }
 `;
+
 const ContactLabel = styled.label`
   margin-right: 40px;
   cursor: pointer;
   font-size: 13px;
+  @media screen and (max-width: 768px) {
+    margin-right: 20px;
+  }
 `;
+
 const AddressContainer = styled.div`
   margin: 30px 0;
   font-size: 13px;
@@ -322,6 +411,10 @@ const AddressContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    margin: 20px 0;
+  }
 `;
 
 const AddressInput = styled.input`
@@ -330,9 +423,24 @@ const AddressInput = styled.input`
   outline: none;
   font-size: 12px;
   width: 300px;
+  @media screen and (max-width: 768px) {
+    width: 200px;
+  }
 `;
 
 const ImageContainer = styled.div`
   padding: 30px 0;
   border-bottom: 1px solid #d9d9d9;
+  @media screen and (max-width: 768px) {
+    padding: 20px 0;
+  }
+`;
+
+const CategoryContainer = styled.div`
+  display: none;
+  @media screen and (max-width: 768px) {
+    display: block;
+    padding: 25px 0;
+    border-bottom: 1px solid #d9d9d9;
+  }
 `;

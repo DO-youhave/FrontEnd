@@ -1,94 +1,74 @@
 import styled from '@emotion/styled';
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 
-const commentExample = [
-  {
-    id: 1,
-    profile: '익명 1',
-    content:
-      '가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하',
-    date: '2023.02.02. 16:15',
-    reply: [
-      {
-        id: 1,
-        profile: '익명 1',
-        content:
-          '가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하',
-        date: '2023.02.02. 16:15',
-      },
-    ],
-  },
-  {
-    id: 2,
-    profile: '익명 2',
-    content:
-      '가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하',
-    date: '2023.02.02. 16:15',
-    reply: [
-      {
-        id: 1,
-        profile: '익명 1',
-        content:
-          '가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하',
-        date: '2023.02.02. 16:15',
-      },
-      {
-        id: 1,
-        profile: '익명 1',
-        content:
-          '가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하',
-        date: '2023.02.02. 16:15',
-      },
-    ],
-  },
-];
+interface CommentProps {
+  id: number;
+  profile: string;
+  content: string;
+  date: string;
+  reply: {
+    id: number;
+    profile: string;
+    content: string;
+    date: string;
+  }[];
+}
 
-const Comment = () => {
+const Comment = ({ id, profile, content, date, reply }: CommentProps) => {
+  const [comment, setComment] = useState(false);
+  const [replyInput, setReplyInput] = useState(''); // 답글 입력
+  const handleComment = () => setComment(!comment);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setReplyInput(e.target.value);
+  };
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      console.log(replyInput);
+      setReplyInput('');
+      setComment(false);
+    }
+  };
   return (
-    <CommentContainer>
-      <Text id='total'>댓글 2</Text>
-      {commentExample.map(({ id, profile, content, date, reply }) => (
-        <Fragment key={id}>
-          <CommentBox>
-            <Profile>{profile}</Profile>
-            <div
-              style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-              <Text>{content}</Text>
-              <Text id='date'>{date} | 신고</Text>
-            </div>
-            <ReplyButton>답글</ReplyButton>
-          </CommentBox>
-          {reply?.map((rep) => (
-            <CommentBox id='reply' key={rep.id}>
-              <ReplyArrow />
-              <Profile>{rep.profile}</Profile>
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '5px',
-                }}>
-                <Text>{rep.content}</Text>
-                <Text id='date'>{rep.date} | 신고</Text>
-              </div>
-            </CommentBox>
-          ))}
-        </Fragment>
+    <Fragment key={id}>
+      <CommentBox>
+        <Profile>{profile}</Profile>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+          <Text>{content}</Text>
+          <Text id='date'>{date} | 신고</Text>
+        </div>
+        <ReplyButton onClick={handleComment}>답글</ReplyButton>
+      </CommentBox>
+      {reply?.map((rep) => (
+        <CommentBox id='reply' key={rep.id}>
+          <ReplyArrow />
+          <Profile>{rep.profile}</Profile>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '5px',
+            }}>
+            <Text>{rep.content}</Text>
+            <Text id='date'>{rep.date} | 신고</Text>
+          </div>
+        </CommentBox>
       ))}
-    </CommentContainer>
+      {
+        // 답글 달기
+        comment && (
+          <ReplyInput
+            placeholder='답글을 입력해주세요'
+            value={replyInput}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+          />
+        )
+      }
+    </Fragment>
   );
 };
 
 export default Comment;
-
-const CommentContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 50px;
-  border-top: 2px solid #d9d9d9;
-`;
 
 const CommentBox = styled.div`
   width: 95%;
@@ -150,4 +130,20 @@ const ReplyButton = styled.button`
   border: 1px solid #adadad;
   background: #fff;
   cursor: pointer;
+`;
+
+const ReplyInput = styled.input`
+  margin-top: 20px;
+  width: 90%;
+  height: 50px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 0 20px;
+  box-sizing: border-box;
+  background: url('/img/paper_plane.svg') no-repeat;
+  background-color: #e9e9e9;
+  background-position: 98% 50%;
+  background-size: 20px;
 `;

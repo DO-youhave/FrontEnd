@@ -17,8 +17,10 @@ const ImageUpload = ({ image }: { image: ImageUploadProps }) => {
 
       {/* 사진 추가 버튼 */}
       <Container id='add' onClick={handleClick}>
-        <img src='/img/image.svg' alt='이미지추가' />
-        상세 사진 추가 (선택 사항, 최대 2개)
+        <ImageShape src='/img/image.svg' alt='이미지추가' />
+        <ImagePlaceholder id={String(!images.length)}>
+          상세 사진 추가 (선택사항, 최대 2개)
+        </ImagePlaceholder>
       </Container>
 
       {/* 사진 미리보기 */}
@@ -46,10 +48,16 @@ const Container = styled.div`
     font-weight: 400;
     gap: 15px;
     cursor: pointer;
+    @media screen and (max-width: 768px) {
+      font-size: 14px;
+    }
   }
   &#imgList {
     gap: 30px;
     margin-left: 30px;
+    @media screen and (max-width: 768px) {
+      gap: 20px;
+    }
   }
 `;
 
@@ -61,11 +69,31 @@ const ImgBox = styled.div<{ src: string }>`
   background: url(${({ src }) => src}) no-repeat center center;
   background-size: cover;
   position: relative;
+  @media screen and (max-width: 768px) {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+  }
 `;
+
 const RemoveButton = styled.img`
   position: absolute;
   width: 20px;
   right: -10px;
   top: -10px;
   cursor: pointer;
+`;
+
+const ImageShape = styled.img`
+  @media screen and (max-width: 768px) {
+    width: 30px;
+  }
+`;
+
+const ImagePlaceholder = styled.span`
+  @media screen and (max-width: 768px) {
+    &#false {
+      display: none;
+    }
+  }
 `;

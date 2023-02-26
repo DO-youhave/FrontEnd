@@ -63,7 +63,7 @@ const TapeMemo = styled.div`
   color: #fff;
   line-height: 1.4;
   &#first {
-    background: url('/img/tornTape_1.png') no-repeat center center;
+    background: url('/img/tornTape_1.svg') no-repeat center center;
     background-size: cover;
     padding: 10px 20px 10px 40px;
     width: 241.31px;
