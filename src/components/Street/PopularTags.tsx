@@ -66,12 +66,12 @@ const Title = styled.div`
 `;
 
 const Label = styled.label`
-  padding: 10px 22px;
+  padding: 12px 22px 10px;
   border-radius: 29.5px;
   cursor: pointer;
   font-size: 13px;
   background-color: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0px 7px rgba(0, 0, 0, 0.1);
 `;
 
 const Tag = styled.input`

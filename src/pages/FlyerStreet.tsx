@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useEffect } from 'react';
 
 import Category from '../components/Street/Category';
 import FlyerList from '../components/Street/FlyerList';
@@ -7,6 +8,10 @@ import Search from '../components/Street/Search';
 import Sort from '../components/Street/Sort';
 
 const FlyerStreet = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <Container>
       <PageTop>
@@ -57,7 +62,7 @@ const CategoryNSearch = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 50px 0 30px;
+  margin: 70px 0 40px;
 `;
 
 const MainContents = styled.div`

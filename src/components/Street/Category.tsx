@@ -92,7 +92,8 @@ const Item = styled.li`
   font-size: 18px;
   padding: 10px 0;
   line-height: 18px;
-  text-align: cent &#current {
+  text-align: left;
+  &#current {
     color: ${COLORS.MAIN};
     font-weight: 700;
     &:after {
@@ -107,7 +108,7 @@ const Item = styled.li`
     content: '';
     display: block;
     padding-top: 7px;
-    border-bottom: 3px solid ${COLORS.MAIN};
+    border-bottom: 2px solid ${COLORS.MAIN};
     transform: scaleX(0);
     transition: transform 250ms ease-in-out;
     transform-origin: 0% 50%;
