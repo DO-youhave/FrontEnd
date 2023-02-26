@@ -34,6 +34,11 @@ export interface FlyerFormProps {
     contact: string[];
     address: { chatting: string; email: string };
   };
+  mobile: {
+    backPage: () => void;
+    handleChangeRadio: (e: React.ChangeEvent<HTMLFormElement>) => void;
+    category: string | undefined;
+  };
 }
 
 export interface SelectCategoryProps {

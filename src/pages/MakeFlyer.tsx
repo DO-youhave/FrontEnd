@@ -10,7 +10,7 @@ const MakeFlyer = () => {
   return (
     <Container>
       <SelectCategory controller={category} />
-      <FlyerForm controller={form} />
+      <FlyerForm controller={form} mobile={category} />
     </Container>
   );
 };
