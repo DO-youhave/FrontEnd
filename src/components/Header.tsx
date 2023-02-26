@@ -61,4 +61,5 @@ const MenuList = styled.ul`
 `;
 const Menu = styled.li`
   cursor: pointer;
+  font-weight: 600;
 `;
