@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ROUTES } from '../constants/routes';
@@ -6,9 +6,8 @@ import useGetParams from './useGetParams';
 
 const useSearch = () => {
   const navigate = useNavigate();
-  const input = useRef<HTMLInputElement>(null);
+  const [searchValue, setSearchValue] = useState<string>('');
   const { category, sort, searchValue: currentValue } = useGetParams();
-  const searchValue: string = input.current ? input.current.value : '';
   const route: string = ROUTES.STREET.DETAIL(category, sort, searchValue);
 
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -20,13 +19,17 @@ const useSearch = () => {
     navigate(route);
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+  };
+
   useEffect(() => {
-    if (input.current) {
-      input.current.value = currentValue;
+    if (currentValue) {
+      setSearchValue(currentValue);
     }
   }, [currentValue]);
 
-  return { input, handleEnter, handleClick };
+  return { searchValue, handleChange, handleEnter, handleClick };
 };
 
 export default useSearch;

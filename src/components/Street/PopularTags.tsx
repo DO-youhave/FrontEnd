@@ -51,11 +51,19 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   gap: 20px;
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
 const Tags = styled.form`
   display: flex;
+  flex-wrap: wrap;
   gap: 15px;
+  @media screen and (max-width: 768px) {
+    gap: 10px;
+  }
 `;
 
 const Title = styled.div`
@@ -72,6 +80,11 @@ const Label = styled.label`
   font-size: 13px;
   background-color: #fff;
   box-shadow: 0 0px 7px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.1s ease;
+  @media screen and (max-width: 768px) {
+    padding: 10px 20px 8px;
+    font-size: 12px;
+  }
 `;
 
 const Tag = styled.input`

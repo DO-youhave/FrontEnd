@@ -51,6 +51,14 @@ const Container = styled.ul`
   grid-template-columns: repeat(4, 1fr);
   width: 100%;
   gap: 65px;
+  @media screen and (max-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+  @media screen and (max-width: 576px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0px 20px;
+  }
 `;
 const Flyer = styled.li`
   background-color: #000;
@@ -72,6 +80,14 @@ const Flyer = styled.li`
   &:hover {
     box-shadow: 0px 0px 0px;
   }
+  @media screen and (max-width: 768px) {
+    height: 250px;
+    font-size: 20px;
+  }
+  @media screen and (max-width: 576px) {
+    height: 200px;
+    font-size: 16px;
+  }
 `;
 const Title = styled.div`
   width: 100%;
@@ -79,6 +95,9 @@ const Title = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  @media screen and (max-width: 768px) {
+    height: 60px;
+  }
 `;
 const Tags = styled.div`
   display: flex;
@@ -90,6 +109,9 @@ const Tags = styled.div`
   font-size: 16px;
   width: 100%;
   height: 85px;
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+  }
 `;
 const Tag = styled.div`
   margin-bottom: 10px;

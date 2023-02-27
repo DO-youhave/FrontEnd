@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { ROUTES } from '../../constants/routes';
 import useGetParams from '../../hooks/useGetParams';
+import Select from '../shared/Select';
 
 const sortList = [
   {
@@ -20,7 +21,7 @@ const sortList = [
   },
 ];
 
-const Sort = () => {
+const Sort = ({ id }: { id?: string }) => {
   const { category, sort, searchValue } = useGetParams();
   const navigate = useNavigate();
 
@@ -30,7 +31,9 @@ const Sort = () => {
     return id;
   };
 
-  return (
+  return id === 'mobile' ? (
+    <Select id={id} type='sort' array={sortList} />
+  ) : (
     <SortContainer>
       {sortList.map(({ id, name }) => (
         <Fragment key={id}>
@@ -56,7 +59,11 @@ const SortContainer = styled.ul`
   color: #a3a3a3;
   font-weight: 400;
   gap: 15px;
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `;
+
 const SortList = styled.li`
   cursor: pointer;
   &:hover {
