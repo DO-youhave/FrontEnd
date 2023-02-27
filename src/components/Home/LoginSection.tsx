@@ -28,10 +28,13 @@ const Section = styled.div`
   align-items: center;
   height: 100vh;
   background-color: #f8f8f8;
+  @media all and (max-width: 767px) {
+    display: none;
+  }
 `;
 
 const Container = styled.div`
-  padding: 100px 90px;
+  padding: 60px 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -40,13 +43,13 @@ const Container = styled.div`
   border-radius: 45px;
 `;
 
-const OAuthButton = styled.button`
+export const OAuthButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 400px;
-  height: 60px;
-  margin: 20px 0px;
+  width: 380px;
+  height: 55px;
+  margin-top: 20px;
   border: none;
   border-radius: 8px;
   font-size: 20px;
@@ -61,10 +64,17 @@ const OAuthButton = styled.button`
     background-color: #03c75a;
     color: #fff;
   }
+
+  @media all and (max-width: 767px) {
+    width: 100%;
+    height: 55px;
+    font-size: 17px;
+    font-weight: 500;
+  }
 `;
 
 const Title = styled.span`
-  font-size: 3rem;
+  font-size: 2.7rem;
   font-weight: 700;
   display: inline-block;
   margin-bottom: 20px;
@@ -75,7 +85,6 @@ const Title = styled.span`
 
 const Sub = styled.span`
   font-size: 1.2rem;
-  font-weight: 600;
   display: inline-block;
-  margin-bottom: 70px;
+  margin-bottom: 50px;
 `;
