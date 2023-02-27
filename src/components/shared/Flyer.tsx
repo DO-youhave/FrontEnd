@@ -31,6 +31,12 @@ const Container = styled.div`
   background-size: cover;
   transition: box-shadow 0.1s ease;
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+  @media all and (max-width: 767px) {
+    margin-bottom: 30px;
+    width: 200px;
+    height: 280px;
+    padding: 60px 20px;
+  }
 `;
 
 const Tapes = styled.div`

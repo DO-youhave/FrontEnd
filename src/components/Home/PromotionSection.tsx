@@ -42,6 +42,10 @@ const Section = styled.div`
   position: relative;
   background: url('/img/note.png') no-repeat center center;
   background-size: cover;
+
+  @media all and (max-width: 767px) {
+    display: none;
+  }
 `;
 
 const Rotate = styled.div`

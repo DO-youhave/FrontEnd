@@ -44,6 +44,9 @@ const reverseMarquee = keyframes`
 const MovingContainer = styled.div`
   height: 200px;
   background-color: ${COLORS.MAIN};
+  @media all and (max-width: 767px) {
+    display: none;
+  }
 `;
 
 const Balloon = styled.div`
