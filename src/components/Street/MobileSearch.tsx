@@ -2,9 +2,8 @@ import styled from '@emotion/styled';
 
 import useSearch from '../../hooks/useSearch';
 
-const Search = () => {
+const MobileSearch = () => {
   const { searchValue, handleChange, handleClick, handleEnter } = useSearch();
-
   return (
     <Container>
       <Input
@@ -19,19 +18,26 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default MobileSearch;
 
 const Container = styled.div`
-  border-bottom: 1px solid #cdcdcd;
-  display: flex;
-  align-items: center;
+  display: none;
+  @media screen and (max-width: 768px) {
+    border: 1px solid #cdcdcd;
+    border-radius: 10px;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
 `;
 
 const Input = styled.input`
   width: 400px;
-  padding: 13px 0;
+  padding: 13px;
   border: none;
-  background-size: 4% auto;
+  border-radius: 10px;
   outline: none;
   font-size: 13px;
   &::placeholder {
@@ -40,7 +46,7 @@ const Input = styled.input`
 `;
 
 const SearchBtn = styled.button`
-  width: 20px;
+  width: 60px;
   height: 20px;
   border: none;
   background: url('/img/search.svg') no-repeat center center;
