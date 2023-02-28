@@ -6,7 +6,7 @@ import Flyer from '../shared/Flyer';
 
 const PromotionSection = () => {
   const navigate = useNavigate();
-  const goStreet = () => navigate(ROUTES.STREET.DETAIL('total', 'new', ''));
+  const goStreet = () => navigate(ROUTES.STREET.DETAIL('total', '', 'new', ''));
 
   return (
     <Section id='second'>

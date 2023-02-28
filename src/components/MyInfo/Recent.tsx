@@ -45,7 +45,7 @@ const recentExample = [
 
 const Recent = () => {
   return (
-    <Container>
+    <GridBox>
       {recentExample.map(({ id, content, createdAt }) => (
         <AlertBox key={id}>
           <BoxTape src='/img/tape.svg' alt='tape' />
@@ -57,21 +57,17 @@ const Recent = () => {
           <Date>{createdAt}</Date>
         </AlertBox>
       ))}
-    </Container>
+    </GridBox>
   );
 };
 
 export default Recent;
 
-const Container = styled.div`
-  height: 100%;
+const GridBox = styled.div`
   width: 80%;
-  background-color: #f5f6f8;
-  border-radius: 8px;
-  padding: 55px 50px;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 40px 30px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px 50px;
 `;
 
 const AlertBox = styled.div`
@@ -85,7 +81,7 @@ const AlertBox = styled.div`
   background: url('/img/flyerBg.png') no-repeat center center;
   background-size: cover;
   transition: box-shadow 0.1s ease;
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
   border-radius: 15px;
   &:hover {
     box-shadow: 0px 0px 0px;

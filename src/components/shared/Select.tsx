@@ -16,7 +16,7 @@ const Select = ({
   id?: string;
 }) => {
   const navigate = useNavigate();
-  const { sort, searchValue, category } = useGetParams();
+  const { sort, searchValue, category, tag } = useGetParams();
   const param = type === 'category' ? category : sort;
   const nowSelect = array.find(({ id }) => id === param)?.name;
   const [onSelect, setOnSelect] = useState(false);
@@ -42,8 +42,10 @@ const Select = ({
               id={setId(id)}
               onClick={() => {
                 type === 'category'
-                  ? navigate(ROUTES.STREET.DETAIL(id, sort, searchValue))
-                  : navigate(ROUTES.STREET.DETAIL(category, id, searchValue));
+                  ? navigate(ROUTES.STREET.DETAIL(id, '', sort, searchValue))
+                  : navigate(
+                      ROUTES.STREET.DETAIL(category, tag, id, searchValue)
+                    );
                 setOnSelect(!onSelect);
               }}>
               {name}

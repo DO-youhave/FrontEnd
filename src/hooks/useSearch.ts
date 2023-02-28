@@ -7,8 +7,8 @@ import useGetParams from './useGetParams';
 const useSearch = () => {
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState<string>('');
-  const { category, sort, searchValue: currentValue } = useGetParams();
-  const route: string = ROUTES.STREET.DETAIL(category, sort, searchValue);
+  const { category, tag, sort, searchValue: currentValue } = useGetParams();
+  const route: string = ROUTES.STREET.DETAIL(category, tag, sort, searchValue);
 
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
