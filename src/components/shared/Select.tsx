@@ -42,7 +42,7 @@ const Select = ({
               id={setId(id)}
               onClick={() => {
                 type === 'category'
-                  ? navigate(ROUTES.STREET.DETAIL(id, tag, sort, searchValue))
+                  ? navigate(ROUTES.STREET.DETAIL(id, '', sort, searchValue))
                   : navigate(
                       ROUTES.STREET.DETAIL(category, tag, id, searchValue)
                     );
