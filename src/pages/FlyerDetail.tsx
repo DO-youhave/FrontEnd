@@ -2,12 +2,13 @@ import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Comment from '../components/FlyerDetail/Comments';
+import Comments from '../components/FlyerDetail/Comments';
 import { COLORS } from '../constants/colors';
 
 const tags = ['#운동화', '#나이키', '#맥북'];
 const FlyerDetail = () => {
   const navigate = useNavigate();
+  const [rows, setRows] = useState(false);
   const [openDots, setOpenDots] = useState(false);
   const [openContact, setOpenContact] = useState(false);
 
@@ -34,7 +35,7 @@ const FlyerDetail = () => {
     window.scrollTo(0, 0);
   }, []);
   return (
-    <Container>
+    <Container onClick={() => setRows(false)}>
       <Flyer>
         <Header>
           <BackButton onClick={handleBack} />
@@ -76,7 +77,7 @@ const FlyerDetail = () => {
             </>
           )}
         </div>
-        <Comment />
+        <Comments rows={rows} setRows={setRows} />
       </Flyer>
     </Container>
   );
@@ -99,7 +100,7 @@ const Flyer = styled.div`
   align-items: center;
   background-color: #fff;
   margin: 50px 0px;
-  padding: 50px;
+  padding: 63px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 `;
 
@@ -217,6 +218,7 @@ const ContactMenu = styled.div`
   border-radius: 12px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
   cursor: pointer;
+  z-index: 10;
   &#chat {
     top: 60px;
     right: 0px;

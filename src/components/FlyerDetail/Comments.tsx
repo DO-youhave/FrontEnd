@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
+import { useState } from 'react';
 
+import { COLORS } from '../../constants/colors';
 import Comment from './Comment';
 
 const commentExample = [
@@ -44,10 +46,51 @@ const commentExample = [
   },
 ];
 
-const Comments = () => {
+interface CommentsProps {
+  rows: boolean;
+  setRows: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Comments = ({ rows, setRows }: CommentsProps) => {
+  const [replyText, setReplyText] = useState<string>('');
+  const isReplyOver = () => {
+    if (replyText.length === 301) alert('댓글은 300자까지 밖에 못 써요 😥');
+  };
+  const handleRows = rows ? 7 : 1;
+
   return (
     <CommentContainer>
-      <Text id='total'>댓글 2</Text>
+      <Text id='total'>
+        댓글
+        <span style={{ color: `${COLORS.MAIN}`, fontWeight: '600' }}> 2</span>
+      </Text>
+
+      {/* 댓글 입력창(top) */}
+      <ReplyTextAreaWrap>
+        <ReplyTextArea
+          placeholder='댓글을 입력해주세요'
+          rows={handleRows}
+          maxLength={300}
+          onClick={(e) => {
+            e.stopPropagation();
+            setRows(true);
+          }}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+            setReplyText(e.target.value);
+            isReplyOver();
+          }}
+        />
+        {rows ? (
+          <NumNSubmit>
+            <TextNum>{replyText.length}/300</TextNum>
+            <SubmitReplyButton onClick={(e) => e.stopPropagation()}>
+              등록
+            </SubmitReplyButton>
+          </NumNSubmit>
+        ) : undefined}
+      </ReplyTextAreaWrap>
+
+      {/* 입력된 댓글들 */}
       {commentExample.map(({ id, profile, content, date, reply }) => (
         <Comment
           key={id}
@@ -58,27 +101,76 @@ const Comments = () => {
           reply={reply}
         />
       ))}
-      <ReplyInput placeholder='댓글을 입력해주세요' />
+
+      {/* 댓글 입력창 (bottom) */}
+      <ReplyTextAreaWrap>
+        <ReplyTextArea
+          placeholder='댓글을 입력해주세요'
+          rows={handleRows}
+          maxLength={300}
+          onClick={(e) => {
+            e.stopPropagation();
+            setRows(true);
+          }}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+            setReplyText(e.target.value);
+            isReplyOver();
+          }}
+        />
+        {rows ? (
+          <NumNSubmit>
+            <TextNum>{replyText.length}/300</TextNum>
+            <SubmitReplyButton onClick={(e) => e.stopPropagation()}>
+              등록
+            </SubmitReplyButton>
+          </NumNSubmit>
+        ) : undefined}
+      </ReplyTextAreaWrap>
     </CommentContainer>
   );
 };
 
 export default Comments;
 
-const ReplyInput = styled.input`
-  margin-top: 40px;
-  width: 90%;
-  height: 50px;
+const ReplyTextAreaWrap = styled.div`
+  position: relative;
+  width: 100%;
+  background: #e9e9e9;
+  border-radius: 15px;
+`;
+const ReplyTextArea = styled.textarea`
+  margin: 5px 0;
+  width: 100%;
+  outline: none;
   border: none;
-  border-radius: 8px;
+  border-radius: 15px;
   font-size: 14px;
   font-weight: 400;
-  padding: 0 20px;
+  padding: 16px 20px;
   box-sizing: border-box;
-  background: url('/img/paperPlane.svg') no-repeat;
-  background-color: #e9e9e9;
-  background-position: 98% 50%;
-  background-size: 20px;
+  background: #e9e9e9;
+`;
+const NumNSubmit = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+`;
+
+const TextNum = styled.div`
+  padding: 10px 20px;
+`;
+
+const SubmitReplyButton = styled.div`
+  padding: 10px 30px;
+  background-color: ${COLORS.MAIN};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 400;
+  cursor: pointer;
 `;
 
 const CommentContainer = styled.div`
@@ -94,8 +186,9 @@ const Text = styled.div`
   width: 100%;
   font-size: 14px;
   font-weight: 400;
+  margin-top: 20px;
   &#total {
-    width: 95%;
+    width: 100%;
     font-size: 18px;
     font-weight: 500;
     padding: 20px 0;

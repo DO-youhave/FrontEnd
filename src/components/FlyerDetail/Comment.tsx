@@ -28,16 +28,48 @@ const Comment = ({ id, profile, content, date, reply }: CommentProps) => {
       setComment(false);
     }
   };
+
+  // '댓글' 신고 버튼 클릭 시
+  const handleReport = () => {
+    if (confirm('이 댓글을 신고하시겠어요?')) {
+      alert('신고되었습니다! 깨끗한 사이트를 위한 협조 감사합니다 😄');
+    }
+  };
+
   return (
     <Fragment key={id}>
-      <CommentBox>
-        <Profile>{profile}</Profile>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-          <Text>{content}</Text>
-          <Text id='date'>{date} | 신고</Text>
-        </div>
-        <ReplyButton onClick={handleComment}>답글</ReplyButton>
-      </CommentBox>
+      <div
+        style={{
+          width: '100%',
+          borderBottom: '1px solid #d9d9d9',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'flex-start',
+        }}>
+        <CommentBox id='comment'>
+          <Profile>{profile}</Profile>
+          <div
+            style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <Text>{content}</Text>
+            <Text id='date'>{date}</Text>
+          </div>
+          <ReplyButton onClick={handleComment}>답글</ReplyButton>
+        </CommentBox>
+
+        <More>
+          {/* 본인이 쓴 댓글일 경우 */}
+          <MoreContent id='mine'>
+            <MoreItem id='margin'>수정</MoreItem>
+            <MoreItem>삭제</MoreItem>
+          </MoreContent>
+
+          {/* 본인이 쓴 댓글이 아닐 경우 */}
+          <MoreContent>
+            <MoreItem onClick={handleReport}>신고</MoreItem>
+          </MoreContent>
+        </More>
+      </div>
+
       {reply?.map((rep) => (
         <CommentBox id='reply' key={rep.id}>
           <ReplyArrow />
@@ -49,7 +81,7 @@ const Comment = ({ id, profile, content, date, reply }: CommentProps) => {
               gap: '5px',
             }}>
             <Text>{rep.content}</Text>
-            <Text id='date'>{rep.date} | 신고</Text>
+            <Text id='date'>{rep.date}</Text>
           </div>
         </CommentBox>
       ))}
@@ -71,15 +103,17 @@ const Comment = ({ id, profile, content, date, reply }: CommentProps) => {
 export default Comment;
 
 const CommentBox = styled.div`
-  width: 95%;
+  width: 98%;
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  padding: 20px 0;
-  border-bottom: 1px solid #d9d9d9;
+  padding: 30px 0;
   &#reply {
     position: relative;
     padding-left: 50px;
+    border-bottom: 1px solid #d9d9d9;
+  }
+  &#comment {
+    width: 60%;
   }
 `;
 
@@ -87,11 +121,12 @@ const Profile = styled.div`
   display: flex;
   align-items: center;
   font-size: 14px;
+  margin-bottom: 10px;
   &::before {
     content: '';
     display: inline-block;
-    width: 25px;
-    height: 25px;
+    width: 27px;
+    height: 27px;
     margin-right: 10px;
     background: url('/img/profile.svg') no-repeat;
     background-size: contain;
@@ -125,11 +160,49 @@ const ReplyArrow = styled.div`
 
 const ReplyButton = styled.button`
   margin-right: auto;
+  margin-top: 20px;
   padding: 5px 10px;
   font-size: 12px;
   border: 1px solid #adadad;
   background: #fff;
   cursor: pointer;
+`;
+
+const MoreItem = styled.div`
+  font-size: 12px;
+  font-weight: 400;
+  color: #616161;
+  &#margin {
+    margin-bottom: 10px;
+  }
+`;
+
+const More = styled.div`
+  width: 12px;
+  height: 20px;
+  margin-top: 43px;
+  background: url('/img/dots.svg') no-repeat center center;
+  background-size: contain;
+  position: relative;
+  cursor: pointer;
+`;
+
+const MoreContent = styled.div`
+  position: absolute;
+  left: -25px;
+  bottom: -55px;
+  border: 1px solid #d9d9d9;
+  padding: 12px 20px;
+  width: max-content;
+  text-align: center;
+  background: #fff;
+  font-size: 12px;
+  display: block;
+  cursor: pointer;
+  &#mine {
+    bottom: -80px;
+    display: none;
+  }
 `;
 
 const ReplyInput = styled.input`
