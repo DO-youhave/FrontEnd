@@ -9,7 +9,7 @@ import { OAuthButton } from './LoginSection';
 
 const MainSection = () => {
   const navigate = useNavigate();
-  const goStreet = () => navigate(ROUTES.STREET.DETAIL('total', 'new', ''));
+  const goStreet = () => navigate(ROUTES.STREET.DETAIL('total', '', 'new', ''));
   const count = useCountNumber(77);
 
   return (

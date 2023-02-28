@@ -27,7 +27,7 @@ const Header = () => {
       <MenuList
         style={{ color: path.includes(MY_PAGE.ROOT) ? '#fff' : '#000' }}>
         {path !== STREET.ROOT && (
-          <Menu onClick={() => navigate(STREET.DETAIL('total', 'new', ''))}>
+          <Menu onClick={() => navigate(STREET.DETAIL('total', '', 'new', ''))}>
             전단지 골목 가기
           </Menu>
         )}
@@ -39,7 +39,7 @@ const Header = () => {
           <NavIcon
             src='/img/street.svg'
             alt='street'
-            onClick={() => navigate(STREET.DETAIL('total', 'new', ''))}
+            onClick={() => navigate(STREET.DETAIL('total', '', 'new', ''))}
           />
         )}
         <NavIcon

@@ -22,7 +22,7 @@ const sortList = [
 ];
 
 const Sort = ({ id }: { id?: string }) => {
-  const { category, sort, searchValue } = useGetParams();
+  const { category, tag, sort, searchValue } = useGetParams();
   const navigate = useNavigate();
 
   const handleSort = (value: string) => {
@@ -40,7 +40,7 @@ const Sort = ({ id }: { id?: string }) => {
           <SortList
             id={handleSort(id)}
             onClick={() =>
-              navigate(ROUTES.STREET.DETAIL(category, id, searchValue))
+              navigate(ROUTES.STREET.DETAIL(category, tag, id, searchValue))
             }>
             {name}
           </SortList>

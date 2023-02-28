@@ -1,26 +1,25 @@
 import styled from '@emotion/styled';
-import { Fragment, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const TagData: string[] = [
-  '#운동화',
-  '#나이키',
-  '#맥북',
-  '#애플워치',
-  '#수학문제',
-];
+import { ROUTES } from '../../constants/routes';
+import useGetParams from '../../hooks/useGetParams';
+
+const TagData: string[] = ['운동화', '나이키', '맥북', '애플워치', '수학문제'];
 
 const PopularTags = () => {
-  const [tags, setTags] = useState<string[]>([]); // 선택된 태그 리스트
+  const navigate = useNavigate();
+  const { category, tag: nowTag, sort, searchValue } = useGetParams();
 
   // 태그 리스트 변경 함수
-  const handleChange = (e: React.FormEvent<HTMLFormElement>) => {
-    const { checked, value } = e.target as HTMLInputElement;
-    if (checked) {
-      setTags([...tags, value]);
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const { id } = e.target as HTMLInputElement;
+    if (nowTag === id) {
+      navigate(ROUTES.STREET.DETAIL(category, '', sort, searchValue));
     } else {
-      setTags(tags.filter((tag) => tag !== value));
+      navigate(ROUTES.STREET.DETAIL(category, id, sort, searchValue));
     }
   };
+  const isChecked = (tag: string) => (nowTag === tag ? 'checked' : '');
 
   return (
     <Container>
@@ -33,12 +32,15 @@ const PopularTags = () => {
           style={{ marginLeft: '5px' }}
         />
       </Title>
-      <Tags onChange={(e) => handleChange(e)}>
+      <Tags>
         {TagData.map((tag) => (
-          <Fragment key={tag}>
-            <Tag id={tag} type='checkbox' name='tag' value={tag} hidden />
-            <Label htmlFor={tag}>{tag}</Label>
-          </Fragment>
+          <Tag
+            key={tag}
+            className={isChecked(tag)}
+            id={tag}
+            onClick={handleClick}>
+            #{tag}
+          </Tag>
         ))}
       </Tags>
     </Container>
@@ -57,7 +59,7 @@ const Container = styled.div`
   }
 `;
 
-const Tags = styled.form`
+const Tags = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
@@ -73,7 +75,7 @@ const Title = styled.div`
   align-items: center;
 `;
 
-const Label = styled.label`
+const Tag = styled.div`
   padding: 12px 22px 10px;
   border-radius: 29.5px;
   cursor: pointer;
@@ -85,10 +87,7 @@ const Label = styled.label`
     padding: 10px 20px 8px;
     font-size: 12px;
   }
-`;
-
-const Tag = styled.input`
-  &:checked + ${Label} {
+  &.checked {
     background: #049669;
     color: #fff;
   }
