@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { TOKEN_KEY } from '../constants/auth';
+import { COLORS } from '../constants/colors';
 import { ROUTES } from '../constants/routes';
 import { getLocalStorage } from '../utils/storage';
 
@@ -9,16 +10,22 @@ const Header = () => {
   const navigate = useNavigate();
   const isLogin = getLocalStorage(TOKEN_KEY);
   const { pathname: path } = useLocation();
-  const { HOME, STREET, POSTING } = ROUTES;
-
+  const { HOME, STREET, POSTING, MY_PAGE } = ROUTES;
+  const background = path.includes(MY_PAGE.ROOT) ? COLORS.MAIN : 'none';
   return (
-    <Container id={path === HOME ? 'fix' : ''}>
+    <Container
+      id={path === HOME ? 'fix' : ''}
+      style={{ background: background }}>
       <MainLogo onClick={() => navigate(HOME)}>
         <Logo src='/img/logo.svg' alt='' />
-        <LogoText>있어요?</LogoText>
+        <LogoText
+          style={{ color: path.includes(MY_PAGE.ROOT) ? '#fff' : '#000' }}>
+          있어요?
+        </LogoText>
       </MainLogo>
 
-      <MenuList>
+      <MenuList
+        style={{ color: path.includes(MY_PAGE.ROOT) ? '#fff' : '#000' }}>
         {path !== STREET.ROOT && (
           <Menu onClick={() => navigate(STREET.DETAIL('total', 'new', ''))}>
             전단지 골목 가기
@@ -38,6 +45,7 @@ const Header = () => {
         <NavIcon
           src='/img/write.svg'
           alt='write'
+          height={26}
           onClick={() => navigate(POSTING)}
         />
         {isLogin && <NavIcon src='/img/profile.svg' alt='profile' />}
@@ -49,12 +57,11 @@ const Header = () => {
 export default Header;
 
 const Container = styled.div`
-  width: 80%;
-  max-width: 1280px;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
-  padding: 26px 0;
+  padding: 26px 10%;
   &#fix {
     position: fixed;
     top: 0;
@@ -94,6 +101,7 @@ const MenuList = styled.ul`
     display: none;
     @media screen and (max-width: 768px) {
       display: flex;
+      align-items: flex-end;
       gap: 15px;
     }
   }
