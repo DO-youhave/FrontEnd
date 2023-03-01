@@ -2,12 +2,13 @@ import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Comment from '../components/FlyerDetail/Comments';
+import Comments from '../components/FlyerDetail/Comments';
 import { COLORS } from '../constants/colors';
 
 const tags = ['#운동화', '#나이키', '#맥북'];
 const FlyerDetail = () => {
   const navigate = useNavigate();
+  const [rows, setRows] = useState(false);
   const [openDots, setOpenDots] = useState(false);
   const [openContact, setOpenContact] = useState(false);
 
@@ -27,28 +28,41 @@ const FlyerDetail = () => {
   const handleCopyClipboard = () => {
     const email = 'aaaaa';
     navigator.clipboard.writeText(email);
-    alert('이메일 주소가 복사되었습니다.');
+    alert('이메일 주소가 복사됐어요!');
   };
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   return (
-    <Container>
+    <Container onClick={() => setRows(false)}>
       <Flyer>
         <Header>
           <BackButton onClick={handleBack} />
-          <h1>수학 문제 좀 풀어주세요!</h1>
+
           <Dots onClick={handleDots}>
             {openDots && (
-              <DotsMenu>
-                <div>수정</div>
-                <div>삭제</div>
-              </DotsMenu>
+              <div>
+                {/* 내가 작성하지 않은 게시물 */}
+                <DotsMenu>
+                  <DotsMenuItem>북마크하기</DotsMenuItem>
+                  <DotsMenuItem id='last'>신고하기</DotsMenuItem>
+                </DotsMenu>
+
+                {/* 내가 작성한 게시물 */}
+                <DotsMenu id='mine'>
+                  <DotsMenuItem>수정</DotsMenuItem>
+                  <DotsMenuItem>삭제</DotsMenuItem>
+                  <DotsMenuItem id='last'>북마크하기</DotsMenuItem>
+                </DotsMenu>
+              </div>
             )}
           </Dots>
         </Header>
-        <Category>이 [문제] 풀어줄 사람 있어요?</Category>
+        <div style={{ fontSize: '36px', fontWeight: '600' }}>
+          수학 문제 좀 풀어주세요!
+        </div>
+        <Category>학습</Category>
         <ViewsNTime>
           조회수 10 &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 1시간 전
         </ViewsNTime>
@@ -76,7 +90,7 @@ const FlyerDetail = () => {
             </>
           )}
         </div>
-        <Comment />
+        <Comments rows={rows} setRows={setRows} />
       </Flyer>
     </Container>
   );
@@ -99,7 +113,7 @@ const Flyer = styled.div`
   align-items: center;
   background-color: #fff;
   margin: 50px 0px;
-  padding: 50px;
+  padding: 63px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 `;
 
@@ -113,9 +127,12 @@ const Header = styled.div`
 
 const Category = styled.div`
   color: #adadad;
-  margin-bottom: 25px;
+  margin-top: 18px;
+  margin-bottom: 18px;
   text-decoration: underline;
   cursor: default;
+  font-weight: 600;
+  cursor: pointer;
 `;
 
 const ViewsNTime = styled.div`
@@ -125,6 +142,7 @@ const ViewsNTime = styled.div`
   border-bottom: 1px solid #d9d9d9;
   width: 100%;
   text-align: center;
+  font-weight: 400;
 `;
 
 const Imgs = styled.div`
@@ -137,14 +155,13 @@ const Content = styled.div`
   width: 90%;
   margin-top: 50px;
   line-height: 1.5;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
 `;
 
 const Tags = styled.div`
   width: 90%;
   display: flex;
   gap: 10px;
-  margin-right: auto;
   margin-bottom: 100px;
 `;
 
@@ -155,6 +172,7 @@ const Tag = styled.div`
   cursor: pointer;
   font-size: 14px;
   font-weight: 400;
+  color: #616161;
 `;
 
 const BackButton = styled.div`
@@ -177,13 +195,24 @@ const Dots = styled.div`
 const DotsMenu = styled.div`
   position: absolute;
   top: 40px;
-  right: 20px;
-  width: 60px;
+  right: -27px;
+  width: 100px;
   text-align: center;
   background-color: #fff;
-  border: 1px solid #d9d9d9;
+  border: 1px solid #dedede;
   border-radius: 5px;
-  padding: 10px;
+  padding: 15px 10px;
+  &#mine {
+    display: none;
+  }
+`;
+const DotsMenuItem = styled.div`
+  margin-bottom: 10px;
+  color: #616161;
+  font-size: 13px;
+  &#last {
+    margin-bottom: 0;
+  }
 `;
 
 const ContactButton = styled.button`
@@ -213,10 +242,10 @@ const ContactMenu = styled.div`
   width: 350px;
   text-align: left;
   color: ${COLORS.MAIN};
-  border: 1px solid #d9d9d9;
   border-radius: 12px;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.2);
   cursor: pointer;
+  z-index: 10;
   &#chat {
     top: 60px;
     right: 0px;
