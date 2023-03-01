@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../constants/routes';
 import { currentPath } from '../../utils/currentPath';
 
-const menus: { id: string; name: string }[] = [
+export const menus: { id: string; name: string }[] = [
   { id: ROUTES.MY_PAGE.RECENT, name: '최근 알림' },
   { id: ROUTES.MY_PAGE.POSTING, name: '내가 쓴 글' },
   { id: ROUTES.MY_PAGE.COMMENT, name: '내가 쓴 댓글' },

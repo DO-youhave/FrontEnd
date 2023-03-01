@@ -2,8 +2,8 @@ export const ROUTES = {
   HOME: '/', // 메인 페이지
   STREET: {
     ROOT: '/street', // 골목 페이지
-    DETAIL: (category: string, sort: string, value: string) =>
-      `/street?category=${category}&sort=${sort}&q=${value}`, // 골목 상세 페이지
+    DETAIL: (category: string, tag: string, sort: string, value: string) =>
+      `/street?category=${category}&tag=${tag}&sort=${sort}&q=${value}`, // 골목 상세 페이지
   }, // 전단지 골목 페이지
   FLYER: '/flyer', // 전단지 상세 페이지
   POSTING: '/posting', // 전단지 등록 페이지
