@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import { Fragment, useState } from 'react';
 
+import { NowTextNum, NumNSubmit, SubmitReplyButton, TextNum } from './Comments';
+
 interface CommentProps {
   id: number;
   profile: string;
@@ -17,11 +19,15 @@ interface CommentProps {
 const Comment = ({ id, profile, content, date, reply }: CommentProps) => {
   const [comment, setComment] = useState(false);
   const [replyInput, setReplyInput] = useState(''); // 답글 입력
+  const isReplyOver = () => {
+    if (replyInput.length === 301) alert('댓글은 300자까지 밖에 못 써요 😥');
+  };
+
   const handleComment = () => setComment(!comment);
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setReplyInput(e.target.value);
   };
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter') {
       console.log(replyInput);
       setReplyInput('');
@@ -40,7 +46,7 @@ const Comment = ({ id, profile, content, date, reply }: CommentProps) => {
     <Fragment key={id}>
       <div
         style={{
-          width: '100%',
+          width: '95%',
           borderBottom: '1px solid #d9d9d9',
           display: 'flex',
           justifyContent: 'space-between',
@@ -70,6 +76,33 @@ const Comment = ({ id, profile, content, date, reply }: CommentProps) => {
         </More>
       </div>
 
+      {
+        // 답글 달기 입력창
+        comment && (
+          <ReplyInputWrap>
+            <ReplyInput
+              placeholder='답글을 입력해주세요'
+              value={replyInput}
+              maxLength={300}
+              rows={7}
+              onChange={(e) => {
+                handleChange(e);
+                isReplyOver();
+              }}
+              onKeyDown={handleKeyDown}
+            />
+            <NumNSubmit>
+              <TextNum>
+                <NowTextNum>{replyInput.length}</NowTextNum>/300
+              </TextNum>
+              <SubmitReplyButton onClick={(e) => e.stopPropagation()}>
+                등록
+              </SubmitReplyButton>
+            </NumNSubmit>
+          </ReplyInputWrap>
+        )
+      }
+
       {reply?.map((rep) => (
         <CommentBox id='reply' key={rep.id}>
           <ReplyArrow />
@@ -78,24 +111,13 @@ const Comment = ({ id, profile, content, date, reply }: CommentProps) => {
             style={{
               display: 'flex',
               flexDirection: 'column',
-              gap: '5px',
+              gap: '10px',
             }}>
             <Text>{rep.content}</Text>
             <Text id='date'>{rep.date}</Text>
           </div>
         </CommentBox>
       ))}
-      {
-        // 답글 달기
-        comment && (
-          <ReplyInput
-            placeholder='답글을 입력해주세요'
-            value={replyInput}
-            onChange={handleChange}
-            onKeyDown={handleKeyDown}
-          />
-        )
-      }
     </Fragment>
   );
 };
@@ -103,7 +125,7 @@ const Comment = ({ id, profile, content, date, reply }: CommentProps) => {
 export default Comment;
 
 const CommentBox = styled.div`
-  width: 98%;
+  width: 95%;
   display: flex;
   flex-direction: column;
   padding: 30px 0;
@@ -121,6 +143,7 @@ const Profile = styled.div`
   display: flex;
   align-items: center;
   font-size: 14px;
+  font-weight: 600;
   margin-bottom: 10px;
   &::before {
     content: '';
@@ -204,19 +227,20 @@ const MoreContent = styled.div`
     display: none;
   }
 `;
+const ReplyInputWrap = styled.div`
+  width: 95%;
+  background-color: #e9e9e9;
+  border-radius: 0 0 12px 12px;
+`;
 
-const ReplyInput = styled.input`
-  margin-top: 20px;
-  width: 90%;
-  height: 50px;
+const ReplyInput = styled.textarea`
+  width: 100%;
   border: none;
+  outline: none;
   border-radius: 8px;
   font-size: 14px;
   font-weight: 400;
-  padding: 0 20px;
+  padding: 20px;
   box-sizing: border-box;
-  background: url('/img/paper_plane.svg') no-repeat;
   background-color: #e9e9e9;
-  background-position: 98% 50%;
-  background-size: 20px;
 `;

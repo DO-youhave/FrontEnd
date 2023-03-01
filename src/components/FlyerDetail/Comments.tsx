@@ -54,7 +54,7 @@ interface CommentsProps {
 const Comments = ({ rows, setRows }: CommentsProps) => {
   const [replyText, setReplyText] = useState<string>('');
   const isReplyOver = () => {
-    if (replyText.length === 301) alert('댓글은 300자까지 밖에 못 써요 😥');
+    if (replyText.length === 300) alert('댓글은 300자까지 밖에 못 써요 😥');
   };
   const handleRows = rows ? 7 : 1;
 
@@ -66,7 +66,11 @@ const Comments = ({ rows, setRows }: CommentsProps) => {
       </Text>
 
       {/* 댓글 입력창(top) */}
-      <ReplyTextAreaWrap>
+      <ReplyTextAreaWrap
+        onClick={(e) => {
+          e.stopPropagation();
+          setRows(true);
+        }}>
         <ReplyTextArea
           placeholder='댓글을 입력해주세요'
           rows={handleRows}
@@ -82,10 +86,10 @@ const Comments = ({ rows, setRows }: CommentsProps) => {
         />
         {rows ? (
           <NumNSubmit>
-            <TextNum>{replyText.length}/300</TextNum>
-            <SubmitReplyButton onClick={(e) => e.stopPropagation()}>
-              등록
-            </SubmitReplyButton>
+            <TextNum>
+              <NowTextNum>{replyText.length}</NowTextNum>/300
+            </TextNum>
+            <SubmitReplyButton>등록</SubmitReplyButton>
           </NumNSubmit>
         ) : undefined}
       </ReplyTextAreaWrap>
@@ -103,7 +107,12 @@ const Comments = ({ rows, setRows }: CommentsProps) => {
       ))}
 
       {/* 댓글 입력창 (bottom) */}
-      <ReplyTextAreaWrap>
+      <ReplyTextAreaWrap
+        id='bottom'
+        onClick={(e) => {
+          e.stopPropagation();
+          setRows(true);
+        }}>
         <ReplyTextArea
           placeholder='댓글을 입력해주세요'
           rows={handleRows}
@@ -119,7 +128,9 @@ const Comments = ({ rows, setRows }: CommentsProps) => {
         />
         {rows ? (
           <NumNSubmit>
-            <TextNum>{replyText.length}/300</TextNum>
+            <TextNum>
+              <NowTextNum>{replyText.length}</NowTextNum>/300
+            </TextNum>
             <SubmitReplyButton onClick={(e) => e.stopPropagation()}>
               등록
             </SubmitReplyButton>
@@ -136,7 +147,10 @@ const ReplyTextAreaWrap = styled.div`
   position: relative;
   width: 100%;
   background: #e9e9e9;
-  border-radius: 15px;
+  border-radius: 12px;
+  &#bottom {
+    margin-top: 20px;
+  }
 `;
 const ReplyTextArea = styled.textarea`
   margin: 5px 0;
@@ -150,7 +164,7 @@ const ReplyTextArea = styled.textarea`
   box-sizing: border-box;
   background: #e9e9e9;
 `;
-const NumNSubmit = styled.div`
+export const NumNSubmit = styled.div`
   display: flex;
   justify-content: flex-end;
   width: 100%;
@@ -158,11 +172,16 @@ const NumNSubmit = styled.div`
   box-sizing: border-box;
 `;
 
-const TextNum = styled.div`
+export const TextNum = styled.div`
   padding: 10px 20px;
+  font-weight: 400;
 `;
 
-const SubmitReplyButton = styled.div`
+export const NowTextNum = styled.span`
+  font-weight: 600;
+`;
+
+export const SubmitReplyButton = styled.div`
   padding: 10px 30px;
   background-color: ${COLORS.MAIN};
   display: flex;
@@ -179,7 +198,7 @@ const CommentContainer = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 50px;
-  border-top: 2px solid #d9d9d9;
+  border-top: 1px solid #d9d9d9;
 `;
 
 const Text = styled.div`
