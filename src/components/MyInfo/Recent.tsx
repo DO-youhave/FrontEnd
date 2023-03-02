@@ -68,6 +68,14 @@ const GridBox = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 30px 50px;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px 20px;
+  }
+  @media screen and (max-width: 576px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `;
 
 const AlertBox = styled.div`
@@ -86,6 +94,9 @@ const AlertBox = styled.div`
   &:hover {
     box-shadow: 0px 0px 0px;
   }
+  @media screen and (max-width: 576px) {
+    background: #fff;
+    
 `;
 
 const BoxTape = styled.img`
