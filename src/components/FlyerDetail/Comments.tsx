@@ -49,14 +49,22 @@ const commentExample = [
 interface CommentsProps {
   rows: boolean;
   setRows: React.Dispatch<React.SetStateAction<boolean>>;
+  rowsBottom: boolean;
+  setRowsBottom: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Comments = ({ rows, setRows }: CommentsProps) => {
+const Comments = ({
+  rows,
+  setRows,
+  rowsBottom,
+  setRowsBottom,
+}: CommentsProps) => {
   const [replyText, setReplyText] = useState<string>('');
   const isReplyOver = () => {
     if (replyText.length === 300) alert('댓글은 300자까지 밖에 못 써요 😥');
   };
   const handleRows = rows ? 7 : 1;
+  const handleRowsBottom = rowsBottom ? 7 : 1;
 
   return (
     <CommentContainer>
@@ -111,22 +119,22 @@ const Comments = ({ rows, setRows }: CommentsProps) => {
         id='bottom'
         onClick={(e) => {
           e.stopPropagation();
-          setRows(true);
+          setRowsBottom(true);
         }}>
         <ReplyTextArea
           placeholder='댓글을 입력해주세요'
-          rows={handleRows}
+          rows={handleRowsBottom}
           maxLength={300}
           onClick={(e) => {
             e.stopPropagation();
-            setRows(true);
+            setRowsBottom(true);
           }}
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
             setReplyText(e.target.value);
             isReplyOver();
           }}
         />
-        {rows ? (
+        {rowsBottom ? (
           <NumNSubmit>
             <TextNum>
               <NowTextNum>{replyText.length}</NowTextNum>/300
@@ -151,6 +159,9 @@ const ReplyTextAreaWrap = styled.div`
   &#bottom {
     margin-top: 20px;
   }
+  @media screen and (max-width: 767px) {
+    background: #fff;
+  }
 `;
 const ReplyTextArea = styled.textarea`
   margin: 5px 0;
@@ -163,6 +174,9 @@ const ReplyTextArea = styled.textarea`
   padding: 16px 20px;
   box-sizing: border-box;
   background: #e9e9e9;
+  @media screen and (max-width: 767px) {
+    background: #fff;
+  }
 `;
 export const NumNSubmit = styled.div`
   display: flex;

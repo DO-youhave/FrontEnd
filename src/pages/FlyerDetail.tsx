@@ -9,6 +9,7 @@ const tags = ['#운동화', '#나이키', '#맥북'];
 const FlyerDetail = () => {
   const navigate = useNavigate();
   const [rows, setRows] = useState(false);
+  const [rowsBottom, setRowsBottom] = useState(false);
   const [openDots, setOpenDots] = useState(false);
   const [openContact, setOpenContact] = useState(false);
 
@@ -35,7 +36,11 @@ const FlyerDetail = () => {
     window.scrollTo(0, 0);
   }, []);
   return (
-    <Container onClick={() => setRows(false)}>
+    <Container
+      onClick={() => {
+        setRows(false);
+        setRowsBottom(false);
+      }}>
       <Flyer>
         <Header>
           <BackButton onClick={handleBack} />
@@ -59,14 +64,15 @@ const FlyerDetail = () => {
             )}
           </Dots>
         </Header>
-        <div style={{ fontSize: '36px', fontWeight: '600' }}>
-          수학 문제 좀 풀어주세요!
-        </div>
+
+        <Title>수학 문제 좀 풀어주세요!</Title>
         <Category>학습</Category>
         <ViewsNTime>
           조회수 10 &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 1시간 전
         </ViewsNTime>
+
         <Imgs />
+
         <Content>
           가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하
         </Content>
@@ -75,7 +81,8 @@ const FlyerDetail = () => {
             <Tag key={tag}>{tag}</Tag>
           ))}
         </Tags>
-        <div style={{ position: 'relative' }}>
+
+        <ContactWrap>
           <ContactButton id={String(openContact)} onClick={handleContact}>
             글쓴이에게 연락하기
           </ContactButton>
@@ -89,8 +96,14 @@ const FlyerDetail = () => {
               </ContactMenu>
             </>
           )}
-        </div>
-        <Comments rows={rows} setRows={setRows} />
+        </ContactWrap>
+
+        <Comments
+          rows={rows}
+          setRows={setRows}
+          rowsBottom={rowsBottom}
+          setRowsBottom={setRowsBottom}
+        />
       </Flyer>
     </Container>
   );
@@ -115,6 +128,17 @@ const Flyer = styled.div`
   margin: 50px 0px;
   padding: 63px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  @media all and (max-width: 1024px) {
+    width: 90%;
+  }
+  @media all and (max-width: 767px) {
+    width: 100%;
+    box-shadow: none;
+    margin: 0;
+    background: url(/img/flyerBg.png) no-repeat center center;
+    background-size: cover;
+    padding: 5%;
+  }
 `;
 
 const Header = styled.div`
@@ -123,6 +147,16 @@ const Header = styled.div`
   width: 100%;
   justify-content: space-between;
   margin-bottom: 25px;
+  @media all and (max-width: 767px) {
+    margin-bottom: 40px;
+  }
+`;
+const Title = styled.div`
+  font-size: 36px;
+  font-weight: 600;
+  @media all and (max-width: 767px) {
+    font-size: 26px;
+  }
 `;
 
 const Category = styled.div`
@@ -133,6 +167,9 @@ const Category = styled.div`
   cursor: default;
   font-weight: 600;
   cursor: pointer;
+  @media all and (max-width: 767px) {
+    font-weight: 500;
+  }
 `;
 
 const ViewsNTime = styled.div`
@@ -143,12 +180,19 @@ const ViewsNTime = styled.div`
   width: 100%;
   text-align: center;
   font-weight: 400;
+  @media all and (max-width: 767px) {
+    padding-bottom: 20px;
+    border-bottom: none;
+  }
 `;
 
 const Imgs = styled.div`
   width: 90%;
   height: 300px;
   background-color: rgba(4, 150, 105, 0.2);
+  @media all and (max-width: 767px) {
+    width: 100%;
+  }
 `;
 
 const Content = styled.div`
@@ -156,6 +200,10 @@ const Content = styled.div`
   margin-top: 50px;
   line-height: 1.5;
   margin-bottom: 50px;
+  font-weight: 400;
+  @media all and (max-width: 767px) {
+    width: 100%;
+  }
 `;
 
 const Tags = styled.div`
@@ -163,6 +211,9 @@ const Tags = styled.div`
   display: flex;
   gap: 10px;
   margin-bottom: 100px;
+  @media all and (max-width: 767px) {
+    width: 100%;
+  }
 `;
 
 const Tag = styled.div`
@@ -176,7 +227,7 @@ const Tag = styled.div`
 `;
 
 const BackButton = styled.div`
-  background: url('/img/back.png') no-repeat;
+  background: url('/img/detailBack.png') no-repeat;
   background-size: contain;
   width: 25px;
   height: 25px;
@@ -200,21 +251,29 @@ const DotsMenu = styled.div`
   text-align: center;
   background-color: #fff;
   border: 1px solid #dedede;
-  border-radius: 5px;
-  padding: 15px 10px;
+  padding: 12px 10px;
   &#mine {
     display: none;
+  }
+  @media all and (max-width: 767px) {
+    right: 20px;
+    top: 35px;
   }
 `;
 const DotsMenuItem = styled.div`
   margin-bottom: 10px;
   color: #616161;
-  font-size: 13px;
+  font-size: 12px;
   &#last {
     margin-bottom: 0;
   }
 `;
-
+const ContactWrap = styled.div`
+  position: relative;
+  @media all and (max-width: 767px) {
+    width: 100%;
+  }
+`;
 const ContactButton = styled.button`
   display: block;
   padding: 15px 0px;
@@ -233,6 +292,10 @@ const ContactButton = styled.button`
     background-color: ${COLORS.MAIN};
     background-size: 15px;
     background-position: 95% 50%;
+  }
+  @media all and (max-width: 767px) {
+    width: 100%;
+    padding: 18px 0;
   }
 `;
 
@@ -261,5 +324,12 @@ const ContactMenu = styled.div`
     background-color: #fff;
     background-size: 15px;
     background-position: 95% 50%;
+  }
+  @media all and (max-width: 767px) {
+    width: 100%;
+    left: 0%;
+    &#chat {
+      top: 63px;
+    }
   }
 `;

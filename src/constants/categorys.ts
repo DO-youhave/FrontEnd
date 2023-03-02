@@ -19,7 +19,7 @@ export const CategoryItem: Categorys[] = [
   {
     id: 'worry',
     name: '고민',
-    tag: '#진로 #학교 #직장 #외모 #성격 #친구 #가족 #연애 #부부 #기타',
+    tag: '#진로 #취업 #학교 #직장 #외모 #성격 #친구 #가족 #연애 #부부 #기타',
   },
   {
     id: 'item',
