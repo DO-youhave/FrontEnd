@@ -42,12 +42,24 @@ const Header = () => {
             onClick={() => navigate(STREET.DETAIL('total', '', 'new', ''))}
           />
         )}
-        <NavIcon
-          src='/img/write.svg'
-          alt='write'
-          height={26}
-          onClick={() => navigate(POSTING)}
-        />
+        {path.includes(MY_PAGE.ROOT) ? (
+          <NavIcon
+            id='write'
+            src='/img/writeW.svg'
+            alt='write'
+            height={26}
+            onClick={() => navigate(POSTING)}
+          />
+        ) : (
+          <NavIcon
+            id='write'
+            src='/img/write.svg'
+            alt='write'
+            height={26}
+            onClick={() => navigate(POSTING)}
+          />
+        )}
+
         {isLogin && <NavIcon src='/img/profile.svg' alt='profile' />}
       </MenuList>
     </Container>
@@ -69,9 +81,11 @@ const Container = styled.div`
     right: 0;
     z-index: 100;
   }
+  @media screen and (max-width: 1024px) {
+    padding: 20px 5%;
+  }
   @media screen and (max-width: 768px) {
-    width: 90%;
-    padding: 10px 0;
+    padding: 10px 5%;
   }
 `;
 
@@ -84,10 +98,17 @@ const MainLogo = styled.div`
 const Logo = styled.img`
   width: 40px;
   margin-right: 5px;
+  @media screen and (max-width: 768px) {
+    width: 30px;
+  }
 `;
 
 const LogoText = styled.div`
   font-weight: 700;
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+    font-weight: 500;
+  }
 `;
 
 const MenuList = styled.ul`
@@ -114,4 +135,8 @@ const Menu = styled.li`
 const NavIcon = styled.img`
   cursor: pointer;
   width: 25px;
+  &#write {
+    stroke: #fff;
+    fill: #fff;
+  }
 `;
