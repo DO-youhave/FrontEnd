@@ -23,13 +23,13 @@ const MainSection = () => {
 
         <Flyer>
           <FlyerTitle>
-            나이키 신발
+            고민 해결해줄 사람
             <FlyerTitle id='have'>있어요?</FlyerTitle>
           </FlyerTitle>
           <Tags>
-            <span>#나이키 에어포스</span>
-            <span>#나이키 한정판 신발</span>
-            <span>#남자 발 사이즈 270</span>
+            <span>#취업자소서봐주세요</span>
+            <span>#성격이소심해요</span>
+            <span>#아이가말을안들어요</span>
           </Tags>
         </Flyer>
 
@@ -40,13 +40,13 @@ const MainSection = () => {
       <ContainerMob>
         <Flyer>
           <FlyerTitle>
-            나이키 신발
+            고민 해결해줄 사람
             <FlyerTitle id='have'>있어요?</FlyerTitle>
           </FlyerTitle>
           <Tags>
-            <span>#나이키 에어포스</span>
-            <span>#나이키 한정판 신발</span>
-            <span>#남자 발 사이즈 270</span>
+            <span>#취업자소서봐주세요</span>
+            <span>#성격이소심해요</span>
+            <span>#아이가말을안들어요</span>
           </Tags>
         </Flyer>
 
@@ -133,6 +133,7 @@ const LoginMob = styled.div`
   justify-content: center;
   align-items: center;
   padding: 0 10%;
+  margin-top: 8px;
 `;
 
 const Button = styled.button`
@@ -155,15 +156,20 @@ const Button = styled.button`
 `;
 
 const FlyerTitle = styled.div`
-  font-size: 1.7rem;
+  font-size: 1.3rem;
   font-weight: 700;
   text-align: center;
   line-height: 1.4;
   &#have {
     font-weight: 900;
+    font-size: 1.8rem;
   }
   @media all and (max-width: 767px) {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
+    &#have {
+      font-weight: 900;
+      font-size: 1.7rem;
+    }
   }
 `;
 
@@ -172,6 +178,7 @@ const Tags = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 15px;
+  margin-top: 30px;
   @media all and (max-width: 767px) {
     gap: 10px;
   }

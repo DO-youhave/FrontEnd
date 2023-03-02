@@ -4,11 +4,12 @@ import { COLORS } from '../../constants/colors';
 
 interface FlyerProps {
   children: React.ReactNode;
+  id?: string;
 }
 
-const Flyer = ({ children }: FlyerProps) => {
+const Flyer = ({ children, id }: FlyerProps) => {
   return (
-    <Container>
+    <Container id={id}>
       <Tapes id='left' />
       <Tapes id='right' />
       {children}
@@ -19,9 +20,8 @@ const Flyer = ({ children }: FlyerProps) => {
 export default Flyer;
 
 const Container = styled.div`
-  padding: 60px 40px;
+  padding: 63px 40px;
   width: 250px;
-  height: 330px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -31,6 +31,11 @@ const Container = styled.div`
   background-size: cover;
   transition: box-shadow 0.1s ease;
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+  &#promotion {
+    height: 330px;
+    padding: 60px 40px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+  }
   @media all and (max-width: 767px) {
     margin-bottom: 30px;
     width: 200px;

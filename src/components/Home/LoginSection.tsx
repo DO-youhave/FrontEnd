@@ -67,9 +67,16 @@ export const OAuthButton = styled.button`
 
   @media all and (max-width: 767px) {
     width: 100%;
-    height: 55px;
+    height: 45px;
     font-size: 17px;
     font-weight: 500;
+    margin-top: 10px;
+    &#naver {
+      background-size: 20px;
+    }
+    &#kakao {
+      background-size: 20px;
+    }
   }
 `;
 

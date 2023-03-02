@@ -11,7 +11,7 @@ const PromotionSection = () => {
   return (
     <Section id='second'>
       <Rotate id='first'>
-        <Flyer>asdsad</Flyer>
+        <Flyer id='promotion'>asdsad</Flyer>
       </Rotate>
       <TapeMemo id='first'>
         어쩌면..
@@ -21,7 +21,7 @@ const PromotionSection = () => {
         고민이 해결될 수 있어요
       </TapeMemo>
       <Rotate id='second'>
-        <Flyer>asdsad</Flyer>
+        <Flyer id='promotion'>asdsad</Flyer>
       </Rotate>
       <TapeMemo id='second'>
         사소한 고민도 괜찮아요

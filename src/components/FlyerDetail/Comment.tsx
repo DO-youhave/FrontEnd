@@ -44,14 +44,8 @@ const Comment = ({ id, profile, content, date, reply }: CommentProps) => {
 
   return (
     <Fragment key={id}>
-      <div
-        style={{
-          width: '95%',
-          borderBottom: '1px solid #d9d9d9',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'flex-start',
-        }}>
+      {/* =====원 댓글===== */}
+      <CommentContainer>
         <CommentBox id='comment'>
           <Profile>{profile}</Profile>
           <div
@@ -62,6 +56,7 @@ const Comment = ({ id, profile, content, date, reply }: CommentProps) => {
           <ReplyButton onClick={handleComment}>답글</ReplyButton>
         </CommentBox>
 
+        {/* 원 댓글에 대한 메뉴 */}
         <More>
           {/* 본인이 쓴 댓글일 경우 */}
           <MoreContent id='mine'>
@@ -74,7 +69,7 @@ const Comment = ({ id, profile, content, date, reply }: CommentProps) => {
             <MoreItem onClick={handleReport}>신고</MoreItem>
           </MoreContent>
         </More>
-      </div>
+      </CommentContainer>
 
       {
         // 답글 달기 입력창
@@ -103,18 +98,31 @@ const Comment = ({ id, profile, content, date, reply }: CommentProps) => {
         )
       }
 
+      {/* =====답 댓글===== */}
       {reply?.map((rep) => (
         <CommentBox id='reply' key={rep.id}>
-          <ReplyArrow />
-          <Profile>{rep.profile}</Profile>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '10px',
-            }}>
-            <Text>{rep.content}</Text>
-            <Text id='date'>{rep.date}</Text>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div>
+              <ReplyArrow />
+              <Profile>{rep.profile}</Profile>
+              <ContentNDate>
+                <Text>{rep.content}</Text>
+                <Text id='date'>{rep.date}</Text>
+              </ContentNDate>
+            </div>
+
+            <More id='reply'>
+              {/* 본인이 쓴 댓글일 경우 */}
+              <MoreContent id='mine'>
+                <MoreItem id='margin'>수정</MoreItem>
+                <MoreItem>삭제</MoreItem>
+              </MoreContent>
+
+              {/* 본인이 쓴 댓글이 아닐 경우 */}
+              <MoreContent>
+                <MoreItem onClick={handleReport}>신고</MoreItem>
+              </MoreContent>
+            </More>
           </div>
         </CommentBox>
       ))}
@@ -123,6 +131,14 @@ const Comment = ({ id, profile, content, date, reply }: CommentProps) => {
 };
 
 export default Comment;
+
+const CommentContainer = styled.div`
+  width: 95%;
+  border-bottom: 1px solid #d9d9d9;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+`;
 
 const CommentBox = styled.div`
   width: 95%;
@@ -136,6 +152,14 @@ const CommentBox = styled.div`
   }
   &#comment {
     width: 60%;
+  }
+  @media all and (max-width: 767px) {
+    &#comment {
+      width: 100%;
+    }
+    &#reply {
+      padding-left: 40px;
+    }
   }
 `;
 
@@ -154,6 +178,12 @@ const Profile = styled.div`
     background: url('/img/profile.svg') no-repeat;
     background-size: contain;
   }
+`;
+
+const ContentNDate = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 const Text = styled.div`
@@ -179,16 +209,20 @@ const ReplyArrow = styled.div`
   width: 15px;
   height: 15px;
   left: 20px;
+  @media all and (max-width: 767px) {
+    left: 10px;
+  }
 `;
 
 const ReplyButton = styled.button`
   margin-right: auto;
   margin-top: 20px;
-  padding: 5px 10px;
+  padding: 7px 15px;
   font-size: 12px;
-  border: 1px solid #adadad;
+  border: 1px solid #d9d9d9;
   background: #fff;
   cursor: pointer;
+  color: #616161;
 `;
 
 const MoreItem = styled.div`
@@ -208,6 +242,12 @@ const More = styled.div`
   background-size: contain;
   position: relative;
   cursor: pointer;
+  &#reply {
+    margin-top: 3px;
+  }
+  @media all and (max-width: 767px) {
+    margin-top: 35px;
+  }
 `;
 
 const MoreContent = styled.div`
@@ -225,6 +265,14 @@ const MoreContent = styled.div`
   &#mine {
     bottom: -80px;
     display: none;
+  }
+  @media all and (max-width: 767px) {
+    left: -56px;
+    bottom: -40px;
+    padding: 8px 20px;
+    &#mine {
+      bottom: -65px;
+    }
   }
 `;
 const ReplyInputWrap = styled.div`
