@@ -53,9 +53,9 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   gap: 20px;
+  flex-direction: column;
+  align-items: flex-start;
   @media screen and (max-width: 768px) {
-    flex-direction: column;
-    align-items: flex-start;
   }
 `;
 
@@ -73,6 +73,7 @@ const Title = styled.div`
   font-weight: 600;
   display: flex;
   align-items: center;
+  width: 100px;
 `;
 
 const Tag = styled.div`

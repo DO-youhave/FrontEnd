@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { Outlet, useLocation } from 'react-router-dom';
 
 import Menus, { menus } from '../components/MyInfo/Menus';
+import MobileMenus from '../components/MyInfo/MobileMenus';
 import Profile from '../components/MyInfo/Profile';
 import { COLORS } from '../constants/colors';
 
@@ -24,9 +25,10 @@ const MyInfo = () => {
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-            <h2>{name}</h2>
+            <Pathname>{name}</Pathname>
             <Menus />
           </div>
+          <MobileMenus />
           <Outlet />
         </MenuNContent>
       </Content>
@@ -52,6 +54,11 @@ const Title = styled.div`
   color: #fff;
   margin: 50px 0px 200px 0px;
   width: 75%;
+  @media screen and (max-width: 768px) {
+    font-size: 20px;
+    width: 90%;
+    margin: 30px 0px 150px 0px;
+  }
 `;
 
 const Content = styled.div`
@@ -63,6 +70,9 @@ const Content = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 50px;
+  @media screen and (max-width: 768px) {
+    padding: 100px 0px 50px 0px;
+  }
 `;
 
 const MenuNContent = styled.div`
@@ -73,4 +83,20 @@ const MenuNContent = styled.div`
   border-radius: 20px;
   padding: 80px 60px;
   min-height: 600px;
+  @media screen and (max-width: 768px) {
+    padding: 0px;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: #f5f6f8;
+    width: 90%;
+`;
+
+const Pathname = styled.div`
+  font-size: 23px;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 20px;
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `;

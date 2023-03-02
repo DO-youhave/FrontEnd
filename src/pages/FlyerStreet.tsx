@@ -53,6 +53,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
   @media screen and (max-width: 768px) {
     background-color: #f5f6f8;
   }
@@ -63,8 +64,10 @@ const PageTop = styled.div`
   max-width: 1200px;
   background: #fff;
   margin-top: 30px;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     width: 90%;
+  }
+  @media screen and (max-width: 768px) {
     background: #f5f6f8;
   }
 `;
@@ -98,7 +101,7 @@ const MainContentsInner = styled.div`
   margin-top: 30px;
   width: 75%;
   max-width: 1200px;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     width: 90%;
   }
 `;
@@ -106,7 +109,7 @@ const MainContentsInner = styled.div`
 const TagsNSort = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin: 10px 0 30px;
 `;
 

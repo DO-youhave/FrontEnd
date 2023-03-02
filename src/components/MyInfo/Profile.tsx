@@ -4,7 +4,7 @@ import { COLORS } from '../../constants/colors';
 
 const Profile = () => {
   return (
-    <div style={{ position: 'absolute', width: '80%', top: '130px' }}>
+    <Absolute>
       <Container>
         <ProfileImg src='/img/profile.svg' alt='profile' />
         <MyPosting>
@@ -14,14 +14,24 @@ const Profile = () => {
           내가 쓴 댓글<Count>10개</Count>
         </MyPosting>
         <MyPosting>
-          내가 북마크한 전단지<Count>10개</Count>
+          북마크한 전단지<Count>10개</Count>
         </MyPosting>
       </Container>
-    </div>
+    </Absolute>
   );
 };
 
 export default Profile;
+
+const Absolute = styled.div`
+  position: absolute;
+  width: 80%;
+  top: 130px;
+  @media screen and (max-width: 768px) {
+    width: 90%;
+    top: 100px;
+  }
+`;
 
 const Container = styled.div`
   display: grid;
@@ -46,12 +56,26 @@ const MyPosting = styled.div`
     border-left: 1px solid #cdcdcd;
     border-right: 1px solid #cdcdcd;
   }
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+    height: 100px;
+  }
+  @media screen and (max-width: 576px) {
+    font-size: 12px;
+    height: 80px;
+  }
 `;
 
 const Count = styled.div`
   font-size: 40px;
   font-weight: 700;
   color: ${COLORS.MAIN};
+  @media screen and (max-width: 768px) {
+    font-size: 30px;
+  }
+  @media screen and (max-width: 576px) {
+    font-size: 20px;
+  }
 `;
 
 const ProfileImg = styled.img`
@@ -60,4 +84,11 @@ const ProfileImg = styled.img`
   left: 50%;
   transform: translateX(-50%);
   width: 100px;
+  @media screen and (max-width: 768px) {
+    width: 80px;
+  }
+  @media screen and (max-width: 576px) {
+    width: 60px;
+    top: -35px;
+  }
 `;
