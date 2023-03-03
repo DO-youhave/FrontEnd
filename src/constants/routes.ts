@@ -1,3 +1,9 @@
+const naverClientId = import.meta.env.VITE_NAVER_CLIENT_ID;
+const naverCallbackUrl = import.meta.env.VITE_NAVER_CALLBACK_URL;
+const naverState = Math.random().toString(36).substring(3, 14);
+const kakaoClientId = import.meta.env.VITE_KAKAO_CLIENT_ID;
+const kakaoCallbackUrl = import.meta.env.VITE_KAKAO_CALLBACK_URL;
+
 export const ROUTES = {
   HOME: '/', // 메인 페이지
   STREET: {
@@ -18,4 +24,6 @@ export const ROUTES = {
     EXIT: 'exit', // 회원 탈퇴
   },
   NOT_FOUND: '/not-found', // 404 페이지
+  NAVER_LOGIN: `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${naverClientId}&state=${naverState}&redirect_uri=${naverCallbackUrl}`,
+  KAKAO_LOGIN: `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoClientId}&redirect_uri=${kakaoCallbackUrl}&response_type=code`,
 };

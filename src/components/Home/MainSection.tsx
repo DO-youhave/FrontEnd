@@ -5,7 +5,7 @@ import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
 import useCountNumber from '../../hooks/useCountNumber';
 import Flyer from '../shared/Flyer';
-import { OAuthButton } from './LoginSection';
+import OAuthButton from '../shared/OAuthButton';
 
 const MainSection = () => {
   const navigate = useNavigate();
@@ -57,8 +57,8 @@ const MainSection = () => {
 
         {/* 비로그인 - 로그인 버튼 */}
         <LoginMob>
-          <OAuthButton id='naver'>네이버로 로그인</OAuthButton>
-          <OAuthButton id='kakao'>카카오로 로그인</OAuthButton>
+          <OAuthButton type='naver' />
+          <OAuthButton type='kakao' />
         </LoginMob>
 
         {/* 로그인 - 전단지 골목 가기 버튼 */}
