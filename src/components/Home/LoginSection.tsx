@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 import { COLORS } from '../../constants/colors';
+import OAuthButton from '../shared/OAuthButton';
 
 const LoginSection = () => {
   return (
@@ -12,8 +13,8 @@ const LoginSection = () => {
         <Sub>간편하게 로그인하고 전단지 한 장 붙이러가요!</Sub>
         <span>소셜 간편 로그인</span>
         <div style={{ display: 'flex', gap: '20px', marginTop: '15px' }}>
-          <OAuthButton id='naver'>네이버로 로그인</OAuthButton>
-          <OAuthButton id='kakao'>카카오로 로그인</OAuthButton>
+          <OAuthButton type='naver' />
+          <OAuthButton type='kakao' />
         </div>
       </Container>
     </Section>
@@ -41,43 +42,6 @@ const Container = styled.div`
   background-color: #fff;
   border: 2px solid #d9d9d9;
   border-radius: 45px;
-`;
-
-export const OAuthButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 380px;
-  height: 55px;
-  margin-top: 20px;
-  border: none;
-  border-radius: 8px;
-  font-size: 20px;
-  font-weight: 400;
-  cursor: pointer;
-  &#kakao {
-    background: url('/img/kakaoLogo.svg') no-repeat 20px 50%;
-    background-color: #fee500;
-  }
-  &#naver {
-    background: url('/img/naverLogo.svg') no-repeat 20px 50%;
-    background-color: #03c75a;
-    color: #fff;
-  }
-
-  @media all and (max-width: 767px) {
-    width: 100%;
-    height: 45px;
-    font-size: 17px;
-    font-weight: 500;
-    margin-top: 10px;
-    &#naver {
-      background-size: 20px;
-    }
-    &#kakao {
-      background-size: 20px;
-    }
-  }
 `;
 
 const Title = styled.span`
