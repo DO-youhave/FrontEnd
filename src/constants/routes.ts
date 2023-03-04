@@ -26,4 +26,6 @@ export const ROUTES = {
   NOT_FOUND: '/not-found', // 404 페이지
   NAVER_LOGIN: `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${naverClientId}&state=${naverState}&redirect_uri=${naverCallbackUrl}`,
   KAKAO_LOGIN: `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoClientId}&redirect_uri=${kakaoCallbackUrl}&response_type=code`,
+  NAVER_REDIRECT: '/user/naver-callback',
+  KAKAO_REDIRECT: '/user/kakao-callback',
 };
