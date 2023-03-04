@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { ROUTES } from '../../constants/routes';
 import Flyer from '../shared/Flyer';
+import { FlyerTitle, Tags } from './MainSection';
 
 const PromotionSection = () => {
   const navigate = useNavigate();
@@ -11,7 +12,18 @@ const PromotionSection = () => {
   return (
     <Section id='second'>
       <Rotate id='first'>
-        <Flyer id='promotion'>asdsad</Flyer>
+        <Flyer id='promotion'>
+          <FlyerTitle>
+            에어팟2 미개봉
+            <br />
+            사실 분<FlyerTitle id='have'>있어요?</FlyerTitle>
+          </FlyerTitle>
+          <Tags>
+            <span>#에어팟2</span>
+            <span>#미개봉</span>
+            <span>#전자기기</span>
+          </Tags>
+        </Flyer>
       </Rotate>
       <TapeMemo id='first'>
         어쩌면..
@@ -21,7 +33,18 @@ const PromotionSection = () => {
         고민이 해결될 수 있어요
       </TapeMemo>
       <Rotate id='second'>
-        <Flyer id='promotion'>asdsad</Flyer>
+        <Flyer id='promotion'>
+          <FlyerTitle>
+            넷플릭스 인생작
+            <br />
+            추천해주실 분<FlyerTitle id='have'>있어요?</FlyerTitle>
+          </FlyerTitle>
+          <Tags>
+            <span>#넷플릭스</span>
+            <span>#띵작추천</span>
+            <span>#영화</span>
+          </Tags>
+        </Flyer>
       </Rotate>
       <TapeMemo id='second'>
         사소한 고민도 괜찮아요
