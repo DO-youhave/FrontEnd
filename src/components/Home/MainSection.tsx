@@ -4,13 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
 import useCountNumber from '../../hooks/useCountNumber';
+import useGetCount from '../../hooks/useGetCount';
 import Flyer from '../shared/Flyer';
 import OAuthButton from '../shared/OAuthButton';
 
 const MainSection = () => {
   const navigate = useNavigate();
+  const number = useGetCount();
+  const count = useCountNumber(number);
+
   const goStreet = () => navigate(ROUTES.STREET.DETAIL('total', '', 'new', ''));
-  const count = useCountNumber();
 
   return (
     <Section>
