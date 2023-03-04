@@ -10,7 +10,7 @@ import OAuthButton from '../shared/OAuthButton';
 const MainSection = () => {
   const navigate = useNavigate();
   const goStreet = () => navigate(ROUTES.STREET.DETAIL('total', '', 'new', ''));
-  const count = useCountNumber(77);
+  const count = useCountNumber();
 
   return (
     <Section>
@@ -155,7 +155,7 @@ const Button = styled.button`
   }
 `;
 
-const FlyerTitle = styled.div`
+export const FlyerTitle = styled.div`
   font-size: 1.3rem;
   font-weight: 700;
   text-align: center;
@@ -173,7 +173,7 @@ const FlyerTitle = styled.div`
   }
 `;
 
-const Tags = styled.div`
+export const Tags = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
