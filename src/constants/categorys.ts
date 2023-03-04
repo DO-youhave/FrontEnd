@@ -6,7 +6,7 @@ export type CategoryName =
   | '육아'
   | '찾아요'
   | '자랑'
-  | '의료'
+  | '건강'
   | '홍보';
 
 interface Categorys {
@@ -39,7 +39,7 @@ export const CategoryItem: Categorys[] = [
   {
     id: 'find',
     name: '찾아요',
-    tag: '#강아지 #고양이 #반려동물 #사람 #물건',
+    tag: '#장소 #물건 #음악 #넷플릭스 #강아지 #고양이 #반려동물 #사람 #ㅇㅇ분실',
   },
   {
     id: 'boast',
@@ -48,7 +48,7 @@ export const CategoryItem: Categorys[] = [
   },
   {
     id: 'medical',
-    name: '의료',
+    name: '건강',
     tag: '#헌혈증 #기증 #병원정보 #건강상담',
   },
   {

@@ -9,6 +9,7 @@ import FlyerStreet from './pages/FlyerStreet';
 import Home from './pages/Home';
 import MakeFlyer from './pages/MakeFlyer';
 import MyInfo from './pages/MyInfo';
+import Redirect from './pages/Redirect';
 
 const App = () => {
   return (
@@ -33,6 +34,14 @@ const App = () => {
         <Route element={<HeaderOff />}>
           <Route path={ROUTES.POSTING} element={<MakeFlyer />} />
           <Route path={ROUTES.FLYER} element={<FlyerDetail />} />
+          <Route
+            path={ROUTES.NAVER_REDIRECT}
+            element={<Redirect type='naver' />}
+          />
+          <Route
+            path={ROUTES.KAKAO_REDIRECT}
+            element={<Redirect type='kakao' />}
+          />
         </Route>
       </Routes>
     </BrowserRouter>
