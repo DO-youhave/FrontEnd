@@ -1,12 +1,11 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import { TOKEN_KEY } from '../../constants/auth';
 import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
 import useCountNumber from '../../hooks/useCountNumber';
 import useGetCount from '../../hooks/useGetCount';
-import { getLocalStorage } from '../../utils/storage';
+import { isLogin } from '../../utils/storage';
 import Flyer from '../shared/Flyer';
 import OAuthButton from '../shared/OAuthButton';
 
@@ -14,7 +13,6 @@ const MainSection = () => {
   const navigate = useNavigate();
   const number = useGetCount();
   const count = useCountNumber(number);
-  const isLogin = getLocalStorage(TOKEN_KEY);
   const goStreet = () => navigate(ROUTES.STREET.DETAIL('total', '', 'new', ''));
 
   return (
@@ -60,7 +58,7 @@ const MainSection = () => {
           <TitleMob id='count'>{count}</TitleMob>개
         </TitleMob>
 
-        {!isLogin ? (
+        {!isLogin() ? (
           <LoginMob>
             <OAuthButton type='naver' />
             <OAuthButton type='kakao' />
