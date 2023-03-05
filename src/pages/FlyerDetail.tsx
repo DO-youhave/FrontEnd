@@ -1,40 +1,26 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import Comments from '../components/FlyerDetail/Comments';
 import { COLORS } from '../constants/colors';
+import useGetFlyerDetail from '../hooks/useGetFlyerDetail';
 
-const tags = ['#운동화', '#나이키', '#맥북'];
 const FlyerDetail = () => {
-  const navigate = useNavigate();
-  const [rows, setRows] = useState(false);
-  const [rowsBottom, setRowsBottom] = useState(false);
-  const [openDots, setOpenDots] = useState(false);
-  const [openContact, setOpenContact] = useState(false);
+  const {
+    rows,
+    setRows,
+    rowsBottom,
+    setRowsBottom,
+    openDots,
+    openContact,
+    handleBack,
+    handleDots,
+    handleContact,
+    handleOpenChat,
+    handleCopyClipboard,
+    tags,
+    info,
+  } = useGetFlyerDetail();
 
-  const handleBack = () => {
-    navigate(-1);
-  };
-  const handleDots = () => {
-    setOpenDots(!openDots);
-  };
-  const handleContact = () => {
-    setOpenContact(!openContact);
-  };
-
-  const handleOpenChat = () => {
-    window.open('');
-  };
-  const handleCopyClipboard = () => {
-    const email = 'aaaaa';
-    navigator.clipboard.writeText(email);
-    alert('이메일 주소가 복사됐어요!');
-  };
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
   return (
     <Container
       onClick={() => {
@@ -65,7 +51,7 @@ const FlyerDetail = () => {
           </Dots>
         </Header>
 
-        <Title>수학 문제 좀 풀어주세요!</Title>
+        <Title>{info?.title}</Title>
         <Category>학습</Category>
         <ViewsNTime>
           조회수 10 &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 1시간 전
