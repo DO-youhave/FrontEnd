@@ -10,5 +10,6 @@ export const flyerCount = async () => {
     return allCount;
   } catch (error) {
     console.error(error);
+    return 0;
   }
 };
