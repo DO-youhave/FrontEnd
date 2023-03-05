@@ -33,7 +33,7 @@ const App = () => {
 
         <Route element={<HeaderOff />}>
           <Route path={ROUTES.POSTING} element={<MakeFlyer />} />
-          <Route path={ROUTES.FLYER} element={<FlyerDetail />} />
+          <Route path={ROUTES.FLYER.ROOT} element={<FlyerDetail />} />
           <Route
             path={ROUTES.NAVER_REDIRECT}
             element={<Redirect type='naver' />}
