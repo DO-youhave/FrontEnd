@@ -2,7 +2,12 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { CategoryItem, CategoryName } from '../constants/categorys';
-import { getLocalStorage, setLocalStorage } from '../utils/storage';
+import { FlyerRegisterProps } from '../interfaces/flyerForm';
+import {
+  getLocalStorage,
+  removeLocalStorage,
+  setLocalStorage,
+} from '../utils/storage';
 import {
   checkCategory,
   checkChattingUrl,
@@ -12,6 +17,8 @@ import {
   checkTags,
   checkTitle,
 } from '../utils/validateFlyerForm';
+import { flyerRegister } from './../apis/Flyer';
+import { ROUTES } from './../constants/routes';
 import { useFetchImage } from './useFetchImage';
 
 const useMakeFlyer = () => {
@@ -20,7 +27,7 @@ const useMakeFlyer = () => {
     /* 서버에서 불러오는 이미지 */
   ]);
   const { images } = image;
-  const [category, setCategory] = useState<CategoryName>();
+  const [category, setCategory] = useState<CategoryName>('전체');
   const [title, setTitle] = useState<string>('');
   const [mainText, setMainText] = useState<string>('');
   const [tag, setTag] = useState<string>('');
@@ -32,7 +39,7 @@ const useMakeFlyer = () => {
   });
   // 임시저장 데이터
   interface TmpInfo {
-    category: CategoryName | undefined;
+    category: CategoryName;
     title: string;
     mainText: string;
     tagList: string[];
@@ -69,17 +76,40 @@ const useMakeFlyer = () => {
   };
 
   // 제출 버튼 클릭
-  const handleSubmit = () => {
-    const formData = {
-      category,
-      title,
-      mainText,
-      tagList,
-      contact,
-      address,
-      image: images.map(({ image }) => image),
+  const handleSubmit = async () => {
+    const data: FlyerRegisterProps = {
+      postRequestDto: {
+        categoryKeyword: category,
+        contactWay: contact.join(','),
+        email: isEmailOn ? address.email : undefined,
+        kakaoUrl: isChatOn ? address.chatting : undefined,
+        tags: tagList.join(','),
+        title,
+        content: mainText,
+      },
+      imageFile: images[0]?.image,
+      imageFileSecond: images[1]?.image,
     };
-    checkAll() && console.log(formData);
+
+    const formData = new FormData();
+    formData.append('imageFile', data.imageFile);
+    formData.append('imageFileSecond', data.imageFileSecond);
+    formData.append(
+      'postRequestDto',
+      new Blob([JSON.stringify(data.postRequestDto)], {
+        type: 'application/json',
+      })
+    );
+    if (checkAll()) {
+      const success = await flyerRegister(formData);
+      if (success) {
+        alert('전단지가 등록되었습니다!');
+        removeLocalStorage('tmp');
+        navigate(ROUTES.STREET.ROOT);
+      } else {
+        alert('전단지 등록에 실패했습니다 😭');
+      }
+    }
   };
 
   // 유효성 검사
