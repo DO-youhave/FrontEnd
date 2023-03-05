@@ -1,3 +1,5 @@
+import { TOKEN_KEY } from './../constants/auth';
+
 const storage = localStorage;
 
 export const getLocalStorage = (key: string, defaultValue = '') => {
@@ -25,4 +27,9 @@ export const removeLocalStorage = (key: string) => {
   } catch (error) {
     console.error(error);
   }
+};
+
+export const isLogin = () => {
+  const state = getLocalStorage(TOKEN_KEY);
+  return !!state;
 };

@@ -48,3 +48,17 @@ export interface SelectCategoryProps {
     category: string | undefined;
   };
 }
+
+export interface FlyerRegisterProps {
+  imageFile: File;
+  imageFileSecond: File;
+  postRequestDto: {
+    categoryKeyword: string;
+    contactWay: string;
+    email?: string;
+    kakaoUrl?: string;
+    tags: string;
+    title: string;
+    content: string;
+  };
+}

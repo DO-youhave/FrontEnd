@@ -11,7 +11,7 @@ export const checkExistData = (value: string, dataName: string) => {
 
 // 카테고리 유효성 검사: 필수로 체크해야 함
 export const checkCategory = (category: undefined | CategoryName) => {
-  if (category === undefined) {
+  if (category === undefined || category === '전체') {
     alert('카테고리를 설정해주세요.');
     return false;
   }
