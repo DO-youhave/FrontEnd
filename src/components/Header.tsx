@@ -1,14 +1,12 @@
 import styled from '@emotion/styled';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { TOKEN_KEY } from '../constants/auth';
 import { COLORS } from '../constants/colors';
 import { ROUTES } from '../constants/routes';
-import { getLocalStorage } from '../utils/storage';
+import { isLogin } from '../utils/storage';
 
 const Header = () => {
   const navigate = useNavigate();
-  const isLogin = getLocalStorage(TOKEN_KEY);
   const { pathname: path } = useLocation();
   const { HOME, STREET, POSTING, MY_PAGE } = ROUTES;
   const background = path.includes(MY_PAGE.ROOT) ? COLORS.MAIN : 'none';
@@ -33,7 +31,7 @@ const Header = () => {
           </Menu>
         )}
         <Menu onClick={() => navigate(POSTING)}>전단지 붙이기</Menu>
-        {!isLogin ? (
+        {!isLogin() ? (
           <Menu>로그인 / 회원가입</Menu>
         ) : (
           <Menu onClick={() => navigate(ROUTES.MY_PAGE.ROOT)}>마이페이지</Menu>
@@ -67,7 +65,7 @@ const Header = () => {
           />
         )}
 
-        {isLogin && (
+        {isLogin() && (
           <NavIcon
             onClick={() => navigate(ROUTES.MY_PAGE.ROOT)}
             src='/img/profile.svg'
