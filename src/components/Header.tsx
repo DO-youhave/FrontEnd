@@ -24,6 +24,7 @@ const Header = () => {
         </LogoText>
       </MainLogo>
 
+      {/* 데스크탑 menu */}
       <MenuList
         style={{ color: path.includes(MY_PAGE.ROOT) ? '#fff' : '#000' }}>
         {path !== STREET.ROOT && (
@@ -32,8 +33,14 @@ const Header = () => {
           </Menu>
         )}
         <Menu onClick={() => navigate(POSTING)}>전단지 붙이기</Menu>
-        <Menu>로그인 / 회원가입</Menu>
+        {!isLogin ? (
+          <Menu>로그인 / 회원가입</Menu>
+        ) : (
+          <Menu onClick={() => navigate(ROUTES.MY_PAGE.ROOT)}>마이페이지</Menu>
+        )}
       </MenuList>
+
+      {/* 모바일 menu */}
       <MenuList id='mobile'>
         {path === HOME && (
           <NavIcon
@@ -60,7 +67,13 @@ const Header = () => {
           />
         )}
 
-        {isLogin && <NavIcon src='/img/profile.svg' alt='profile' />}
+        {isLogin && (
+          <NavIcon
+            onClick={() => navigate(ROUTES.MY_PAGE.ROOT)}
+            src='/img/profile.svg'
+            alt='profile'
+          />
+        )}
       </MenuList>
     </Container>
   );

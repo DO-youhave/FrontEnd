@@ -1,10 +1,12 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
+import { TOKEN_KEY } from '../../constants/auth';
 import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
 import useCountNumber from '../../hooks/useCountNumber';
 import useGetCount from '../../hooks/useGetCount';
+import { getLocalStorage } from '../../utils/storage';
 import Flyer from '../shared/Flyer';
 import OAuthButton from '../shared/OAuthButton';
 
@@ -12,7 +14,7 @@ const MainSection = () => {
   const navigate = useNavigate();
   const number = useGetCount();
   const count = useCountNumber(number);
-
+  const isLogin = getLocalStorage(TOKEN_KEY);
   const goStreet = () => navigate(ROUTES.STREET.DETAIL('total', '', 'new', ''));
 
   return (
@@ -58,16 +60,14 @@ const MainSection = () => {
           <TitleMob id='count'>{count}</TitleMob>개
         </TitleMob>
 
-        {/* 비로그인 - 로그인 버튼 */}
-        <LoginMob>
-          <OAuthButton type='naver' />
-          <OAuthButton type='kakao' />
-        </LoginMob>
-
-        {/* 로그인 - 전단지 골목 가기 버튼 */}
-        <div>
+        {!isLogin ? (
+          <LoginMob>
+            <OAuthButton type='naver' />
+            <OAuthButton type='kakao' />
+          </LoginMob>
+        ) : (
           <Button onClick={goStreet}>전단지 골목 가기</Button>
-        </div>
+        )}
       </ContainerMob>
     </Section>
   );
@@ -154,7 +154,6 @@ const Button = styled.button`
   @media all and (max-width: 767px) {
     font-weight: 500;
     margin-top: 30px;
-    display: none;
   }
 `;
 
