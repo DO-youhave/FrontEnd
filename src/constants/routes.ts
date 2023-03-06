@@ -11,7 +11,10 @@ export const ROUTES = {
     DETAIL: (category: string, tag: string, sort: string, value: string) =>
       `/street?category=${category}&tag=${tag}&sort=${sort}&q=${value}`, // 골목 상세 페이지
   }, // 전단지 골목 페이지
-  FLYER: '/flyer', // 전단지 상세 페이지
+  FLYER: {
+    ROOT: '/flyer', // 전단지 페이지
+    DETAIL: (id: number) => `/flyer?id=${id}`, // 전단지 상세 페이지
+  }, // 전단지 상세 페이지
   POSTING: '/posting', // 전단지 등록 페이지
   EDITING: '/editing', // 전단지 수정 페이지
   MY_PAGE: {

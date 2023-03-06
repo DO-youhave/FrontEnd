@@ -8,13 +8,13 @@ const Home = () => {
   return (
     <div style={{ overflow: 'hidden' }}>
       <MainSection />
-      {!isLogin() ? (
+      {!isLogin() && (
         <>
           <PromotionSection />
           <MovingText />
           <LoginSection />
         </>
-      ) : null}
+      )}
     </div>
   );
 };

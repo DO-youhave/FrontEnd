@@ -13,7 +13,7 @@ const MainSection = () => {
   const navigate = useNavigate();
   const number = useGetCount();
   const count = useCountNumber(number);
-  const goStreet = () => navigate(ROUTES.STREET.DETAIL('total', '', 'new', ''));
+  const goStreet = () => navigate(ROUTES.STREET.DETAIL('', '', 'DATE', ''));
 
   return (
     <Section>
