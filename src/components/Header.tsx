@@ -44,6 +44,7 @@ const Header = () => {
           <NavIcon
             src='/img/street.svg'
             alt='street'
+            height={26}
             onClick={() => navigate(STREET.DETAIL('total', '', 'new', ''))}
           />
         )}
@@ -52,7 +53,6 @@ const Header = () => {
             id='write'
             src='/img/writeW.svg'
             alt='write'
-            height={26}
             onClick={() => navigate(POSTING)}
           />
         ) : (
@@ -60,7 +60,7 @@ const Header = () => {
             id='write'
             src='/img/write.svg'
             alt='write'
-            height={26}
+            height={25}
             onClick={() => navigate(POSTING)}
           />
         )}
@@ -134,7 +134,7 @@ const MenuList = styled.ul`
     @media screen and (max-width: 768px) {
       display: flex;
       align-items: flex-end;
-      gap: 15px;
+      gap: 20px;
     }
   }
 `;
