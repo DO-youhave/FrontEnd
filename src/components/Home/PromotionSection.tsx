@@ -7,7 +7,7 @@ import { FlyerTitle, Tags } from './MainSection';
 
 const PromotionSection = () => {
   const navigate = useNavigate();
-  const goStreet = () => navigate(ROUTES.STREET.DETAIL('total', '', 'new', ''));
+  const goStreet = () => navigate(ROUTES.STREET.DETAIL('', '', 'DATE', ''));
 
   return (
     <Section id='second'>

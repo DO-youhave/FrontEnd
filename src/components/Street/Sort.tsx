@@ -8,15 +8,15 @@ import Select from '../shared/Select';
 
 const sortList = [
   {
-    id: 'new',
+    id: 'DATE',
     name: '최신순',
   },
   {
-    id: 'click',
+    id: 'VIEW',
     name: '조회순',
   },
   {
-    id: 'reply',
+    id: 'COMMENT',
     name: '댓글 많은 순',
   },
 ];
