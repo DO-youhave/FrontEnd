@@ -59,6 +59,6 @@ export const CategoryItem: Categorys[] = [
 ];
 
 export const StreetCategory: Categorys[] = [
-  { id: 'total', name: '전체' },
+  { id: '', name: '전체' },
   ...CategoryItem,
 ];

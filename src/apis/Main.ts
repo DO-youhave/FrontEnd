@@ -14,30 +14,27 @@ export const flyerCount = async () => {
   }
 };
 
-interface FlyerListParams {
-  search: string;
-  category: string;
-  tag: string;
-  sort: string;
+export interface FlyerListParams {
+  search?: string;
+  category?: string;
+  tag?: string;
+  sort?: string;
 }
 
-export const flyerList = async (
-  pageNumber: number,
-  params: FlyerListParams
-) => {
+export const flyerList = async (page: number, params: FlyerListParams) => {
   try {
     const {
       pageData: { content, last },
     }: FlyerListResponse = await http.get(API_URLS.MAIN.POSTS, {
       params: {
-        pageNumber,
+        page,
         ...params,
       },
     });
     return {
       data: content,
       isLast: last,
-      nextPage: pageNumber + 1,
+      nextPage: page + 1,
     };
   } catch (error) {
     console.error(error);

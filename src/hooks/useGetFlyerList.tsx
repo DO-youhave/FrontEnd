@@ -2,16 +2,21 @@ import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from 'react-query';
 
-import { flyerList } from '../apis/Main';
+import { flyerList, FlyerListParams } from '../apis/Main';
 import useGetParams from './useGetParams';
 
 const useGetFlyerList = () => {
   const { searchValue: search, sort, category, tag } = useGetParams();
   const { ref, inView } = useInView();
-  const params = { search, sort, category, tag };
+  const params: FlyerListParams = new Object();
+  if (search) params.search = search;
+  if (sort) params.sort = sort;
+  if (category) params.category = category;
+  if (tag) params.tag = tag;
+
   const { data, isLoading, fetchNextPage } = useInfiniteQuery(
     ['flyerList', params],
-    ({ pageParam = 1 }) => flyerList(pageParam, params),
+    ({ pageParam = 0 }) => flyerList(pageParam, params),
     {
       getNextPageParam: ({ isLast, nextPage }) => {
         if (isLast) return undefined;
