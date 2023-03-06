@@ -71,7 +71,7 @@ const FlyerDetail = () => {
             글쓴이에게 연락하기
           </ContactButton>
           {openContact && (
-            <div style={{ position: 'absolute', top: '70px', width: '100%' }}>
+            <ContactsParent>
               {info?.contactWay.includes('chatting') && (
                 <ContactMenu id='chat' onClick={handleOpenChat}>
                   카카오톡 오픈채팅방 들어가기
@@ -85,7 +85,7 @@ const FlyerDetail = () => {
               {info?.contactWay.length === 0 && (
                 <ContactMenu>글쓴이는 댓글을 원해요!</ContactMenu>
               )}
-            </div>
+            </ContactsParent>
           )}
         </ContactWrap>
 
@@ -290,6 +290,13 @@ const ContactButton = styled.button`
   }
 `;
 
+const ContactsParent = styled.div`
+  position: absolute;
+  top: 63px;
+  width: 100%;
+  z-index: 10;
+`;
+
 const ContactMenu = styled.div`
   padding: 15px 30px;
   width: 100%;
@@ -304,7 +311,7 @@ const ContactMenu = styled.div`
     background-color: #fff;
     background-size: 15px;
     background-position: 95% 50%;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
   &#mail {
     background: url('/img/mail.svg') no-repeat;

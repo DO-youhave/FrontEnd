@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { FlyerDetail } from '../apis/FlyerDetail';
 import { FlyerInfo } from '../interfaces/flyerDetail';
@@ -8,12 +8,15 @@ const tags = ['#운동화', '#나이키', '#맥북'];
 
 const useGetFlyerDetail = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const [rows, setRows] = useState(false);
   const [rowsBottom, setRowsBottom] = useState(false);
   const [openDots, setOpenDots] = useState(false);
   const [openContact, setOpenContact] = useState(false);
   const [info, setInfo] = useState<FlyerInfo>();
+  const id = Number(searchParams.get('id'));
+  console.log(id);
 
   console.log(info);
 
@@ -42,7 +45,7 @@ const useGetFlyerDetail = () => {
 
   useEffect(() => {
     const getDetail = async () => {
-      const detail = await FlyerDetail();
+      const detail = await FlyerDetail(id);
       setInfo(detail);
     };
     getDetail();

@@ -22,19 +22,19 @@ export const API_URLS = {
   },
   POST: {
     REGISTER: '/users/posts', // 전단지 등록
-    DETAIL: (id: string) => `/users/posts/${id}`, // 전단지 상세
-    DELETE: (id: string) => `/users/posts/${id}`, // 전단지 삭제
-    BOOKMARK: (id: string) => `/users/posts/${id}`, // 전단지 북마크
-    GETEDIT: (id: string) => `/users/posts/${id}/edit`, // 전단지 수정 정보 조회
-    EDIT: (id: string) => `/users/posts/${id}/edit`, // 전단지 수정
-    REPORT: (id: string) => `/users/posts/${id}/report`, // 전단지 신고
+    DETAIL: (id: number) => `/users/posts/${id}`, // 전단지 상세
+    DELETE: (id: number) => `/users/posts/${id}`, // 전단지 삭제
+    BOOKMARK: (id: number) => `/users/posts/${id}`, // 전단지 북마크
+    GETEDIT: (id: number) => `/users/posts/${id}/edit`, // 전단지 수정 정보 조회
+    EDIT: (id: number) => `/users/posts/${id}/edit`, // 전단지 수정
+    REPORT: (id: number) => `/users/posts/${id}/report`, // 전단지 신고
   },
   COMMENT: {
-    REGISTER: (id: string) => `/users/posts/${id}`, // 댓글 작성
-    EDIT: (postId: string, commentId: string) =>
+    REGISTER: (id: number) => `/users/posts/${id}`, // 댓글 작성
+    EDIT: (postId: number, commentId: number) =>
       `/users/posts/${postId}/${commentId}`, // 댓글 수정
-    DELETE: (postId: string, commentId: string) =>
+    DELETE: (postId: number, commentId: number) =>
       `/users/posts/${postId}/${commentId}`, // 댓글 삭제
-    LIST: (id: string) => `/users/posts/${id}/comments`, // 댓글 리스트
+    LIST: (id: number) => `/users/posts/${id}/comments`, // 댓글 리스트
   },
 };
