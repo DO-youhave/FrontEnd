@@ -5,7 +5,7 @@ import http from './instance';
 export const FlyerDetail = async () => {
   try {
     const { data }: FlyerInfoResponse = await http.get(
-      API_URLS.POST.DETAIL('6')
+      API_URLS.POST.DETAIL('5')
     );
     return data;
   } catch (error) {

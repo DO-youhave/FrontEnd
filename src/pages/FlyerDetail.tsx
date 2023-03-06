@@ -17,7 +17,6 @@ const FlyerDetail = () => {
     handleContact,
     handleOpenChat,
     handleCopyClipboard,
-    tags,
     info,
   } = useGetFlyerDetail();
 
@@ -52,18 +51,17 @@ const FlyerDetail = () => {
         </Header>
 
         <Title>{info?.title}</Title>
-        <Category>학습</Category>
+        <Category>{info?.categoryKeyword}</Category>
         <ViewsNTime>
-          조회수 10 &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 1시간 전
+          조회수 {info?.viewCount} &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 1시간
+          전
         </ViewsNTime>
 
         <Imgs />
 
-        <Content>
-          가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하
-        </Content>
+        <Content>{info?.content}</Content>
         <Tags>
-          {tags.map((tag) => (
+          {info?.tags.map((tag) => (
             <Tag key={tag}>{tag}</Tag>
           ))}
         </Tags>
@@ -73,14 +71,21 @@ const FlyerDetail = () => {
             글쓴이에게 연락하기
           </ContactButton>
           {openContact && (
-            <>
-              <ContactMenu id='chat' onClick={handleOpenChat}>
-                카카오톡 오픈채팅방 들어가기
-              </ContactMenu>
-              <ContactMenu id='mail' onClick={handleCopyClipboard}>
-                글쓴이 이메일 주소 복사하기
-              </ContactMenu>
-            </>
+            <div style={{ position: 'absolute', top: '70px', width: '100%' }}>
+              {info?.contactWay.includes('chatting') && (
+                <ContactMenu id='chat' onClick={handleOpenChat}>
+                  카카오톡 오픈채팅방 들어가기
+                </ContactMenu>
+              )}
+              {info?.contactWay.includes('email') && (
+                <ContactMenu id='mail' onClick={handleCopyClipboard}>
+                  글쓴이 이메일 주소 복사하기
+                </ContactMenu>
+              )}
+              {info?.contactWay.length === 0 && (
+                <ContactMenu>글쓴이는 댓글을 원해요!</ContactMenu>
+              )}
+            </div>
           )}
         </ContactWrap>
 
@@ -286,9 +291,8 @@ const ContactButton = styled.button`
 `;
 
 const ContactMenu = styled.div`
-  position: absolute;
   padding: 15px 30px;
-  width: 350px;
+  width: 100%;
   text-align: left;
   color: ${COLORS.MAIN};
   border-radius: 12px;
@@ -296,16 +300,13 @@ const ContactMenu = styled.div`
   cursor: pointer;
   z-index: 10;
   &#chat {
-    top: 60px;
-    right: 0px;
     background: url('/img/chat.svg') no-repeat;
     background-color: #fff;
     background-size: 15px;
     background-position: 95% 50%;
+    margin-bottom: 20px;
   }
   &#mail {
-    top: 120px;
-    right: 0px;
     background: url('/img/mail.svg') no-repeat;
     background-color: #fff;
     background-size: 15px;
