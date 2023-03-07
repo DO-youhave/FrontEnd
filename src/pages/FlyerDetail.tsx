@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import Comments from '../components/FlyerDetail/Comments';
 import { COLORS } from '../constants/colors';
 import useGetFlyerDetail from '../hooks/useGetFlyerDetail';
+import { timeForToday } from '../utils/timeForToday';
 
 const FlyerDetail = () => {
   const {
@@ -54,8 +55,8 @@ const FlyerDetail = () => {
         <Title>{info?.title}</Title>
         <Category>{info?.categoryKeyword}</Category>
         <ViewsNTime>
-          조회수 {info?.viewCount} &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 1시간
-          전
+          조회수 {info?.viewCount} &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;{' '}
+          {timeForToday(info?.createdDate || '')}
         </ViewsNTime>
 
         {info?.img ? (
