@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 import Comments from '../components/FlyerDetail/Comments';
+import { CategoryItem } from '../constants/categorys';
 import { COLORS } from '../constants/colors';
 import useGetFlyerDetail from '../hooks/useGetFlyerDetail';
 import { timeForToday } from '../utils/timeForToday';
@@ -21,6 +22,10 @@ const FlyerDetail = () => {
     info,
   } = useGetFlyerDetail();
 
+  console.log(info);
+  const handleCategory = CategoryItem.find(
+    (item) => item.id === info?.categoryKeyword
+  )?.name;
   const handleImgWidth = info?.imgSecond ? 'half' : '';
   return (
     <Container
@@ -35,25 +40,25 @@ const FlyerDetail = () => {
           <Dots onClick={handleDots}>
             {openDots && (
               <div>
-                {/* 내가 작성하지 않은 게시물 */}
-                <DotsMenu>
-                  <DotsMenuItem>북마크하기</DotsMenuItem>
-                  <DotsMenuItem id='last'>신고하기</DotsMenuItem>
-                </DotsMenu>
-
-                {/* 내가 작성한 게시물 */}
-                <DotsMenu id='mine'>
-                  <DotsMenuItem>수정</DotsMenuItem>
-                  <DotsMenuItem>삭제</DotsMenuItem>
-                  <DotsMenuItem id='last'>북마크하기</DotsMenuItem>
-                </DotsMenu>
+                {info?.isWriter ? (
+                  <DotsMenu id='mine'>
+                    <DotsMenuItem>수정</DotsMenuItem>
+                    <DotsMenuItem>삭제</DotsMenuItem>
+                    <DotsMenuItem id='last'>북마크하기</DotsMenuItem>
+                  </DotsMenu>
+                ) : (
+                  <DotsMenu>
+                    <DotsMenuItem>북마크하기</DotsMenuItem>
+                    <DotsMenuItem id='last'>신고하기</DotsMenuItem>
+                  </DotsMenu>
+                )}
               </div>
             )}
           </Dots>
         </Header>
 
         <Title>{info?.title}</Title>
-        <Category>{info?.categoryKeyword}</Category>
+        <Category>{handleCategory}</Category>
         <ViewsNTime>
           조회수 {info?.viewCount} &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;{' '}
           {timeForToday(info?.createdDate || '')}
@@ -193,6 +198,7 @@ const Imgs = styled.div`
   height: 300px;
   display: flex;
   justify-content: space-between;
+  margin: 20px 0 30px;
   @media all and (max-width: 767px) {
     width: 100%;
   }
@@ -266,9 +272,6 @@ const DotsMenu = styled.div`
   background-color: #fff;
   border: 1px solid #dedede;
   padding: 12px 10px;
-  &#mine {
-    display: none;
-  }
   @media all and (max-width: 767px) {
     right: 20px;
     top: 35px;
