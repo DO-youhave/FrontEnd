@@ -1,7 +1,7 @@
 import { API_URLS } from './../constants/apiUrls';
 import { REFRESH_KEY, TOKEN_KEY } from './../constants/auth';
 import { LoginResponse } from './../interfaces/auth';
-import { setLocalStorage } from './../utils/storage';
+import { getLocalStorage, setLocalStorage } from './../utils/storage';
 import http from './instance';
 
 interface KakaoLoginProps {
@@ -48,4 +48,21 @@ export const kakaoLogin = async (data: KakaoLoginProps) => {
   return {
     isLoginFailed: false,
   };
+};
+
+export const refresh = async () => {
+  const token = getLocalStorage(REFRESH_KEY);
+  try {
+    const { accessToken, refreshToken }: LoginResponse = await http.post(
+      API_URLS.AUTH.REFRESH,
+      {
+        refreshToken: token,
+      }
+    );
+    setLocalStorage(TOKEN_KEY, accessToken);
+    setLocalStorage(REFRESH_KEY, refreshToken);
+    return accessToken;
+  } catch (error) {
+    console.error(error);
+  }
 };
