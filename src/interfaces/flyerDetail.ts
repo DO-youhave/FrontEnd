@@ -11,11 +11,11 @@ export interface FlyerInfo {
   contactWay: string;
   content: string;
   createdDate: string;
-  email: string;
-  img: string;
-  imgSecond: string;
+  email?: string;
+  img?: string;
+  imgSecond?: string;
   isWriter: boolean;
-  kakaoUrl: string;
+  kakaoUrl?: string;
   mark: false;
   markNum: number;
   postId: number;

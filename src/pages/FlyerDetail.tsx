@@ -20,6 +20,7 @@ const FlyerDetail = () => {
     info,
   } = useGetFlyerDetail();
 
+  const handleImgWidth = info?.imgSecond ? 'half' : '';
   return (
     <Container
       onClick={() => {
@@ -57,7 +58,18 @@ const FlyerDetail = () => {
           전
         </ViewsNTime>
 
-        <Imgs />
+        {info?.img ? (
+          <Imgs>
+            {info?.img && <Img id={handleImgWidth} src={info?.img} />}
+            {info?.imgSecond && (
+              <Img
+                id={handleImgWidth}
+                className='second'
+                src={info?.imgSecond}
+              />
+            )}
+          </Imgs>
+        ) : undefined}
 
         <Content>{info?.content}</Content>
         <Tags>
@@ -66,29 +78,27 @@ const FlyerDetail = () => {
           ))}
         </Tags>
 
-        <ContactWrap>
-          <ContactButton id={String(openContact)} onClick={handleContact}>
-            글쓴이에게 연락하기
-          </ContactButton>
-          {openContact && (
-            <ContactsParent>
-              {info?.contactWay.includes('chatting') && (
-                <ContactMenu id='chat' onClick={handleOpenChat}>
-                  카카오톡 오픈채팅방 들어가기
-                </ContactMenu>
-              )}
-              {info?.contactWay.includes('email') && (
-                <ContactMenu id='mail' onClick={handleCopyClipboard}>
-                  글쓴이 이메일 주소 복사하기
-                </ContactMenu>
-              )}
-              {info?.contactWay.length === 0 && (
-                <ContactMenu>글쓴이는 댓글을 원해요!</ContactMenu>
-              )}
-            </ContactsParent>
-          )}
-        </ContactWrap>
-
+        {info?.contactWay !== 'comment' && (
+          <ContactWrap>
+            <ContactButton id={String(openContact)} onClick={handleContact}>
+              글쓴이에게 연락하기
+            </ContactButton>
+            {openContact && (
+              <ContactsParent>
+                {info?.contactWay.includes('chatting') && (
+                  <ContactMenu id='chat' onClick={handleOpenChat}>
+                    카카오톡 오픈채팅방 들어가기
+                  </ContactMenu>
+                )}
+                {info?.contactWay.includes('email') && (
+                  <ContactMenu id='mail' onClick={handleCopyClipboard}>
+                    글쓴이 이메일 주소 복사하기
+                  </ContactMenu>
+                )}
+              </ContactsParent>
+            )}
+          </ContactWrap>
+        )}
         <Comments
           rows={rows}
           setRows={setRows}
@@ -180,17 +190,28 @@ const ViewsNTime = styled.div`
 const Imgs = styled.div`
   width: 90%;
   height: 300px;
-  background-color: rgba(4, 150, 105, 0.2);
+  display: flex;
+  justify-content: space-between;
   @media all and (max-width: 767px) {
     width: 100%;
+  }
+`;
+const Img = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  &#half {
+    width: 49%;
+  }
+  &.second {
+    border-left: 1px solid #d9d9d9;
   }
 `;
 
 const Content = styled.div`
   width: 90%;
-  margin-top: 50px;
+  margin: 20px 0;
   line-height: 1.5;
-  margin-bottom: 50px;
   font-weight: 400;
   @media all and (max-width: 767px) {
     width: 100%;
@@ -201,7 +222,8 @@ const Tags = styled.div`
   width: 90%;
   display: flex;
   gap: 10px;
-  margin-bottom: 100px;
+  margin-top: 50px;
+  margin-bottom: 70px;
   @media all and (max-width: 767px) {
     width: 100%;
   }
@@ -275,6 +297,7 @@ const ContactButton = styled.button`
   border-radius: 12px;
   font-weight: 400;
   cursor: pointer;
+  margin: 20px 0;
   &:hover {
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
   }
@@ -292,7 +315,7 @@ const ContactButton = styled.button`
 
 const ContactsParent = styled.div`
   position: absolute;
-  top: 63px;
+  top: 80px;
   width: 100%;
   z-index: 10;
 `;
