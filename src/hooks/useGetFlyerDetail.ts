@@ -16,9 +16,6 @@ const useGetFlyerDetail = () => {
   const [openContact, setOpenContact] = useState(false);
   const [info, setInfo] = useState<FlyerInfo>();
   const id = Number(searchParams.get('id'));
-  console.log(id);
-
-  console.log(info);
 
   const handleBack = () => {
     navigate(-1);
@@ -31,12 +28,14 @@ const useGetFlyerDetail = () => {
   };
 
   const handleOpenChat = () => {
-    window.open('');
+    if (info?.kakaoUrl) window.open(info.kakaoUrl);
   };
-  const handleCopyClipboard = () => {
-    const email = 'aaaaa';
-    navigator.clipboard.writeText(email);
-    alert('이메일 주소가 복사됐어요!');
+
+  const handleCopyClipboard = async () => {
+    if (info?.email) {
+      await navigator.clipboard.writeText(info.email);
+      alert('이메일 주소가 복사됐어요!');
+    }
   };
 
   useEffect(() => {
