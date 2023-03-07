@@ -1,40 +1,27 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import Comments from '../components/FlyerDetail/Comments';
 import { COLORS } from '../constants/colors';
+import useGetFlyerDetail from '../hooks/useGetFlyerDetail';
+import { timeForToday } from '../utils/timeForToday';
 
-const tags = ['#운동화', '#나이키', '#맥북'];
 const FlyerDetail = () => {
-  const navigate = useNavigate();
-  const [rows, setRows] = useState(false);
-  const [rowsBottom, setRowsBottom] = useState(false);
-  const [openDots, setOpenDots] = useState(false);
-  const [openContact, setOpenContact] = useState(false);
+  const {
+    rows,
+    setRows,
+    rowsBottom,
+    setRowsBottom,
+    openDots,
+    openContact,
+    handleBack,
+    handleDots,
+    handleContact,
+    handleOpenChat,
+    handleCopyClipboard,
+    info,
+  } = useGetFlyerDetail();
 
-  const handleBack = () => {
-    navigate(-1);
-  };
-  const handleDots = () => {
-    setOpenDots(!openDots);
-  };
-  const handleContact = () => {
-    setOpenContact(!openContact);
-  };
-
-  const handleOpenChat = () => {
-    window.open('');
-  };
-  const handleCopyClipboard = () => {
-    const email = 'aaaaa';
-    navigator.clipboard.writeText(email);
-    alert('이메일 주소가 복사됐어요!');
-  };
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  const handleImgWidth = info?.imgSecond ? 'half' : '';
   return (
     <Container
       onClick={() => {
@@ -65,39 +52,54 @@ const FlyerDetail = () => {
           </Dots>
         </Header>
 
-        <Title>수학 문제 좀 풀어주세요!</Title>
-        <Category>학습</Category>
+        <Title>{info?.title}</Title>
+        <Category>{info?.categoryKeyword}</Category>
         <ViewsNTime>
-          조회수 10 &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 1시간 전
+          조회수 {info?.viewCount} &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;{' '}
+          {timeForToday(info?.createdDate || '')}
         </ViewsNTime>
 
-        <Imgs />
+        {info?.img ? (
+          <Imgs>
+            {info?.img && <Img id={handleImgWidth} src={info?.img} />}
+            {info?.imgSecond && (
+              <Img
+                id={handleImgWidth}
+                className='second'
+                src={info?.imgSecond}
+              />
+            )}
+          </Imgs>
+        ) : undefined}
 
-        <Content>
-          가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하
-        </Content>
+        <Content>{info?.content}</Content>
         <Tags>
-          {tags.map((tag) => (
+          {info?.tags.map((tag) => (
             <Tag key={tag}>{tag}</Tag>
           ))}
         </Tags>
 
-        <ContactWrap>
-          <ContactButton id={String(openContact)} onClick={handleContact}>
-            글쓴이에게 연락하기
-          </ContactButton>
-          {openContact && (
-            <>
-              <ContactMenu id='chat' onClick={handleOpenChat}>
-                카카오톡 오픈채팅방 들어가기
-              </ContactMenu>
-              <ContactMenu id='mail' onClick={handleCopyClipboard}>
-                글쓴이 이메일 주소 복사하기
-              </ContactMenu>
-            </>
-          )}
-        </ContactWrap>
-
+        {info?.contactWay !== 'comment' && (
+          <ContactWrap>
+            <ContactButton id={String(openContact)} onClick={handleContact}>
+              글쓴이에게 연락하기
+            </ContactButton>
+            {openContact && (
+              <ContactsParent>
+                {info?.contactWay.includes('chatting') && (
+                  <ContactMenu id='chat' onClick={handleOpenChat}>
+                    카카오톡 오픈채팅방 들어가기
+                  </ContactMenu>
+                )}
+                {info?.contactWay.includes('email') && (
+                  <ContactMenu id='mail' onClick={handleCopyClipboard}>
+                    글쓴이 이메일 주소 복사하기
+                  </ContactMenu>
+                )}
+              </ContactsParent>
+            )}
+          </ContactWrap>
+        )}
         <Comments
           rows={rows}
           setRows={setRows}
@@ -189,17 +191,28 @@ const ViewsNTime = styled.div`
 const Imgs = styled.div`
   width: 90%;
   height: 300px;
-  background-color: rgba(4, 150, 105, 0.2);
+  display: flex;
+  justify-content: space-between;
   @media all and (max-width: 767px) {
     width: 100%;
+  }
+`;
+const Img = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  &#half {
+    width: 49%;
+  }
+  &.second {
+    border-left: 1px solid #d9d9d9;
   }
 `;
 
 const Content = styled.div`
   width: 90%;
-  margin-top: 50px;
+  margin: 20px 0;
   line-height: 1.5;
-  margin-bottom: 50px;
   font-weight: 400;
   @media all and (max-width: 767px) {
     width: 100%;
@@ -210,7 +223,8 @@ const Tags = styled.div`
   width: 90%;
   display: flex;
   gap: 10px;
-  margin-bottom: 100px;
+  margin-top: 50px;
+  margin-bottom: 70px;
   @media all and (max-width: 767px) {
     width: 100%;
   }
@@ -284,6 +298,7 @@ const ContactButton = styled.button`
   border-radius: 12px;
   font-weight: 400;
   cursor: pointer;
+  margin: 20px 0;
   &:hover {
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
   }
@@ -299,10 +314,16 @@ const ContactButton = styled.button`
   }
 `;
 
-const ContactMenu = styled.div`
+const ContactsParent = styled.div`
   position: absolute;
+  top: 80px;
+  width: 100%;
+  z-index: 10;
+`;
+
+const ContactMenu = styled.div`
   padding: 15px 30px;
-  width: 350px;
+  width: 100%;
   text-align: left;
   color: ${COLORS.MAIN};
   border-radius: 12px;
@@ -310,16 +331,13 @@ const ContactMenu = styled.div`
   cursor: pointer;
   z-index: 10;
   &#chat {
-    top: 60px;
-    right: 0px;
     background: url('/img/chat.svg') no-repeat;
     background-color: #fff;
     background-size: 15px;
     background-position: 95% 50%;
+    margin-bottom: 10px;
   }
   &#mail {
-    top: 120px;
-    right: 0px;
     background: url('/img/mail.svg') no-repeat;
     background-color: #fff;
     background-size: 15px;
