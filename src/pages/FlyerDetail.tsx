@@ -8,6 +8,7 @@ import { timeForToday } from '../utils/timeForToday';
 
 const FlyerDetail = () => {
   const {
+    postId,
     rows,
     setRows,
     rowsBottom,
@@ -106,6 +107,7 @@ const FlyerDetail = () => {
           </ContactWrap>
         )}
         <Comments
+          postId={postId}
           rows={rows}
           setRows={setRows}
           rowsBottom={rowsBottom}

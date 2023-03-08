@@ -15,7 +15,7 @@ const useGetFlyerDetail = () => {
   const [openDots, setOpenDots] = useState(false);
   const [openContact, setOpenContact] = useState(false);
   const [info, setInfo] = useState<FlyerInfo>();
-  const id = Number(searchParams.get('id'));
+  const postId = Number(searchParams.get('id'));
 
   const handleBack = () => {
     navigate(-1);
@@ -44,13 +44,14 @@ const useGetFlyerDetail = () => {
 
   useEffect(() => {
     const getDetail = async () => {
-      const detail = await FlyerDetail(id);
+      const detail = await FlyerDetail(postId);
       setInfo(detail);
     };
     getDetail();
   }, []);
 
   return {
+    postId,
     rows,
     setRows,
     rowsBottom,

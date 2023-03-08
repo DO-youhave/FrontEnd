@@ -1,22 +1,24 @@
 import styled from '@emotion/styled';
 import { Fragment, useState } from 'react';
 
+import { Comment as CommentType } from '../../apis/Comments';
 import { NowTextNum, NumNSubmit, SubmitReplyButton, TextNum } from './Comments';
 
 interface CommentProps {
-  id: number;
-  profile: string;
+  commentId: number;
+  name: string;
   content: string;
-  date: string;
-  reply: {
-    id: number;
-    profile: string;
-    content: string;
-    date: string;
-  }[];
+  createdDate: string;
+  childComments: CommentType[];
 }
 
-const Comment = ({ id, profile, content, date, reply }: CommentProps) => {
+const Comment = ({
+  commentId,
+  name,
+  content,
+  createdDate,
+  childComments,
+}: CommentProps) => {
   const [comment, setComment] = useState(false);
   const [replyInput, setReplyInput] = useState(''); // 답글 입력
   const isReplyOver = () => {
@@ -43,15 +45,15 @@ const Comment = ({ id, profile, content, date, reply }: CommentProps) => {
   };
 
   return (
-    <Fragment key={id}>
+    <Fragment key={commentId}>
       {/* =====원 댓글===== */}
       <CommentContainer>
         <CommentBox id='comment'>
-          <Profile>{profile}</Profile>
+          <Profile>{name}</Profile>
           <div
             style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             <Text>{content}</Text>
-            <Text id='date'>{date}</Text>
+            <Text id='date'>{createdDate}</Text>
           </div>
           <ReplyButton onClick={handleComment}>답글</ReplyButton>
         </CommentBox>
@@ -99,15 +101,15 @@ const Comment = ({ id, profile, content, date, reply }: CommentProps) => {
       }
 
       {/* =====답 댓글===== */}
-      {reply?.map((rep) => (
-        <CommentBox id='reply' key={rep.id}>
+      {childComments?.map((rep) => (
+        <CommentBox id='reply' key={rep.commentId}>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div>
               <ReplyArrow />
-              <Profile>{rep.profile}</Profile>
+              <Profile>{rep.name}</Profile>
               <ContentNDate>
                 <Text>{rep.content}</Text>
-                <Text id='date'>{rep.date}</Text>
+                <Text id='date'>{rep.createdDate}</Text>
               </ContentNDate>
             </div>
 

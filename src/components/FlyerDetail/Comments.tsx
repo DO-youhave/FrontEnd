@@ -2,51 +2,11 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 
 import { COLORS } from '../../constants/colors';
+import useGetComments from '../../hooks/useGetComments';
 import Comment from './Comment';
 
-const commentExample = [
-  {
-    id: 1,
-    profile: '익명 1',
-    content:
-      '가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하',
-    date: '2023.02.02. 16:15',
-    reply: [
-      {
-        id: 1,
-        profile: '익명 1',
-        content:
-          '가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하',
-        date: '2023.02.02. 16:15',
-      },
-    ],
-  },
-  {
-    id: 2,
-    profile: '익명 2',
-    content:
-      '가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하',
-    date: '2023.02.02. 16:15',
-    reply: [
-      {
-        id: 1,
-        profile: '익명 1',
-        content:
-          '가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하',
-        date: '2023.02.02. 16:15',
-      },
-      {
-        id: 2,
-        profile: '익명 1',
-        content:
-          '가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하',
-        date: '2023.02.02. 16:15',
-      },
-    ],
-  },
-];
-
 interface CommentsProps {
+  postId: number;
   rows: boolean;
   setRows: React.Dispatch<React.SetStateAction<boolean>>;
   rowsBottom: boolean;
@@ -54,11 +14,13 @@ interface CommentsProps {
 }
 
 const Comments = ({
+  postId,
   rows,
   setRows,
   rowsBottom,
   setRowsBottom,
 }: CommentsProps) => {
+  const { comments, isLoading } = useGetComments(postId);
   const [replyText, setReplyText] = useState<string>('');
   const isReplyOver = () => {
     if (replyText.length === 300) alert('댓글은 300자까지 밖에 못 써요 😥');
@@ -70,7 +32,9 @@ const Comments = ({
     <CommentContainer>
       <Text id='total'>
         댓글
-        <span style={{ color: `${COLORS.MAIN}`, fontWeight: '600' }}> 2</span>
+        <span style={{ color: `${COLORS.MAIN}`, fontWeight: '600' }}>
+          &nbsp;{comments?.length || 0}
+        </span>
       </Text>
 
       {/* 댓글 입력창(top) */}
@@ -103,16 +67,18 @@ const Comments = ({
       </ReplyTextAreaWrap>
 
       {/* 입력된 댓글들 */}
-      {commentExample.map(({ id, profile, content, date, reply }) => (
-        <Comment
-          key={id}
-          id={id}
-          profile={profile}
-          content={content}
-          date={date}
-          reply={reply}
-        />
-      ))}
+      {comments?.map(
+        ({ commentId, name, content, createdDate, childComments }) => (
+          <Comment
+            key={commentId}
+            commentId={commentId}
+            name={name}
+            content={content}
+            createdDate={createdDate}
+            childComments={childComments}
+          />
+        )
+      )}
 
       {/* 댓글 입력창 (bottom) */}
       <ReplyTextAreaWrap
