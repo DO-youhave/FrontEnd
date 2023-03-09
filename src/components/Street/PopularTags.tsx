@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom';
 
 import { ROUTES } from '../../constants/routes';
 import useGetParams from '../../hooks/useGetParams';
-
-const TagData: string[] = ['운동화', '나이키', '맥북', '애플워치', '수학문제'];
+import useGetTags from '../../hooks/useGetTags';
 
 const PopularTags = () => {
   const navigate = useNavigate();
   const { category, tag: nowTag, sort, searchValue } = useGetParams();
+  const { tags } = useGetTags(category);
 
   // 태그 리스트 변경 함수
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -33,7 +33,7 @@ const PopularTags = () => {
         />
       </Title>
       <Tags>
-        {TagData.map((tag) => (
+        {tags?.map((tag) => (
           <Tag
             key={tag}
             className={isChecked(tag)}
