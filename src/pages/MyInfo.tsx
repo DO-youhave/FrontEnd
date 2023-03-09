@@ -19,6 +19,7 @@ const MyInfo = () => {
         <span style={{ fontWeight: '700' }}>{profile?.nickname}</span>님!
       </Title>
       <Profile
+        profileImg={profile?.img}
         postCount={profile?.postCount || 0}
         bookmarkCount={profile?.bookmarkCount || 0}
         commentCount={profile?.commentCount || 0}
