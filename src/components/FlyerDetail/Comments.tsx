@@ -3,15 +3,8 @@ import { useState } from 'react';
 
 import { COLORS } from '../../constants/colors';
 import useGetComments from '../../hooks/useGetComments';
+import { CommentsProps } from '../../interfaces/comment';
 import Comment from './Comment';
-
-interface CommentsProps {
-  postId: number;
-  rows: boolean;
-  setRows: React.Dispatch<React.SetStateAction<boolean>>;
-  rowsBottom: boolean;
-  setRowsBottom: React.Dispatch<React.SetStateAction<boolean>>;
-}
 
 const Comments = ({
   postId,
@@ -22,6 +15,7 @@ const Comments = ({
 }: CommentsProps) => {
   const { comments, isLoading } = useGetComments(postId);
   const [replyText, setReplyText] = useState<string>('');
+
   const isReplyOver = () => {
     if (replyText.length === 300) alert('댓글은 300자까지 밖에 못 써요 😥');
   };
@@ -66,9 +60,16 @@ const Comments = ({
         ) : undefined}
       </ReplyTextAreaWrap>
 
-      {/* 입력된 댓글들 */}
+      {/* 입력된 댓글들(parent) */}
       {comments?.map(
-        ({ commentId, name, content, createdDate, childComments }) => (
+        ({
+          commentId,
+          name,
+          content,
+          createdDate,
+          childComments,
+          isCommentWriter,
+        }) => (
           <Comment
             key={commentId}
             commentId={commentId}
@@ -76,41 +77,61 @@ const Comments = ({
             content={content}
             createdDate={createdDate}
             childComments={childComments}
+            isCommentWriter={isCommentWriter}
           />
         )
       )}
 
       {/* 댓글 입력창 (bottom) */}
-      <ReplyTextAreaWrap
-        id='bottom'
-        onClick={(e) => {
-          e.stopPropagation();
-          setRowsBottom(true);
-        }}>
-        <ReplyTextArea
-          placeholder='댓글을 입력해주세요'
-          rows={handleRowsBottom}
-          maxLength={300}
+      {comments?.length !== 0 ? (
+        <ReplyTextAreaWrap
+          id='bottom'
           onClick={(e) => {
             e.stopPropagation();
             setRowsBottom(true);
-          }}
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-            setReplyText(e.target.value);
-            isReplyOver();
-          }}
-        />
-        {rowsBottom ? (
-          <NumNSubmit>
-            <TextNum>
-              <NowTextNum>{replyText.length}</NowTextNum>/300
-            </TextNum>
-            <SubmitReplyButton onClick={(e) => e.stopPropagation()}>
-              등록
-            </SubmitReplyButton>
-          </NumNSubmit>
-        ) : undefined}
-      </ReplyTextAreaWrap>
+          }}>
+          <ReplyTextArea
+            placeholder='댓글을 입력해주세요'
+            rows={handleRowsBottom}
+            maxLength={300}
+            onClick={(e) => {
+              e.stopPropagation();
+              setRowsBottom(true);
+            }}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+              setReplyText(e.target.value);
+              isReplyOver();
+            }}
+          />
+          {rowsBottom ? (
+            <NumNSubmit>
+              <TextNum>
+                <NowTextNum>{replyText.length}</NowTextNum>/300
+              </TextNum>
+              <SubmitReplyButton onClick={(e) => e.stopPropagation()}>
+                등록
+              </SubmitReplyButton>
+            </NumNSubmit>
+          ) : undefined}
+        </ReplyTextAreaWrap>
+      ) : (
+        <div
+          style={{
+            padding: '60px 0 20px',
+            fontWeight: '400',
+            color: '#616161',
+            fontSize: '15px',
+            textAlign: 'center',
+            lineHeight: '1.4',
+            width: '100%',
+          }}>
+          <div style={{ marginBottom: '34px' }}>
+            <img src='/img/thinking.png' width={100} />
+          </div>
+          아직 댓글이 없어요 ㅠㅠ
+          <br />첫 댓글을 남겨주세요!
+        </div>
+      )}
     </CommentContainer>
   );
 };
