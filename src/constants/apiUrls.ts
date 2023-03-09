@@ -5,7 +5,8 @@ export const API_URLS = {
   MAIN: {
     COUNT: '/users', // 메인 카운트
     POSTS: '/users/list', // 전단지 리스트
-    TAGS: '/users/list/top', // 태그 리스트
+    TAGS: (category: string) =>
+      '/users/list/top' + (category ? `?category=${category}` : ''), // 태그 리스트
   },
   USER: {
     KAKAO_LOGIN: '/users/kakao-login', // 카카오 로그인

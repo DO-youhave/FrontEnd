@@ -1,5 +1,10 @@
 import { API_URLS } from '../constants/apiUrls';
-import { FlyerCountResponse, FlyerListResponse } from '../interfaces/main';
+import {
+  FlyerCountResponse,
+  FlyerListParams,
+  FlyerListResponse,
+} from '../interfaces/main';
+import { PopularTagsResponse } from './../interfaces/main';
 import http from './instance';
 
 export const flyerCount = async () => {
@@ -13,13 +18,6 @@ export const flyerCount = async () => {
     return 0;
   }
 };
-
-export interface FlyerListParams {
-  search?: string;
-  category?: string;
-  tag?: string;
-  sort?: string;
-}
 
 export const flyerList = async (page: number, params: FlyerListParams) => {
   try {
@@ -43,5 +41,16 @@ export const flyerList = async (page: number, params: FlyerListParams) => {
       isLast: true,
       nextPage: 1,
     };
+  }
+};
+
+export const popularTags = async (category: string) => {
+  try {
+    const { data }: PopularTagsResponse = await http.get(
+      API_URLS.MAIN.TAGS(category)
+    );
+    return data;
+  } catch (error) {
+    console.error(error);
   }
 };
