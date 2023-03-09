@@ -34,7 +34,9 @@ const Header = () => {
         {!isLogin() ? (
           <Menu>로그인 / 회원가입</Menu>
         ) : (
-          <Menu onClick={() => navigate(ROUTES.MY_PAGE.ROOT)}>마이페이지</Menu>
+          <Menu onClick={() => navigate(MY_PAGE.ROOT + '/' + MY_PAGE.RECENT)}>
+            마이페이지
+          </Menu>
         )}
       </MenuList>
 
@@ -67,7 +69,7 @@ const Header = () => {
 
         {isLogin() && (
           <NavIcon
-            onClick={() => navigate(ROUTES.MY_PAGE.ROOT)}
+            onClick={() => navigate(MY_PAGE.ROOT + '/' + MY_PAGE.RECENT)}
             src='/img/profile.svg'
             alt='profile'
           />
