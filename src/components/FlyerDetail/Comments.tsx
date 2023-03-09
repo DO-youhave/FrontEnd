@@ -14,13 +14,51 @@ const Comments = ({
   setRowsBottom,
 }: CommentsProps) => {
   const { comments, isLoading } = useGetComments(postId);
-  const [replyText, setReplyText] = useState<string>('');
+  const [commentInput, setCommentInput] = useState<string>('');
+  const [commentInputBottom, setCommentInputBottom] = useState<string>('');
 
-  const isReplyOver = () => {
-    if (replyText.length === 300) alert('댓글은 300자까지 밖에 못 써요 😥');
-  };
   const handleRows = rows ? 7 : 1;
   const handleRowsBottom = rowsBottom ? 7 : 1;
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && confirm('댓글을 등록하시겠습니까?')) {
+      setCommentInput('');
+      setRows(false);
+      alert('댓글이 등록되었습니다!');
+    }
+  };
+  const handleSubmit = () => {
+    if (confirm('댓글을 등록하시겠습니까?')) {
+      setCommentInput('');
+      setRows(false);
+      alert('댓글이 등록되었습니다!');
+    }
+  };
+  const handleKeyDownBottom = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && confirm('댓글을 등록하시겠습니까?')) {
+      setCommentInputBottom('');
+      setRowsBottom(false);
+      alert('댓글이 등록되었습니다!');
+    }
+  };
+  const handleSubmitBottom = () => {
+    if (confirm('댓글을 등록하시겠습니까?')) {
+      setCommentInputBottom('');
+      setRowsBottom(false);
+      alert('댓글이 등록되었습니다!');
+    }
+  };
+
+  const handleInputLength = () => {
+    return commentInput.length === 0 || commentInput.length === 301
+      ? true
+      : false;
+  };
+  const handleInputLengthBottom = () => {
+    return commentInputBottom.length === 0 || commentInputBottom.length === 301
+      ? true
+      : false;
+  };
 
   return (
     <CommentContainer>
@@ -40,22 +78,30 @@ const Comments = ({
         <ReplyTextArea
           placeholder='댓글을 입력해주세요'
           rows={handleRows}
-          maxLength={300}
+          value={commentInput}
+          maxLength={301}
           onClick={(e) => {
             e.stopPropagation();
             setRows(true);
           }}
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-            setReplyText(e.target.value);
-            isReplyOver();
+            setCommentInput(e.target.value);
           }}
+          onKeyDown={handleKeyDown}
         />
         {rows ? (
           <NumNSubmit>
             <TextNum>
-              <NowTextNum>{replyText.length}</NowTextNum>/300
+              <NowTextNum>{commentInput.length}</NowTextNum>/300
             </TextNum>
-            <SubmitReplyButton>등록</SubmitReplyButton>
+            <SubmitReplyButton
+              disabled={handleInputLength()}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleSubmit();
+              }}>
+              등록
+            </SubmitReplyButton>
           </NumNSubmit>
         ) : undefined}
       </ReplyTextAreaWrap>
@@ -93,22 +139,28 @@ const Comments = ({
           <ReplyTextArea
             placeholder='댓글을 입력해주세요'
             rows={handleRowsBottom}
-            maxLength={300}
+            value={commentInputBottom}
+            maxLength={301}
             onClick={(e) => {
               e.stopPropagation();
               setRowsBottom(true);
             }}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-              setReplyText(e.target.value);
-              isReplyOver();
+              setCommentInputBottom(e.target.value);
             }}
+            onKeyDown={handleKeyDownBottom}
           />
           {rowsBottom ? (
             <NumNSubmit>
               <TextNum>
-                <NowTextNum>{replyText.length}</NowTextNum>/300
+                <NowTextNum>{commentInputBottom.length}</NowTextNum>/300
               </TextNum>
-              <SubmitReplyButton onClick={(e) => e.stopPropagation()}>
+              <SubmitReplyButton
+                disabled={handleInputLengthBottom()}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSubmitBottom();
+                }}>
                 등록
               </SubmitReplyButton>
             </NumNSubmit>
@@ -182,7 +234,7 @@ export const NowTextNum = styled.span`
   font-weight: 600;
 `;
 
-export const SubmitReplyButton = styled.div`
+export const SubmitReplyButton = styled.button`
   padding: 10px 30px;
   background-color: ${COLORS.MAIN};
   display: flex;
@@ -191,6 +243,11 @@ export const SubmitReplyButton = styled.div`
   color: #fff;
   font-weight: 400;
   cursor: pointer;
+  border: none;
+  &:disabled {
+    background: ${COLORS.GRAY};
+    cursor: default;
+  }
 `;
 
 const CommentContainer = styled.div`

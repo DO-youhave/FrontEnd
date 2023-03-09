@@ -27,24 +27,30 @@ const Comment = ({
   const [moreOn, setMoreOn] = useState(false);
   const [replyMoreOn, setReplyMoreOn] = useState(false);
 
-  const isReplyOver = () => {
-    if (replyInput.length === 301) alert('댓글은 300자까지 밖에 못 써요 😥');
-  };
   const handleComment = () => setReplyOn(!replyOn);
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setReplyInput(e.target.value);
   };
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter') {
-      console.log(replyInput);
+    if (e.key === 'Enter' && confirm('댓글을 등록하시겠습니까?')) {
+      setReplyInput('');
+      setReplyOn(false);
+      alert('댓글이 등록되었습니다!');
+    }
+  };
+  const handleSubmit = () => {
+    if (confirm('댓글을 등록하시겠습니까?')) {
+      alert('댓글이 등록되었습니다!');
       setReplyInput('');
       setReplyOn(false);
     }
   };
-
   const handleReplyBtn = () => {
     const id = replyOn ? 'on' : undefined;
     return id;
+  };
+  const handleInputLength = () => {
+    return replyInput.length === 0 || replyInput.length > 301 ? true : false;
   };
 
   // '댓글' 신고 버튼 클릭 시
@@ -107,7 +113,6 @@ const Comment = ({
               rows={7}
               onChange={(e) => {
                 handleChange(e);
-                isReplyOver();
               }}
               onKeyDown={handleKeyDown}
             />
@@ -115,7 +120,12 @@ const Comment = ({
               <TextNum>
                 <NowTextNum>{replyInput.length}</NowTextNum>/300
               </TextNum>
-              <SubmitReplyButton onClick={(e) => e.stopPropagation()}>
+              <SubmitReplyButton
+                disabled={handleInputLength()}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSubmit();
+                }}>
                 등록
               </SubmitReplyButton>
             </NumNSubmit>
