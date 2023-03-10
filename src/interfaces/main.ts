@@ -25,3 +25,17 @@ export interface FlyerListResponse {
     last: boolean;
   };
 }
+
+export interface FlyerListParams {
+  search?: string;
+  category?: string;
+  tag?: string;
+  sort?: string;
+}
+
+export interface PopularTagsResponse {
+  code: string;
+  data: string[];
+  msg: string;
+  success: boolean;
+}

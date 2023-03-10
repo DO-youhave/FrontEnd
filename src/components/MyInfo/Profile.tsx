@@ -2,19 +2,31 @@ import styled from '@emotion/styled';
 
 import { COLORS } from '../../constants/colors';
 
-const Profile = () => {
+interface ProfileProps {
+  profileImg: string | undefined;
+  postCount: number;
+  bookmarkCount: number;
+  commentCount: number;
+}
+
+const Profile = ({
+  profileImg,
+  postCount,
+  bookmarkCount,
+  commentCount,
+}: ProfileProps) => {
   return (
     <Absolute>
       <Container>
-        <ProfileImg src='/img/profile.svg' alt='profile' />
+        <ProfileImg src={profileImg || '/img/profile.svg'} alt='profile' />
         <MyPosting>
-          내가 붙인 전단지<Count>10개</Count>
+          내가 붙인 전단지<Count>{postCount}개</Count>
         </MyPosting>
         <MyPosting id='border'>
-          내가 쓴 댓글<Count>10개</Count>
+          내가 쓴 댓글<Count>{commentCount}개</Count>
         </MyPosting>
         <MyPosting>
-          북마크한 전단지<Count>10개</Count>
+          북마크한 전단지<Count>{bookmarkCount}개</Count>
         </MyPosting>
       </Container>
     </Absolute>
@@ -83,6 +95,7 @@ const ProfileImg = styled.img`
   top: -50px;
   left: 50%;
   transform: translateX(-50%);
+  border-radius: 50%;
   width: 100px;
   @media screen and (max-width: 768px) {
     width: 80px;

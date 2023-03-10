@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from 'react-query';
 
-import { flyerList, FlyerListParams } from '../apis/Main';
+import { flyerList } from '../apis/Main';
+import { FlyerListParams } from '../interfaces/main';
 import useGetParams from './useGetParams';
 
 const useGetFlyerList = () => {

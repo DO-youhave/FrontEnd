@@ -5,17 +5,25 @@ import Menus, { menus } from '../components/MyInfo/Menus';
 import MobileMenus from '../components/MyInfo/MobileMenus';
 import Profile from '../components/MyInfo/Profile';
 import { COLORS } from '../constants/colors';
+import useGetProfile from '../hooks/useGetProfile';
 
 const MyInfo = () => {
+  const { profile } = useGetProfile();
   const { pathname } = useLocation();
   const name = menus.find(({ id }) => pathname.includes(id))?.name;
 
   return (
     <Container>
       <Title>
-        안녕하세요, <span style={{ fontWeight: '700' }}>ㅇㅇㅇ</span>님!
+        안녕하세요,{' '}
+        <span style={{ fontWeight: '700' }}>{profile?.nickname}</span>님!
       </Title>
-      <Profile />
+      <Profile
+        profileImg={profile?.img}
+        postCount={profile?.postCount || 0}
+        bookmarkCount={profile?.bookmarkCount || 0}
+        commentCount={profile?.commentCount || 0}
+      />
       <Content>
         <MenuNContent>
           <div

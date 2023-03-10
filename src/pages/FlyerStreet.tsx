@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Category from '../components/Street/Category';
 import FlyerList from '../components/Street/FlyerList';
@@ -7,8 +8,12 @@ import MobileSearch from '../components/Street/MobileSearch';
 import PopularTags from '../components/Street/PopularTags';
 import Search from '../components/Street/Search';
 import Sort from '../components/Street/Sort';
+import { ROUTES } from '../constants/routes';
 
 const FlyerStreet = () => {
+  const navigate = useNavigate();
+  const goWrite = () => navigate(ROUTES.POSTING);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -43,6 +48,7 @@ const FlyerStreet = () => {
           <FlyerList />
         </MainContentsInner>
       </MainContents>
+      <WriteButton src='/img/writeBtn.svg' onClick={goWrite} />
     </Container>
   );
 };
@@ -142,4 +148,12 @@ const SubTitle = styled.div`
   @media screen and (max-width: 768px) {
     display: none;
   }s
+`;
+
+const WriteButton = styled.img`
+  width: 100px;
+  position: fixed;
+  bottom: 20px;
+  right: 3%;
+  cursor: pointer;
 `;

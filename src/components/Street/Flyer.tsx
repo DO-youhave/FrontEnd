@@ -49,6 +49,7 @@ const Container = styled.li<{ img: string | null }>`
     box-shadow: 0px 0px 0px;
     background: url(${({ img }) => (img ? img : '/img/flyerBg.png')}) no-repeat
       center center;
+    background-size: ${({ img }) => (img ? 'contain' : 'cover')};
   }
   @media screen and (max-width: 768px) {
     height: 250px;
@@ -59,6 +60,7 @@ const Container = styled.li<{ img: string | null }>`
     font-size: 16px;
   }
 `;
+
 const Title = styled.div`
   width: 100%;
   height: 100px;
@@ -69,6 +71,7 @@ const Title = styled.div`
     height: 60px;
   }
 `;
+
 const Tags = styled.div`
   display: flex;
   flex-direction: column;

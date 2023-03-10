@@ -26,7 +26,7 @@ const Header = () => {
       <MenuList
         style={{ color: path.includes(MY_PAGE.ROOT) ? '#fff' : '#000' }}>
         {path !== STREET.ROOT && (
-          <Menu onClick={() => navigate(STREET.DETAIL('total', '', 'new', ''))}>
+          <Menu onClick={() => navigate(STREET.DETAIL('', '', 'DATE', ''))}>
             전단지 골목 가기
           </Menu>
         )}
@@ -34,7 +34,9 @@ const Header = () => {
         {!isLogin() ? (
           <Menu>로그인 / 회원가입</Menu>
         ) : (
-          <Menu onClick={() => navigate(ROUTES.MY_PAGE.ROOT)}>마이페이지</Menu>
+          <Menu onClick={() => navigate(MY_PAGE.ROOT + '/' + MY_PAGE.RECENT)}>
+            마이페이지
+          </Menu>
         )}
       </MenuList>
 
@@ -45,7 +47,7 @@ const Header = () => {
             src='/img/street.svg'
             alt='street'
             height={26}
-            onClick={() => navigate(STREET.DETAIL('total', '', 'new', ''))}
+            onClick={() => navigate(STREET.DETAIL('', '', 'DATE', ''))}
           />
         )}
         {path.includes(MY_PAGE.ROOT) ? (
@@ -67,7 +69,7 @@ const Header = () => {
 
         {isLogin() && (
           <NavIcon
-            onClick={() => navigate(ROUTES.MY_PAGE.ROOT)}
+            onClick={() => navigate(MY_PAGE.ROOT + '/' + MY_PAGE.RECENT)}
             src='/img/profile.svg'
             alt='profile'
           />
