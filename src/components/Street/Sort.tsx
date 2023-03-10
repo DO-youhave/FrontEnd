@@ -73,7 +73,7 @@ const SortList = styled.li`
     color: #000;
     font-weight: 600;
   }
-  &#reply {
+  &#COMMENT {
     display: none;
   }
 `;
