@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import { COLORS } from '../../constants/colors';
 import useGetComments from '../../hooks/useGetComments';
+import useWriteComments from '../../hooks/useWriteComments';
 import { CommentsProps } from '../../interfaces/comment';
 import Comment from './Comment';
 
@@ -13,52 +14,19 @@ const Comments = ({
   rowsBottom,
   setRowsBottom,
 }: CommentsProps) => {
-  const { comments, isLoading } = useGetComments(postId);
-  const [commentInput, setCommentInput] = useState<string>('');
-  const [commentInputBottom, setCommentInputBottom] = useState<string>('');
-
+  const { comments } = useGetComments(postId);
+  const {
+    commentInput,
+    commentInputBottom,
+    handleChange,
+    handleChangeBottom,
+    handleSubmit,
+    handleSubmitBottom,
+    handleInputLength,
+    handleInputLengthBottom,
+  } = useWriteComments(postId, setRows, setRowsBottom);
   const handleRows = rows ? 7 : 1;
   const handleRowsBottom = rowsBottom ? 7 : 1;
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && confirm('댓글을 등록하시겠습니까?')) {
-      setCommentInput('');
-      setRows(false);
-      alert('댓글이 등록되었습니다!');
-    }
-  };
-  const handleSubmit = () => {
-    if (confirm('댓글을 등록하시겠습니까?')) {
-      setCommentInput('');
-      setRows(false);
-      alert('댓글이 등록되었습니다!');
-    }
-  };
-  const handleKeyDownBottom = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && confirm('댓글을 등록하시겠습니까?')) {
-      setCommentInputBottom('');
-      setRowsBottom(false);
-      alert('댓글이 등록되었습니다!');
-    }
-  };
-  const handleSubmitBottom = () => {
-    if (confirm('댓글을 등록하시겠습니까?')) {
-      setCommentInputBottom('');
-      setRowsBottom(false);
-      alert('댓글이 등록되었습니다!');
-    }
-  };
-
-  const handleInputLength = () => {
-    return commentInput.length === 0 || commentInput.length === 301
-      ? true
-      : false;
-  };
-  const handleInputLengthBottom = () => {
-    return commentInputBottom.length === 0 || commentInputBottom.length === 301
-      ? true
-      : false;
-  };
 
   return (
     <CommentContainer>
@@ -84,10 +52,7 @@ const Comments = ({
             e.stopPropagation();
             setRows(true);
           }}
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-            setCommentInput(e.target.value);
-          }}
-          onKeyDown={handleKeyDown}
+          onChange={handleChange}
         />
         {rows ? (
           <NumNSubmit>
@@ -118,6 +83,7 @@ const Comments = ({
         }) => (
           <Comment
             key={commentId}
+            postId={postId}
             commentId={commentId}
             name={name}
             content={content}
@@ -145,10 +111,7 @@ const Comments = ({
               e.stopPropagation();
               setRowsBottom(true);
             }}
-            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-              setCommentInputBottom(e.target.value);
-            }}
-            onKeyDown={handleKeyDownBottom}
+            onChange={handleChangeBottom}
           />
           {rowsBottom ? (
             <NumNSubmit>

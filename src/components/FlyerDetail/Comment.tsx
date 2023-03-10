@@ -3,9 +3,11 @@ import { Fragment, useState } from 'react';
 
 import { Comment as CommentType } from '../../apis/Comments';
 import { COLORS } from '../../constants/colors';
+import useWriteReply from '../../hooks/useWriteReply';
 import { NowTextNum, NumNSubmit, SubmitReplyButton, TextNum } from './Comments';
 
 interface CommentProps {
+  postId: number;
   commentId: number;
   name: string;
   content: string;
@@ -15,6 +17,7 @@ interface CommentProps {
 }
 
 const Comment = ({
+  postId,
   commentId,
   name,
   content,
@@ -23,41 +26,21 @@ const Comment = ({
   isCommentWriter,
 }: CommentProps) => {
   const [replyOn, setReplyOn] = useState(false); // 답글(child) 입력 창 on, off
-  const [replyInput, setReplyInput] = useState(''); // 답글 입력 값
+  const {
+    replyInput,
+    handleChange,
+    handleReport,
+    handleInputLength,
+    handleSubmit,
+  } = useWriteReply(postId, commentId, setReplyOn);
   const [moreOn, setMoreOn] = useState(false);
   const [replyMoreOn, setReplyMoreOn] = useState(false);
 
   const handleComment = () => setReplyOn(!replyOn);
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setReplyInput(e.target.value);
-  };
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && confirm('댓글을 등록하시겠습니까?')) {
-      setReplyInput('');
-      setReplyOn(false);
-      alert('댓글이 등록되었습니다!');
-    }
-  };
-  const handleSubmit = () => {
-    if (confirm('댓글을 등록하시겠습니까?')) {
-      alert('댓글이 등록되었습니다!');
-      setReplyInput('');
-      setReplyOn(false);
-    }
-  };
+
   const handleReplyBtn = () => {
     const id = replyOn ? 'on' : undefined;
     return id;
-  };
-  const handleInputLength = () => {
-    return replyInput.length === 0 || replyInput.length > 301 ? true : false;
-  };
-
-  // '댓글' 신고 버튼 클릭 시
-  const handleReport = () => {
-    if (confirm('이 댓글을 신고하시겠어요?')) {
-      alert('신고되었습니다! 깨끗한 사이트를 위한 협조 감사합니다 😄');
-    }
   };
 
   return (
@@ -111,10 +94,7 @@ const Comment = ({
               value={replyInput}
               maxLength={300}
               rows={7}
-              onChange={(e) => {
-                handleChange(e);
-              }}
-              onKeyDown={handleKeyDown}
+              onChange={handleChange}
             />
             <NumNSubmit>
               <TextNum>

@@ -41,3 +41,25 @@ export const commentList = async (postId: number) => {
     console.error(error);
   }
 };
+
+export const writeComment = async (
+  postId: number,
+  data: { content: string }
+) => {
+  try {
+    return http.post(API_URLS.COMMENT.REGISTER(postId), data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const writeReply = async (
+  postId: number,
+  data: { parentId: number; content: string }
+) => {
+  try {
+    return http.post(API_URLS.COMMENT.REGISTER(postId), data);
+  } catch (error) {
+    console.error(error);
+  }
+};
