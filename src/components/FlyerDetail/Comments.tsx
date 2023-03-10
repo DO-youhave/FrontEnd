@@ -167,22 +167,12 @@ const Comments = ({
           ) : undefined}
         </ReplyTextAreaWrap>
       ) : (
-        <div
-          style={{
-            padding: '60px 0 20px',
-            fontWeight: '400',
-            color: '#616161',
-            fontSize: '15px',
-            textAlign: 'center',
-            lineHeight: '1.4',
-            width: '100%',
-          }}>
+        <NoComment>
           <div style={{ marginBottom: '34px' }}>
             <img src='/img/thinking.png' width={100} />
           </div>
-          아직 댓글이 없어요 ㅠㅠ
-          <br />첫 댓글을 남겨주세요!
-        </div>
+          첫 댓글을 남겨주세요!
+        </NoComment>
       )}
     </CommentContainer>
   );
@@ -274,4 +264,14 @@ const Text = styled.div`
     font-size: 12px;
     color: #adadad;
   }
+`;
+
+const NoComment = styled.div`
+  padding: 60px 0 20px;
+  font-weight: 400;
+  color: #616161;
+  font-size: 15px;
+  text-align: center;
+  line-height: 1.4;
+  width: 100%;
 `;
