@@ -18,7 +18,7 @@ const Profile = ({
   return (
     <Absolute>
       <Container>
-        <ProfileImg src={profileImg || '/img/profile.svg'} alt='profile' />
+        <ProfileImg background={profileImg || '/img/profile.svg'} />
         <MyPosting>
           내가 붙인 전단지<Count>{postCount}개</Count>
         </MyPosting>
@@ -90,13 +90,16 @@ const Count = styled.div`
   }
 `;
 
-const ProfileImg = styled.img`
+const ProfileImg = styled.div<{ background: string }>`
   position: absolute;
-  top: -50px;
+  top: -70px;
   left: 50%;
-  transform: translateX(-50%);
   border-radius: 50%;
-  width: 100px;
+  transform: translateX(-50%);
+  background: url(${({ background }) => background}) no-repeat center center;
+  background-size: cover;
+  width: 120px;
+  height: 120px;
   @media screen and (max-width: 768px) {
     width: 80px;
   }
