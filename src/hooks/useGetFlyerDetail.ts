@@ -4,18 +4,16 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { FlyerDetail } from '../apis/FlyerDetail';
 import { FlyerInfo } from '../interfaces/flyerDetail';
 
-const tags = ['#운동화', '#나이키', '#맥북'];
-
 const useGetFlyerDetail = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  const [rows, setRows] = useState(false);
-  const [rowsBottom, setRowsBottom] = useState(false);
+  const [rows, setRows] = useState(false); // 댓글(parent) 입력 창(상) on, off
+  const [rowsBottom, setRowsBottom] = useState(false); // 댓글(parent) 입력 창(하) on, off
   const [openDots, setOpenDots] = useState(false);
   const [openContact, setOpenContact] = useState(false);
   const [info, setInfo] = useState<FlyerInfo>();
-  const id = Number(searchParams.get('id'));
+  const postId = Number(searchParams.get('id'));
 
   const handleBack = () => {
     navigate(-1);
@@ -44,13 +42,14 @@ const useGetFlyerDetail = () => {
 
   useEffect(() => {
     const getDetail = async () => {
-      const detail = await FlyerDetail(id);
+      const detail = await FlyerDetail(postId);
       setInfo(detail);
     };
     getDetail();
   }, []);
 
   return {
+    postId,
     rows,
     setRows,
     rowsBottom,
@@ -62,7 +61,6 @@ const useGetFlyerDetail = () => {
     handleContact,
     handleOpenChat,
     handleCopyClipboard,
-    tags,
     info,
   };
 };

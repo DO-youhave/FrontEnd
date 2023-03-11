@@ -2,67 +2,29 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 
 import { COLORS } from '../../constants/colors';
+import useGetComments from '../../hooks/useGetComments';
+import useWriteComments from '../../hooks/useWriteComments';
+import { CommentsProps } from '../../interfaces/comment';
 import Comment from './Comment';
 
-const commentExample = [
-  {
-    id: 1,
-    profile: '익명 1',
-    content:
-      '가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하',
-    date: '2023.02.02. 16:15',
-    reply: [
-      {
-        id: 1,
-        profile: '익명 1',
-        content:
-          '가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하',
-        date: '2023.02.02. 16:15',
-      },
-    ],
-  },
-  {
-    id: 2,
-    profile: '익명 2',
-    content:
-      '가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하',
-    date: '2023.02.02. 16:15',
-    reply: [
-      {
-        id: 1,
-        profile: '익명 1',
-        content:
-          '가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하',
-        date: '2023.02.02. 16:15',
-      },
-      {
-        id: 2,
-        profile: '익명 1',
-        content:
-          '가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하가ㅏ다라마바사아자차카타파하',
-        date: '2023.02.02. 16:15',
-      },
-    ],
-  },
-];
-
-interface CommentsProps {
-  rows: boolean;
-  setRows: React.Dispatch<React.SetStateAction<boolean>>;
-  rowsBottom: boolean;
-  setRowsBottom: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
 const Comments = ({
+  postId,
   rows,
   setRows,
   rowsBottom,
   setRowsBottom,
 }: CommentsProps) => {
-  const [replyText, setReplyText] = useState<string>('');
-  const isReplyOver = () => {
-    if (replyText.length === 300) alert('댓글은 300자까지 밖에 못 써요 😥');
-  };
+  const { comments } = useGetComments(postId);
+  const {
+    commentInput,
+    commentInputBottom,
+    handleChange,
+    handleChangeBottom,
+    handleSubmit,
+    handleSubmitBottom,
+    handleInputLength,
+    handleInputLengthBottom,
+  } = useWriteComments(postId, setRows, setRowsBottom);
   const handleRows = rows ? 7 : 1;
   const handleRowsBottom = rowsBottom ? 7 : 1;
 
@@ -70,7 +32,9 @@ const Comments = ({
     <CommentContainer>
       <Text id='total'>
         댓글
-        <span style={{ color: `${COLORS.MAIN}`, fontWeight: '600' }}> 2</span>
+        <span style={{ color: `${COLORS.MAIN}`, fontWeight: '600' }}>
+          &nbsp;{comments?.length || 0}
+        </span>
       </Text>
 
       {/* 댓글 입력창(top) */}
@@ -82,69 +46,97 @@ const Comments = ({
         <ReplyTextArea
           placeholder='댓글을 입력해주세요'
           rows={handleRows}
-          maxLength={300}
+          value={commentInput}
+          maxLength={301}
           onClick={(e) => {
             e.stopPropagation();
             setRows(true);
           }}
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-            setReplyText(e.target.value);
-            isReplyOver();
-          }}
+          onChange={handleChange}
         />
         {rows ? (
           <NumNSubmit>
             <TextNum>
-              <NowTextNum>{replyText.length}</NowTextNum>/300
+              <NowTextNum>{commentInput.length}</NowTextNum>/300
             </TextNum>
-            <SubmitReplyButton>등록</SubmitReplyButton>
-          </NumNSubmit>
-        ) : undefined}
-      </ReplyTextAreaWrap>
-
-      {/* 입력된 댓글들 */}
-      {commentExample.map(({ id, profile, content, date, reply }) => (
-        <Comment
-          key={id}
-          id={id}
-          profile={profile}
-          content={content}
-          date={date}
-          reply={reply}
-        />
-      ))}
-
-      {/* 댓글 입력창 (bottom) */}
-      <ReplyTextAreaWrap
-        id='bottom'
-        onClick={(e) => {
-          e.stopPropagation();
-          setRowsBottom(true);
-        }}>
-        <ReplyTextArea
-          placeholder='댓글을 입력해주세요'
-          rows={handleRowsBottom}
-          maxLength={300}
-          onClick={(e) => {
-            e.stopPropagation();
-            setRowsBottom(true);
-          }}
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-            setReplyText(e.target.value);
-            isReplyOver();
-          }}
-        />
-        {rowsBottom ? (
-          <NumNSubmit>
-            <TextNum>
-              <NowTextNum>{replyText.length}</NowTextNum>/300
-            </TextNum>
-            <SubmitReplyButton onClick={(e) => e.stopPropagation()}>
+            <SubmitReplyButton
+              disabled={handleInputLength()}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleSubmit();
+              }}>
               등록
             </SubmitReplyButton>
           </NumNSubmit>
         ) : undefined}
       </ReplyTextAreaWrap>
+
+      {/* 입력된 댓글들(parent) */}
+      {comments?.map(
+        ({
+          commentId,
+          name,
+          content,
+          createdDate,
+          childComments,
+          isCommentWriter,
+        }) => (
+          <Comment
+            key={commentId}
+            postId={postId}
+            commentId={commentId}
+            name={name}
+            content={content}
+            createdDate={createdDate}
+            childComments={childComments}
+            isCommentWriter={isCommentWriter}
+          />
+        )
+      )}
+
+      {/* 댓글 입력창 (bottom) */}
+      {comments?.length !== 0 ? (
+        <ReplyTextAreaWrap
+          id='bottom'
+          onClick={(e) => {
+            e.stopPropagation();
+            setRowsBottom(true);
+          }}>
+          <ReplyTextArea
+            placeholder='댓글을 입력해주세요'
+            rows={handleRowsBottom}
+            value={commentInputBottom}
+            maxLength={301}
+            onClick={(e) => {
+              e.stopPropagation();
+              setRowsBottom(true);
+            }}
+            onChange={handleChangeBottom}
+          />
+          {rowsBottom ? (
+            <NumNSubmit>
+              <TextNum>
+                <NowTextNum>{commentInputBottom.length}</NowTextNum>/300
+              </TextNum>
+              <SubmitReplyButton
+                disabled={handleInputLengthBottom()}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSubmitBottom();
+                }}>
+                등록
+              </SubmitReplyButton>
+            </NumNSubmit>
+          ) : undefined}
+        </ReplyTextAreaWrap>
+      ) : (
+        <NoComment>
+          <div style={{ marginBottom: '34px' }}>
+            <img src='/img/thinking.png' width={100} />
+          </div>
+          첫 댓글을 남겨주세요!
+        </NoComment>
+      )}
     </CommentContainer>
   );
 };
@@ -195,7 +187,7 @@ export const NowTextNum = styled.span`
   font-weight: 600;
 `;
 
-export const SubmitReplyButton = styled.div`
+export const SubmitReplyButton = styled.button`
   padding: 10px 30px;
   background-color: ${COLORS.MAIN};
   display: flex;
@@ -204,6 +196,11 @@ export const SubmitReplyButton = styled.div`
   color: #fff;
   font-weight: 400;
   cursor: pointer;
+  border: none;
+  &:disabled {
+    background: ${COLORS.GRAY};
+    cursor: default;
+  }
 `;
 
 const CommentContainer = styled.div`
@@ -230,4 +227,14 @@ const Text = styled.div`
     font-size: 12px;
     color: #adadad;
   }
+`;
+
+const NoComment = styled.div`
+  padding: 60px 0 20px;
+  font-weight: 400;
+  color: #616161;
+  font-size: 15px;
+  text-align: center;
+  line-height: 1.4;
+  width: 100%;
 `;
