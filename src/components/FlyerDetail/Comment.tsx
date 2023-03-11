@@ -1,96 +1,111 @@
 import styled from '@emotion/styled';
 import { Fragment, useState } from 'react';
 
+import { Comment as CommentType } from '../../apis/Comments';
+import { COLORS } from '../../constants/colors';
+import useWriteReply from '../../hooks/useWriteReply';
 import { NowTextNum, NumNSubmit, SubmitReplyButton, TextNum } from './Comments';
 
 interface CommentProps {
-  id: number;
-  profile: string;
+  postId: number;
+  commentId: number;
+  name: string;
   content: string;
-  date: string;
-  reply: {
-    id: number;
-    profile: string;
-    content: string;
-    date: string;
-  }[];
+  createdDate: string;
+  childComments: CommentType[];
+  isCommentWriter: boolean;
 }
 
-const Comment = ({ id, profile, content, date, reply }: CommentProps) => {
-  const [comment, setComment] = useState(false);
-  const [replyInput, setReplyInput] = useState(''); // 답글 입력
-  const isReplyOver = () => {
-    if (replyInput.length === 301) alert('댓글은 300자까지 밖에 못 써요 😥');
-  };
+const Comment = ({
+  postId,
+  commentId,
+  name,
+  content,
+  createdDate,
+  childComments,
+  isCommentWriter,
+}: CommentProps) => {
+  const [replyOn, setReplyOn] = useState(false); // 답글(child) 입력 창 on, off
+  const {
+    replyInput,
+    handleChange,
+    handleReport,
+    handleInputLength,
+    handleSubmit,
+  } = useWriteReply(postId, commentId, setReplyOn);
+  const [moreOn, setMoreOn] = useState(false);
+  const [replyMoreOn, setReplyMoreOn] = useState(false);
 
-  const handleComment = () => setComment(!comment);
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setReplyInput(e.target.value);
-  };
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter') {
-      console.log(replyInput);
-      setReplyInput('');
-      setComment(false);
-    }
-  };
+  const handleComment = () => setReplyOn(!replyOn);
 
-  // '댓글' 신고 버튼 클릭 시
-  const handleReport = () => {
-    if (confirm('이 댓글을 신고하시겠어요?')) {
-      alert('신고되었습니다! 깨끗한 사이트를 위한 협조 감사합니다 😄');
-    }
+  const handleReplyBtn = () => {
+    const id = replyOn ? 'on' : undefined;
+    return id;
   };
 
   return (
-    <Fragment key={id}>
+    <Fragment key={commentId}>
       {/* =====원 댓글===== */}
-      <CommentContainer>
+      <CommentContainer onClick={() => setMoreOn(false)}>
         <CommentBox id='comment'>
-          <Profile>{profile}</Profile>
+          <Profile>{name}</Profile>
           <div
             style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             <Text>{content}</Text>
-            <Text id='date'>{date}</Text>
+            <Text id='date'>{createdDate}</Text>
           </div>
-          <ReplyButton onClick={handleComment}>답글</ReplyButton>
+          <ReplyButton
+            id={handleReplyBtn()}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleComment();
+            }}>
+            답글
+          </ReplyButton>
         </CommentBox>
 
         {/* 원 댓글에 대한 메뉴 */}
-        <More>
-          {/* 본인이 쓴 댓글일 경우 */}
-          <MoreContent id='mine'>
-            <MoreItem id='margin'>수정</MoreItem>
-            <MoreItem>삭제</MoreItem>
-          </MoreContent>
-
-          {/* 본인이 쓴 댓글이 아닐 경우 */}
-          <MoreContent>
-            <MoreItem onClick={handleReport}>신고</MoreItem>
-          </MoreContent>
+        <More
+          onClick={(e) => {
+            e.stopPropagation();
+            setMoreOn(!moreOn);
+          }}>
+          {isCommentWriter ? (
+            moreOn ? (
+              <MoreContent id='mine'>
+                <MoreItem id='margin'>수정</MoreItem>
+                <MoreItem>삭제</MoreItem>
+              </MoreContent>
+            ) : undefined
+          ) : moreOn ? (
+            <MoreContent>
+              <MoreItem onClick={handleReport}>신고</MoreItem>
+            </MoreContent>
+          ) : undefined}
         </More>
       </CommentContainer>
 
       {
         // 답글 달기 입력창
-        comment && (
+        replyOn && (
           <ReplyInputWrap>
             <ReplyInput
               placeholder='답글을 입력해주세요'
               value={replyInput}
               maxLength={300}
               rows={7}
-              onChange={(e) => {
-                handleChange(e);
-                isReplyOver();
-              }}
-              onKeyDown={handleKeyDown}
+              onChange={handleChange}
             />
             <NumNSubmit>
               <TextNum>
                 <NowTextNum>{replyInput.length}</NowTextNum>/300
               </TextNum>
-              <SubmitReplyButton onClick={(e) => e.stopPropagation()}>
+              <SubmitReplyButton
+                disabled={handleInputLength()}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSubmit();
+                }}>
                 등록
               </SubmitReplyButton>
             </NumNSubmit>
@@ -99,29 +114,31 @@ const Comment = ({ id, profile, content, date, reply }: CommentProps) => {
       }
 
       {/* =====답 댓글===== */}
-      {reply?.map((rep) => (
-        <CommentBox id='reply' key={rep.id}>
+      {childComments?.map((rep) => (
+        <CommentBox id='reply' key={rep.commentId}>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div>
               <ReplyArrow />
-              <Profile>{rep.profile}</Profile>
+              <Profile>{rep.name}</Profile>
               <ContentNDate>
                 <Text>{rep.content}</Text>
-                <Text id='date'>{rep.date}</Text>
+                <Text id='date'>{rep.createdDate}</Text>
               </ContentNDate>
             </div>
 
-            <More id='reply'>
-              {/* 본인이 쓴 댓글일 경우 */}
-              <MoreContent id='mine'>
-                <MoreItem id='margin'>수정</MoreItem>
-                <MoreItem>삭제</MoreItem>
-              </MoreContent>
-
-              {/* 본인이 쓴 댓글이 아닐 경우 */}
-              <MoreContent>
-                <MoreItem onClick={handleReport}>신고</MoreItem>
-              </MoreContent>
+            <More id='reply' onClick={() => setReplyMoreOn(!replyMoreOn)}>
+              {isCommentWriter ? (
+                replyMoreOn ? (
+                  <MoreContent id='mine'>
+                    <MoreItem id='margin'>수정</MoreItem>
+                    <MoreItem>삭제</MoreItem>
+                  </MoreContent>
+                ) : undefined
+              ) : replyMoreOn ? (
+                <MoreContent>
+                  <MoreItem onClick={handleReport}>신고</MoreItem>
+                </MoreContent>
+              ) : undefined}
             </More>
           </div>
         </CommentBox>
@@ -223,6 +240,12 @@ const ReplyButton = styled.button`
   background: #fff;
   cursor: pointer;
   color: #616161;
+  &#on {
+    background: ${COLORS.MAIN};
+    color: #fff;
+    border: 1px solid ${COLORS.MAIN};
+    box-shadow: 0 0 15px rgba(4, 150, 105, 0.5);
+  }
 `;
 
 const MoreItem = styled.div`
