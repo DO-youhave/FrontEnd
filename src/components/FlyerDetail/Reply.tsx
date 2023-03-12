@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 
 import { Comment } from '../../apis/Comments';
+import useRemoveReply from '../../hooks/useRemoveReply';
 import {
   CommentBox,
   IsMe,
@@ -13,12 +14,15 @@ import {
 } from './Comment';
 
 interface ReplyProps {
+  postId: number;
   rep: Comment;
   handleReport: () => void;
 }
 
-const Reply = ({ rep, handleReport }: ReplyProps) => {
+const Reply = ({ postId, rep, handleReport }: ReplyProps) => {
   const [replyMoreOn, setReplyMoreOn] = useState(false);
+
+  const { isRemove } = useRemoveReply(postId, rep.commentId);
 
   return (
     <CommentBox id='reply' key={rep.commentId}>
@@ -35,25 +39,27 @@ const Reply = ({ rep, handleReport }: ReplyProps) => {
         </div>
 
         {/* 답 댓글에 대한 메뉴 */}
-        <More
-          id='reply'
-          onClick={(e) => {
-            e.stopPropagation();
-            setReplyMoreOn(!replyMoreOn);
-          }}>
-          {rep.isCommentWriter ? (
-            replyMoreOn ? (
-              <MoreContent id='mine'>
-                <MoreItem id='margin'>수정</MoreItem>
-                <MoreItem>삭제</MoreItem>
+        {!rep.isRemoved ? (
+          <More
+            id='reply'
+            onClick={(e) => {
+              e.stopPropagation();
+              setReplyMoreOn(!replyMoreOn);
+            }}>
+            {rep.isCommentWriter ? (
+              replyMoreOn ? (
+                <MoreContent id='mine'>
+                  <MoreItem id='margin'>수정</MoreItem>
+                  <MoreItem onClick={isRemove}>삭제</MoreItem>
+                </MoreContent>
+              ) : undefined
+            ) : replyMoreOn ? (
+              <MoreContent>
+                <MoreItem onClick={handleReport}>신고</MoreItem>
               </MoreContent>
-            ) : undefined
-          ) : replyMoreOn ? (
-            <MoreContent>
-              <MoreItem onClick={handleReport}>신고</MoreItem>
-            </MoreContent>
-          ) : undefined}
-        </More>
+            ) : undefined}
+          </More>
+        ) : undefined}
       </div>
     </CommentBox>
   );

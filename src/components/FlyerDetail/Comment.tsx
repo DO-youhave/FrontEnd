@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { Fragment, useState } from 'react';
 
 import { COLORS } from '../../constants/colors';
+import useRemoveComment from '../../hooks/useRemoveComment';
 import useWriteReply from '../../hooks/useWriteReply';
 import { CommentProps } from '../../interfaces/comment';
 import { NowTextNum, NumNSubmit, SubmitReplyButton, TextNum } from './Comments';
@@ -15,6 +16,7 @@ const Comment = ({
   createdDate,
   childComments,
   isCommentWriter,
+  isRemoved,
 }: CommentProps) => {
   const [replyOn, setReplyOn] = useState(false); // 답글(child) 입력 창 on, off
   const {
@@ -24,6 +26,8 @@ const Comment = ({
     handleInputLength,
     handleSubmit,
   } = useWriteReply(postId, commentId, setReplyOn);
+
+  const { isRemove } = useRemoveComment(postId, commentId);
 
   const [moreOn, setMoreOn] = useState(false);
 
@@ -48,35 +52,39 @@ const Comment = ({
             <Text>{content}</Text>
             <Text id='date'>{createdDate}</Text>
           </div>
-          <ReplyButton
-            id={handleReplyBtn()}
-            onClick={(e) => {
-              e.stopPropagation();
-              handleComment();
-            }}>
-            답글
-          </ReplyButton>
+          {!isRemoved ? (
+            <ReplyButton
+              id={handleReplyBtn()}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleComment();
+              }}>
+              답글
+            </ReplyButton>
+          ) : undefined}
         </CommentBox>
 
         {/* 원 댓글에 대한 메뉴 */}
-        <More
-          onClick={(e) => {
-            e.stopPropagation();
-            setMoreOn(!moreOn);
-          }}>
-          {isCommentWriter ? (
-            moreOn ? (
-              <MoreContent id='mine'>
-                <MoreItem id='margin'>수정</MoreItem>
-                <MoreItem>삭제</MoreItem>
+        {!isRemoved ? (
+          <More
+            onClick={(e) => {
+              e.stopPropagation();
+              setMoreOn(!moreOn);
+            }}>
+            {isCommentWriter ? (
+              moreOn ? (
+                <MoreContent id='mine'>
+                  <MoreItem id='margin'>수정</MoreItem>
+                  <MoreItem onClick={isRemove}>삭제</MoreItem>
+                </MoreContent>
+              ) : undefined
+            ) : moreOn ? (
+              <MoreContent>
+                <MoreItem onClick={handleReport}>신고</MoreItem>
               </MoreContent>
-            ) : undefined
-          ) : moreOn ? (
-            <MoreContent>
-              <MoreItem onClick={handleReport}>신고</MoreItem>
-            </MoreContent>
-          ) : undefined}
-        </More>
+            ) : undefined}
+          </More>
+        ) : undefined}
       </CommentContainer>
 
       {
@@ -109,7 +117,12 @@ const Comment = ({
 
       {/* =====답 댓글===== */}
       {childComments?.map((rep) => (
-        <Reply rep={rep} handleReport={handleReport} />
+        <Reply
+          key={rep.commentId}
+          postId={postId}
+          rep={rep}
+          handleReport={handleReport}
+        />
       ))}
     </Fragment>
   );

@@ -81,6 +81,7 @@ const Comments = ({
           createdDate,
           childComments,
           isCommentWriter,
+          isRemoved,
         }) => (
           <Comment
             key={commentId}
@@ -91,6 +92,7 @@ const Comments = ({
             createdDate={createdDate}
             childComments={childComments}
             isCommentWriter={isCommentWriter}
+            isRemoved={isRemoved}
           />
         )
       )}

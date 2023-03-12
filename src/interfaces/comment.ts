@@ -16,4 +16,5 @@ export interface CommentProps {
   createdDate: string;
   childComments: CommentType[];
   isCommentWriter: boolean;
+  isRemoved: boolean;
 }

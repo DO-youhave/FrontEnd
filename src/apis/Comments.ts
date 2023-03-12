@@ -63,3 +63,11 @@ export const writeReply = async (
     console.error(error);
   }
 };
+
+export const removeComment = async (postId: number, commentId: number) => {
+  try {
+    return http.delete(API_URLS.COMMENT.DELETE(postId, commentId));
+  } catch (error) {
+    console.error(error);
+  }
+};
