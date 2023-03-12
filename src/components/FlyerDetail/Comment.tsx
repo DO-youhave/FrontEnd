@@ -5,6 +5,7 @@ import { COLORS } from '../../constants/colors';
 import useWriteReply from '../../hooks/useWriteReply';
 import { CommentProps } from '../../interfaces/comment';
 import { NowTextNum, NumNSubmit, SubmitReplyButton, TextNum } from './Comments';
+import Reply from './Reply';
 
 const Comment = ({
   postId,
@@ -25,7 +26,6 @@ const Comment = ({
   } = useWriteReply(postId, commentId, setReplyOn);
 
   const [moreOn, setMoreOn] = useState(false);
-  const [replyMoreOn, setReplyMoreOn] = useState(false);
 
   const handleComment = () => setReplyOn(!replyOn);
 
@@ -109,35 +109,7 @@ const Comment = ({
 
       {/* =====답 댓글===== */}
       {childComments?.map((rep) => (
-        <CommentBox id='reply' key={rep.commentId}>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div>
-              <ReplyArrow />
-              <Profile>
-                {rep.name} {isCommentWriter ? <IsMe>나</IsMe> : undefined}
-              </Profile>
-              <ContentNDate>
-                <Text>{rep.content}</Text>
-                <Text id='date'>{rep.createdDate}</Text>
-              </ContentNDate>
-            </div>
-
-            <More id='reply' onClick={() => setReplyMoreOn(!replyMoreOn)}>
-              {isCommentWriter ? (
-                replyMoreOn ? (
-                  <MoreContent id='mine'>
-                    <MoreItem id='margin'>수정</MoreItem>
-                    <MoreItem>삭제</MoreItem>
-                  </MoreContent>
-                ) : undefined
-              ) : replyMoreOn ? (
-                <MoreContent>
-                  <MoreItem onClick={handleReport}>신고</MoreItem>
-                </MoreContent>
-              ) : undefined}
-            </More>
-          </div>
-        </CommentBox>
+        <Reply rep={rep} handleReport={handleReport} />
       ))}
     </Fragment>
   );
@@ -153,7 +125,7 @@ const CommentContainer = styled.div`
   align-items: flex-start;
 `;
 
-const CommentBox = styled.div`
+export const CommentBox = styled.div`
   width: 95%;
   display: flex;
   flex-direction: column;
@@ -176,7 +148,7 @@ const CommentBox = styled.div`
   }
 `;
 
-const Profile = styled.div`
+export const Profile = styled.div`
   display: flex;
   align-items: center;
   font-size: 14px;
@@ -193,7 +165,7 @@ const Profile = styled.div`
   }
 `;
 
-const IsMe = styled.span`
+export const IsMe = styled.span`
   display: inline-block;
   margin-left: 12px;
   border-radius: 100%;
@@ -206,13 +178,7 @@ const IsMe = styled.span`
   color: #fff;
 `;
 
-const ContentNDate = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-`;
-
-const Text = styled.div`
+export const Text = styled.div`
   width: 100%;
   font-size: 14px;
   font-weight: 400;
@@ -228,19 +194,7 @@ const Text = styled.div`
   }
 `;
 
-const ReplyArrow = styled.div`
-  position: absolute;
-  background: url('/img/replyArrow.png');
-  background-size: contain;
-  width: 15px;
-  height: 15px;
-  left: 20px;
-  @media all and (max-width: 767px) {
-    left: 10px;
-  }
-`;
-
-const ReplyButton = styled.button`
+export const ReplyButton = styled.button`
   margin-right: auto;
   margin-top: 20px;
   padding: 7px 15px;
@@ -257,7 +211,7 @@ const ReplyButton = styled.button`
   }
 `;
 
-const MoreItem = styled.div`
+export const MoreItem = styled.div`
   font-size: 12px;
   font-weight: 400;
   color: #616161;
@@ -266,7 +220,7 @@ const MoreItem = styled.div`
   }
 `;
 
-const More = styled.div`
+export const More = styled.div`
   width: 12px;
   height: 20px;
   margin-top: 43px;
@@ -282,7 +236,7 @@ const More = styled.div`
   }
 `;
 
-const MoreContent = styled.div`
+export const MoreContent = styled.div`
   position: absolute;
   left: -25px;
   bottom: -55px;
@@ -306,13 +260,13 @@ const MoreContent = styled.div`
     }
   }
 `;
-const ReplyInputWrap = styled.div`
+export const ReplyInputWrap = styled.div`
   width: 95%;
   background-color: #e9e9e9;
   border-radius: 0 0 12px 12px;
 `;
 
-const ReplyInput = styled.textarea`
+export const ReplyInput = styled.textarea`
   width: 100%;
   border: none;
   outline: none;
