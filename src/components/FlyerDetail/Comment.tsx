@@ -39,7 +39,10 @@ const Comment = ({
       {/* =====원 댓글===== */}
       <CommentContainer onClick={() => setMoreOn(false)}>
         <CommentBox id='comment'>
-          <Profile>{name}</Profile>
+          <Profile>
+            {name} {isCommentWriter ? <IsMe>나</IsMe> : undefined}
+          </Profile>
+
           <div
             style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             <Text>{content}</Text>
@@ -110,7 +113,9 @@ const Comment = ({
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div>
               <ReplyArrow />
-              <Profile>{rep.name}</Profile>
+              <Profile>
+                {rep.name} {isCommentWriter ? <IsMe>나</IsMe> : undefined}
+              </Profile>
               <ContentNDate>
                 <Text>{rep.content}</Text>
                 <Text id='date'>{rep.createdDate}</Text>
@@ -186,6 +191,19 @@ const Profile = styled.div`
     background: url('/img/profile.svg') no-repeat;
     background-size: contain;
   }
+`;
+
+const IsMe = styled.span`
+  display: inline-block;
+  margin-left: 12px;
+  border-radius: 100%;
+  width: 18px;
+  height: 18px;
+  font-size: 10px;
+  text-align: center;
+  line-height: 18px;
+  background: ${COLORS.MAIN};
+  color: #fff;
 `;
 
 const ContentNDate = styled.div`
@@ -278,7 +296,6 @@ const MoreContent = styled.div`
   cursor: pointer;
   &#mine {
     bottom: -80px;
-    display: none;
   }
   @media all and (max-width: 767px) {
     left: -56px;
