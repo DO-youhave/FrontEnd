@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
 
 import { COLORS } from '../../constants/colors';
 import useGetComments from '../../hooks/useGetComments';

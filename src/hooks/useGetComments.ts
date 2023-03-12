@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
-import { commentList, Comments } from '../apis/Comments';
+import { commentList } from '../apis/Comments';
 
 const useGetComments = (postId: number) => {
   // const [comments, setComments] = useState<Comments[]>();

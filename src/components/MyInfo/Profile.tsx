@@ -102,9 +102,11 @@ const ProfileImg = styled.div<{ background: string }>`
   height: 120px;
   @media screen and (max-width: 768px) {
     width: 80px;
+    height: 80px;
   }
   @media screen and (max-width: 576px) {
     width: 60px;
+    height: 60px;
     top: -35px;
   }
 `;
