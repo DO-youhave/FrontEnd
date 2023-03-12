@@ -8,11 +8,11 @@ const useGetFlyerDetail = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  const [rows, setRows] = useState(false); // 댓글(parent) 입력 창(상) on, off
-  const [rowsBottom, setRowsBottom] = useState(false); // 댓글(parent) 입력 창(하) on, off
   const [openDots, setOpenDots] = useState(false);
   const [openContact, setOpenContact] = useState(false);
-  const [info, setInfo] = useState<FlyerInfo>();
+  const [info, setInfo] = useState<FlyerInfo>(); // 전단지 상세 정보(댓글 제외)
+  const [rows, setRows] = useState(false); // 댓글(parent) 입력 창(상) on, off
+  const [rowsBottom, setRowsBottom] = useState(false); // 댓글(parent) 입력 창(하) on, off
   const postId = Number(searchParams.get('id'));
 
   const handleBack = () => {

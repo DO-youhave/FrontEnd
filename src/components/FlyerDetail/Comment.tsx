@@ -1,20 +1,10 @@
 import styled from '@emotion/styled';
 import { Fragment, useState } from 'react';
 
-import { Comment as CommentType } from '../../apis/Comments';
 import { COLORS } from '../../constants/colors';
 import useWriteReply from '../../hooks/useWriteReply';
+import { CommentProps } from '../../interfaces/comment';
 import { NowTextNum, NumNSubmit, SubmitReplyButton, TextNum } from './Comments';
-
-interface CommentProps {
-  postId: number;
-  commentId: number;
-  name: string;
-  content: string;
-  createdDate: string;
-  childComments: CommentType[];
-  isCommentWriter: boolean;
-}
 
 const Comment = ({
   postId,
@@ -33,6 +23,7 @@ const Comment = ({
     handleInputLength,
     handleSubmit,
   } = useWriteReply(postId, commentId, setReplyOn);
+
   const [moreOn, setMoreOn] = useState(false);
   const [replyMoreOn, setReplyMoreOn] = useState(false);
 

@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
 
 import { COLORS } from '../../constants/colors';
 import useGetComments from '../../hooks/useGetComments';
@@ -25,8 +24,10 @@ const Comments = ({
     handleInputLength,
     handleInputLengthBottom,
   } = useWriteComments(postId, setRows, setRowsBottom);
+
   const handleRows = rows ? 7 : 1;
   const handleRowsBottom = rowsBottom ? 7 : 1;
+  console.log(comments);
 
   return (
     <CommentContainer>
