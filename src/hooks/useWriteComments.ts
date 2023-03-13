@@ -11,6 +11,7 @@ const useWriteComments = (
 ) => {
   const [commentInput, setCommentInput] = useState<string>('');
   const [commentInputBottom, setCommentInputBottom] = useState<string>('');
+
   const onSuccess = () => {
     alert('댓글이 등록되었습니다!');
     queryClient.invalidateQueries(['comments', postId]);

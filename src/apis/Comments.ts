@@ -63,3 +63,35 @@ export const writeReply = async (
     console.error(error);
   }
 };
+
+export const removeComment = async (postId: number, commentId: number) => {
+  try {
+    return http.delete(API_URLS.COMMENT.DELETE(postId, commentId));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const editComment = async (
+  postId: number,
+  commentId: number,
+  data: { content: string }
+) => {
+  try {
+    return http.post(API_URLS.COMMENT.EDIT(postId, commentId), data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const editReply = async (
+  postId: number,
+  commentId: number,
+  data: { content: string }
+) => {
+  try {
+    return http.post(API_URLS.COMMENT.EDIT(postId, commentId), data);
+  } catch (error) {
+    console.error(error);
+  }
+};

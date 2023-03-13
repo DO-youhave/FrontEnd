@@ -23,7 +23,6 @@ const FlyerDetail = () => {
     info,
   } = useGetFlyerDetail();
 
-  console.log(info);
   const handleCategory = CategoryItem.find(
     (item) => item.id === info?.categoryKeyword
   )?.name;

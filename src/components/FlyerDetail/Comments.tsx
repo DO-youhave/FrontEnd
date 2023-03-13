@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
 
 import { COLORS } from '../../constants/colors';
 import useGetComments from '../../hooks/useGetComments';
@@ -25,6 +24,7 @@ const Comments = ({
     handleInputLength,
     handleInputLengthBottom,
   } = useWriteComments(postId, setRows, setRowsBottom);
+
   const handleRows = rows ? 7 : 1;
   const handleRowsBottom = rowsBottom ? 7 : 1;
 
@@ -80,6 +80,7 @@ const Comments = ({
           createdDate,
           childComments,
           isCommentWriter,
+          isRemoved,
         }) => (
           <Comment
             key={commentId}
@@ -90,10 +91,10 @@ const Comments = ({
             createdDate={createdDate}
             childComments={childComments}
             isCommentWriter={isCommentWriter}
+            isRemoved={isRemoved}
           />
         )
       )}
-
       {/* 댓글 입력창 (bottom) */}
       {comments?.length !== 0 ? (
         <ReplyTextAreaWrap
