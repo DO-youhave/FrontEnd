@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { Fragment, useState } from 'react';
 
 import { COLORS } from '../../constants/colors';
+import useEditComment from '../../hooks/useEditComment';
 import useRemoveComment from '../../hooks/useRemoveComment';
 import useWriteReply from '../../hooks/useWriteReply';
 import { CommentProps } from '../../interfaces/comment';
@@ -19,6 +20,8 @@ const Comment = ({
   isRemoved,
 }: CommentProps) => {
   const [replyOn, setReplyOn] = useState(false); // 답글(child) 입력 창 on, off
+  const [onEdit, setOnEdit] = useState(false); // 댓글(parent) 수정 창 on,off
+  const [saveComment, setSaveComment] = useState<string>(content);
   const {
     replyInput,
     handleChange,
@@ -26,6 +29,13 @@ const Comment = ({
     handleInputLength,
     handleSubmit,
   } = useWriteReply(postId, commentId, setReplyOn);
+
+  const { completeEdit } = useEditComment(
+    postId,
+    commentId,
+    saveComment,
+    setOnEdit
+  );
 
   const { isRemove } = useRemoveComment(postId, commentId);
 
@@ -36,6 +46,13 @@ const Comment = ({
   const handleReplyBtn = () => {
     const id = replyOn ? 'on' : undefined;
     return id;
+  };
+
+  const handleEditInput = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
+    setSaveComment(e.target.value);
+
+  const handleEditinputNum = () => {
+    return saveComment.length === 0 || saveComment.length > 300 ? true : false;
   };
 
   return (
@@ -49,8 +66,38 @@ const Comment = ({
 
           <div
             style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            <Text>{content}</Text>
-            <Text id='date'>{createdDate}</Text>
+            {onEdit ? ( // 수정 버튼 클릭 시 댓글 편집 창
+              <EditInputWrap>
+                <EditTextArea
+                  value={saveComment}
+                  rows={7}
+                  maxLength={301}
+                  onChange={handleEditInput}
+                />
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                  }}>
+                  <TextNum>
+                    <NowTextNum>{saveComment.length}</NowTextNum>/300
+                  </TextNum>
+                  <CancelEdit onClick={() => setOnEdit(false)}>취소</CancelEdit>
+                  <SubmitEdit
+                    disabled={handleEditinputNum()}
+                    onClick={completeEdit}>
+                    수정
+                  </SubmitEdit>
+                </div>
+              </EditInputWrap>
+            ) : (
+              <Text>{content}</Text>
+            )}
+            {!onEdit ? (
+              !isRemoved ? (
+                <Text id='date'>{createdDate}</Text>
+              ) : undefined
+            ) : undefined}
           </div>
           {!isRemoved ? (
             <ReplyButton
@@ -74,7 +121,13 @@ const Comment = ({
             {isCommentWriter ? (
               moreOn ? (
                 <MoreContent id='mine'>
-                  <MoreItem id='margin'>수정</MoreItem>
+                  <MoreItem
+                    id='margin'
+                    onClick={() => {
+                      setOnEdit(true);
+                    }}>
+                    수정
+                  </MoreItem>
                   <MoreItem onClick={isRemove}>삭제</MoreItem>
                 </MoreContent>
               ) : undefined
@@ -149,7 +202,7 @@ export const CommentBox = styled.div`
     border-bottom: 1px solid #d9d9d9;
   }
   &#comment {
-    width: 60%;
+    width: 100%;
   }
   @media all and (max-width: 767px) {
     &#comment {
@@ -189,6 +242,43 @@ export const IsMe = styled.span`
   line-height: 18px;
   background: ${COLORS.MAIN};
   color: #fff;
+`;
+
+export const EditInputWrap = styled.div`
+  width: 100%;
+  font-size: 14px;
+  margin: 10px 0;
+  padding: 18px;
+  border-radius: 15px;
+  background: #e9e9e9;
+  box-sizing: border-box;
+`;
+
+export const EditTextArea = styled.textarea`
+  width: 100%;
+  border: none;
+  background: #e9e9e9;
+  outline: none;
+`;
+
+export const SubmitEdit = styled.button`
+  padding: 10px 30px;
+  border: none;
+  background: ${COLORS.MAIN};
+  color: #fff;
+  cursor: pointer;
+
+  &:disabled {
+    background: #cdcdcd;
+  }
+`;
+
+export const CancelEdit = styled.button`
+  padding: 10px 30px;
+  border: 1px solid ${COLORS.MAIN};
+  color: ${COLORS.MAIN};
+  cursor: pointer;
+  margin-right: 10px;
 `;
 
 export const Text = styled.div`

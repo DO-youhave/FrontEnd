@@ -27,7 +27,6 @@ const Comments = ({
 
   const handleRows = rows ? 7 : 1;
   const handleRowsBottom = rowsBottom ? 7 : 1;
-  console.log(comments);
 
   return (
     <CommentContainer>
@@ -96,7 +95,6 @@ const Comments = ({
           />
         )
       )}
-
       {/* 댓글 입력창 (bottom) */}
       {comments?.length !== 0 ? (
         <ReplyTextAreaWrap
