@@ -20,6 +20,7 @@ const FlyerDetail = () => {
     handleContact,
     handleOpenChat,
     handleCopyClipboard,
+    handleReport,
     info,
   } = useGetFlyerDetail();
 
@@ -49,7 +50,9 @@ const FlyerDetail = () => {
                 ) : (
                   <DotsMenu>
                     <DotsMenuItem>북마크하기</DotsMenuItem>
-                    <DotsMenuItem id='last'>신고하기</DotsMenuItem>
+                    <DotsMenuItem id='last' onClick={handleReport}>
+                      신고하기
+                    </DotsMenuItem>
                   </DotsMenu>
                 )}
               </div>

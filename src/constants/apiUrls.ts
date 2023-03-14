@@ -37,5 +37,6 @@ export const API_URLS = {
     DELETE: (postId: number, commentId: number) =>
       `/users/posts/${postId}/${commentId}`, // 댓글 삭제
     LIST: (id: number) => `/users/posts/${id}/comments`, // 댓글 리스트
+    REPORT: (postId: number) => `users/comments/${postId}/report`, // 댓글 신고
   },
 };

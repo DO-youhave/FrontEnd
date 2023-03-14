@@ -12,3 +12,11 @@ export const FlyerDetail = async (id: number) => {
     console.error(error);
   }
 };
+
+export const ReportDetail = async (postId: number) => {
+  try {
+    return http.post(API_URLS.POST.REPORT(postId));
+  } catch (error) {
+    console.error(error);
+  }
+};

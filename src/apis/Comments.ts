@@ -95,3 +95,19 @@ export const editReply = async (
     console.error(error);
   }
 };
+
+export const ReportComment = (commentId: number) => {
+  try {
+    return http.post(API_URLS.COMMENT.REPORT(commentId));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const ReportReply = (commentId: number) => {
+  try {
+    return http.post(API_URLS.COMMENT.REPORT(commentId));
+  } catch (error) {
+    console.error(error);
+  }
+};

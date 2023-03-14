@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import { FlyerDetail } from '../apis/FlyerDetail';
+import { FlyerDetail, ReportDetail } from '../apis/FlyerDetail';
 import { FlyerInfo } from '../interfaces/flyerDetail';
 
 const useGetFlyerDetail = () => {
@@ -20,6 +20,17 @@ const useGetFlyerDetail = () => {
   };
   const handleDots = () => {
     setOpenDots(!openDots);
+  };
+
+  const handleReport = async () => {
+    try {
+      if (confirm('이 전단지를 신고하시겠어요?')) {
+        await ReportDetail(postId);
+        alert('신고되었습니다! 깨끗한 사이트를 위한 협조 감사합니다 😄');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
   const handleContact = () => {
     setOpenContact(!openContact);
@@ -61,6 +72,7 @@ const useGetFlyerDetail = () => {
     handleContact,
     handleOpenChat,
     handleCopyClipboard,
+    handleReport,
     info,
   };
 };

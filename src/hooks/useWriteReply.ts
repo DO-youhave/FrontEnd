@@ -35,13 +35,6 @@ const useWriteReply = (
     }
   };
 
-  // '댓글' 신고 버튼 클릭 시
-  const handleReport = () => {
-    if (confirm('이 댓글을 신고하시겠어요?')) {
-      alert('신고되었습니다! 깨끗한 사이트를 위한 협조 감사합니다 😄');
-    }
-  };
-
   const handleInputLength = () => {
     return replyInput.length === 0 || replyInput.length > 301 ? true : false;
   };
@@ -50,7 +43,6 @@ const useWriteReply = (
     replyInput,
     handleChange,
     handleSubmit,
-    handleReport,
     handleInputLength,
   };
 };
