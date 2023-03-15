@@ -4,6 +4,7 @@ import Comments from '../components/FlyerDetail/Comments';
 import { CategoryItem } from '../constants/categorys';
 import { COLORS } from '../constants/colors';
 import useGetFlyerDetail from '../hooks/useGetFlyerDetail';
+import useRemoveFlyer from '../hooks/useRemoveFlyer';
 import { timeForToday } from '../utils/timeForToday';
 
 const FlyerDetail = () => {
@@ -25,6 +26,8 @@ const FlyerDetail = () => {
     info,
   } = useGetFlyerDetail();
 
+  const { handleRemove } = useRemoveFlyer(postId);
+
   const handleCategory = CategoryItem.find(
     (item) => item.id === info?.categoryKeyword
   )?.name;
@@ -45,7 +48,7 @@ const FlyerDetail = () => {
                 {info?.isWriter ? (
                   <DotsMenu id='mine'>
                     <DotsMenuItem>수정</DotsMenuItem>
-                    <DotsMenuItem>삭제</DotsMenuItem>
+                    <DotsMenuItem onClick={handleRemove}>삭제</DotsMenuItem>
                     <DotsMenuItem id='last' onClick={handleBookmark}>
                       {info?.mark ? '북마크취소' : '북마크하기'}
                     </DotsMenuItem>

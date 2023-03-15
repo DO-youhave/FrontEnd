@@ -13,6 +13,14 @@ export const FlyerDetail = async (id: number) => {
   }
 };
 
+export const deleteFlyer = (postId: number) => {
+  try {
+    return http.delete(API_URLS.POST.DELETE(postId));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const ReportDetail = async (postId: number) => {
   try {
     return http.post(API_URLS.POST.REPORT(postId));
