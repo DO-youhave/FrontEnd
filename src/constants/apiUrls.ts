@@ -25,7 +25,8 @@ export const API_URLS = {
     REGISTER: '/users/posts', // 전단지 등록
     DETAIL: (id: number) => `/users/posts/${id}`, // 전단지 상세
     DELETE: (id: number) => `/users/posts/${id}`, // 전단지 삭제
-    BOOKMARK: (id: number) => `/users/posts/${id}`, // 전단지 북마크
+    BOOKMARK: (postId: number, mark: boolean) =>
+      `/users/posts/${postId}?mark=${mark}`, // 전단지 북마크
     GETEDIT: (id: number) => `/users/posts/${id}/edit`, // 전단지 수정 정보 조회
     EDIT: (id: number) => `/users/posts/${id}/edit`, // 전단지 수정
     REPORT: (id: number) => `/users/posts/${id}/report`, // 전단지 신고

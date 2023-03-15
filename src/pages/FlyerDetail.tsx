@@ -21,6 +21,7 @@ const FlyerDetail = () => {
     handleOpenChat,
     handleCopyClipboard,
     handleReport,
+    handleBookmark,
     info,
   } = useGetFlyerDetail();
 
@@ -45,11 +46,15 @@ const FlyerDetail = () => {
                   <DotsMenu id='mine'>
                     <DotsMenuItem>수정</DotsMenuItem>
                     <DotsMenuItem>삭제</DotsMenuItem>
-                    <DotsMenuItem id='last'>북마크하기</DotsMenuItem>
+                    <DotsMenuItem id='last' onClick={handleBookmark}>
+                      {info?.mark ? '북마크취소' : '북마크하기'}
+                    </DotsMenuItem>
                   </DotsMenu>
                 ) : (
                   <DotsMenu>
-                    <DotsMenuItem>북마크하기</DotsMenuItem>
+                    <DotsMenuItem onClick={handleBookmark}>
+                      {info?.mark ? '북마크취소' : '북마크하기'}
+                    </DotsMenuItem>
                     <DotsMenuItem id='last' onClick={handleReport}>
                       신고하기
                     </DotsMenuItem>

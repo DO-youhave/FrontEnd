@@ -20,3 +20,11 @@ export const ReportDetail = async (postId: number) => {
     console.error(error);
   }
 };
+
+export const Bookmark = async (postId: number, mark: boolean) => {
+  try {
+    return http.patch(API_URLS.POST.BOOKMARK(postId, mark));
+  } catch (error) {
+    console.error(error);
+  }
+};
