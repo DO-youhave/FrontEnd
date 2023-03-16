@@ -16,9 +16,10 @@ const Redirect = ({ type }: RedirectProps) => {
   const [searchParams] = useSearchParams();
   const code = searchParams.get('code') || '';
   const state = searchParams.get('state') || '';
+  const redirectUrl = import.meta.env.VITE_KAKAO_CALLBACK_URL;
   const data = {
     naver: { code, state },
-    kakao: { code },
+    kakao: { code, redirectUrl },
   };
   const loginApi = {
     naver: naverLogin,
