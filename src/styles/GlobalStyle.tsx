@@ -10,24 +10,36 @@ const style = css`
   html {
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
+    font-family: 'Noto Sans KR', sans-serif;
   }
   body {
     margin: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 500;
   }
   main {
     display: block;
   }
+  div {
+    box-sizing: border-box;
+  }
   h1 {
     font-size: 2em;
     margin: 0.67em 0;
+  }
+  textarea {
+    resize: none;
   }
   hr {
     box-sizing: content-box;
     height: 0;
     overflow: visible;
   }
+  ul {
+    list-style: none;
+    padding: 0;
+  }
   pre {
-    font-family: monospace, monospace;
     font-size: 1em;
   }
   a {
@@ -45,7 +57,6 @@ const style = css`
   code,
   kbd,
   samp {
-    font-family: monospace, monospace;
     font-size: 1em;
   }
   small {
