@@ -1,8 +1,10 @@
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 import Comments from '../components/FlyerDetail/Comments';
 import { CategoryItem } from '../constants/categorys';
 import { COLORS } from '../constants/colors';
+import { ROUTES } from '../constants/routes';
 import useGetFlyerDetail from '../hooks/useGetFlyerDetail';
 import useRemoveFlyer from '../hooks/useRemoveFlyer';
 import { timeForToday } from '../utils/timeForToday';
@@ -26,11 +28,18 @@ const FlyerDetail = () => {
     info,
   } = useGetFlyerDetail();
 
+  const navigate = useNavigate();
+
   const { handleRemove } = useRemoveFlyer(postId);
 
   const handleCategory = CategoryItem.find(
     (item) => item.id === info?.categoryKeyword
   )?.name;
+
+  const goCategory = () => {
+    navigate(ROUTES.STREET.DETAIL(info?.categoryKeyword, '', '', ''));
+  };
+
   const handleImgWidth = info?.imgSecond ? 'half' : '';
   return (
     <Container
@@ -69,7 +78,7 @@ const FlyerDetail = () => {
         </Header>
 
         <Title>{info?.title}</Title>
-        <Category>{handleCategory}</Category>
+        <Category onClick={goCategory}>{handleCategory}</Category>
         <ViewsNTime>
           조회수 {info?.viewCount} &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;{' '}
           {timeForToday(info?.createdDate || '')}
@@ -77,12 +86,19 @@ const FlyerDetail = () => {
 
         {info?.img ? (
           <Imgs>
-            {info?.img && <Img id={handleImgWidth} src={info?.img} />}
+            {info?.img && (
+              <Img
+                id={handleImgWidth}
+                src={info?.img}
+                onClick={() => window.open(`${info?.img}`)}
+              />
+            )}
             {info?.imgSecond && (
               <Img
                 id={handleImgWidth}
                 className='second'
                 src={info?.imgSecond}
+                onClick={() => window.open(`${info?.imgSecond}`)}
               />
             )}
           </Imgs>
@@ -219,6 +235,7 @@ const Img = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  cursor: pointer;
   &#half {
     width: 49%;
   }
@@ -252,7 +269,6 @@ const Tag = styled.div`
   padding: 9px 12px;
   border: 1px solid #d9d9d9;
   background-color: #f9f9f9;
-  cursor: pointer;
   font-size: 14px;
   font-weight: 400;
   color: #616161;
