@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
-import { Comment } from '../../apis/Comments';
+import { Comment, ReportReply } from '../../apis/Comments';
 import useEditReply from '../../hooks/useEditReply';
 import useRemoveReply from '../../hooks/useRemoveReply';
 import {
@@ -22,10 +22,9 @@ import { NowTextNum, TextNum } from './Comments';
 interface ReplyProps {
   postId: number;
   rep: Comment;
-  handleReport: () => void;
 }
 
-const Reply = ({ postId, rep, handleReport }: ReplyProps) => {
+const Reply = ({ postId, rep }: ReplyProps) => {
   const [replyMoreOn, setReplyMoreOn] = useState(false);
   const [onEdit, setOnEdit] = useState<boolean>(false);
 
@@ -46,6 +45,17 @@ const Reply = ({ postId, rep, handleReport }: ReplyProps) => {
     saveReply,
     setOnEdit
   );
+
+  const submitReportReply = async () => {
+    try {
+      if (confirm('이 댓글을 신고하시겠어요?')) {
+        await ReportReply(rep.commentId);
+        alert('신고되었습니다! 깨끗한 사이트를 위한 협조 감사합니다 😄');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <CommentBox id='reply' key={rep.commentId}>
@@ -110,7 +120,7 @@ const Reply = ({ postId, rep, handleReport }: ReplyProps) => {
               ) : undefined
             ) : replyMoreOn ? (
               <MoreContent>
-                <MoreItem onClick={handleReport}>신고</MoreItem>
+                <MoreItem onClick={submitReportReply}>신고</MoreItem>
               </MoreContent>
             ) : undefined}
           </More>

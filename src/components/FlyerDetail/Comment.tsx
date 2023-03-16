@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Fragment, useState } from 'react';
 
+import { ReportComment } from '../../apis/Comments';
 import { COLORS } from '../../constants/colors';
 import useEditComment from '../../hooks/useEditComment';
 import useRemoveComment from '../../hooks/useRemoveComment';
@@ -22,13 +23,8 @@ const Comment = ({
   const [replyOn, setReplyOn] = useState(false); // 답글(child) 입력 창 on, off
   const [onEdit, setOnEdit] = useState(false); // 댓글(parent) 수정 창 on,off
   const [saveComment, setSaveComment] = useState<string>(content);
-  const {
-    replyInput,
-    handleChange,
-    handleReport,
-    handleInputLength,
-    handleSubmit,
-  } = useWriteReply(postId, commentId, setReplyOn);
+  const { replyInput, handleChange, handleInputLength, handleSubmit } =
+    useWriteReply(postId, commentId, setReplyOn);
 
   const { completeEdit } = useEditComment(
     postId,
@@ -36,6 +32,17 @@ const Comment = ({
     saveComment,
     setOnEdit
   );
+
+  const submitReportComment = async () => {
+    try {
+      if (confirm('이 댓글을 신고하시겠어요?')) {
+        await ReportComment(commentId);
+        alert('신고되었습니다! 깨끗한 사이트를 위한 협조 감사합니다 😄');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const { isRemove } = useRemoveComment(postId, commentId);
 
@@ -133,7 +140,7 @@ const Comment = ({
               ) : undefined
             ) : moreOn ? (
               <MoreContent>
-                <MoreItem onClick={handleReport}>신고</MoreItem>
+                <MoreItem onClick={submitReportComment}>신고</MoreItem>
               </MoreContent>
             ) : undefined}
           </More>
@@ -170,12 +177,7 @@ const Comment = ({
 
       {/* =====답 댓글===== */}
       {childComments?.map((rep) => (
-        <Reply
-          key={rep.commentId}
-          postId={postId}
-          rep={rep}
-          handleReport={handleReport}
-        />
+        <Reply key={rep.commentId} postId={postId} rep={rep} />
       ))}
     </Fragment>
   );
