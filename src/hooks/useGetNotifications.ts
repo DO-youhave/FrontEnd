@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { Notification, recentNotification } from '../apis/User';
+import { recentNotification } from '../apis/User';
+import { Notification } from '../interfaces/user';
 
 const useGetNotifications = () => {
   const [notifications, setNotifications] = useState<Notification[]>();
