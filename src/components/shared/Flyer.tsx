@@ -36,6 +36,12 @@ const Container = styled.div`
     padding: 60px 40px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
   }
+  &#login {
+    width: 240px;
+    height: 300px;
+    padding: 63px 20px;
+    border: 1px solid #e9e9e9;
+  }
   @media all and (max-width: 767px) {
     margin-bottom: 30px;
     width: 200px;
