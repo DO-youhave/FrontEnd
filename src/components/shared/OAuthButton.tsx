@@ -8,8 +8,8 @@ interface OAuthButtonProps {
 
 const OAuthButton = ({ type }: OAuthButtonProps) => {
   const loginTitle = {
-    naver: '네이버로 로그인',
-    kakao: '카카오로 로그인',
+    naver: '네이버로 시작하기',
+    kakao: '카카오로 시작하기',
   };
   const handleClickNaver = () => (location.href = ROUTES.NAVER_LOGIN);
   const handleClickKakao = () => (location.href = ROUTES.KAKAO_LOGIN);
