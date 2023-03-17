@@ -18,6 +18,7 @@ const FlyerForm = ({ controller, mobile }: FlyerFormProps) => {
     handleSubmit,
     handleAddress,
     handleSave,
+    postId,
     image,
     isChatOn,
     isEmailOn,
@@ -36,9 +37,9 @@ const FlyerForm = ({ controller, mobile }: FlyerFormProps) => {
     <Container>
       <BackArrow onClick={backPage} />
       <TitleNButtons>
-        <FormTitle>전단지 만들기</FormTitle>
+        <FormTitle>{postId ? '전단지 수정하기' : '전단지 만들기'}</FormTitle>
         <ButtonContainer>
-          <SaveBtn onClick={handleSave}>임시 저장</SaveBtn>
+          {!postId && <SaveBtn onClick={handleSave}>임시 저장</SaveBtn>}
           <PostBtn onClick={handleSubmit}>전단지 붙이기</PostBtn>
         </ButtonContainer>
       </TitleNButtons>

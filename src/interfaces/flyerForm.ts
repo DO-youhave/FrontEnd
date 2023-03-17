@@ -23,6 +23,7 @@ export interface FlyerFormProps {
     handleAddress: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleSave: () => void;
     checkAll: () => boolean;
+    postId: string | null;
     isChatOn: boolean;
     isEmailOn: boolean;
     suggestTags: string;
