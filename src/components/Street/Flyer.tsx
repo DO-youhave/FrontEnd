@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
 import { ROUTES } from '../../constants/routes';
+import { isLogin } from '../../utils/storage';
 
 interface FlyerProps {
   postId: number;
@@ -12,10 +13,17 @@ interface FlyerProps {
 
 const Flyer = ({ postId, title, tags, imgUrl }: FlyerProps) => {
   const navigate = useNavigate();
-  const goDetail = () => navigate(ROUTES.FLYER.DETAIL(postId));
+  const isLoginMember = () => {
+    if (!isLogin()) {
+      alert('회원만 볼 수 있어요 🙀');
+      navigate(ROUTES.LOGIN);
+    } else {
+      navigate(ROUTES.FLYER.DETAIL(postId));
+    }
+  };
 
   return (
-    <Container key={postId} id={imgUrl ? 'img' : ''} onClick={goDetail}>
+    <Container key={postId} id={imgUrl ? 'img' : ''} onClick={isLoginMember}>
       <Inner>
         <Card id='front'>
           <Title>{title}</Title>
