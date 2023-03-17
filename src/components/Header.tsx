@@ -8,7 +8,7 @@ import { isLogin } from '../utils/storage';
 const Header = () => {
   const navigate = useNavigate();
   const { pathname: path } = useLocation();
-  const { HOME, STREET, POSTING, MY_PAGE } = ROUTES;
+  const { HOME, STREET, POSTING, MY_PAGE, LOGIN } = ROUTES;
   const background = path.includes(MY_PAGE.ROOT) ? COLORS.MAIN : 'none';
   return (
     <Container
@@ -32,7 +32,7 @@ const Header = () => {
         )}
         <Menu onClick={() => navigate(POSTING)}>전단지 붙이기</Menu>
         {!isLogin() ? (
-          <Menu>로그인 / 회원가입</Menu>
+          <Menu onClick={() => navigate(LOGIN)}>로그인 / 회원가입</Menu>
         ) : (
           <Menu onClick={() => navigate(MY_PAGE.ROOT + '/' + MY_PAGE.RECENT)}>
             마이페이지
