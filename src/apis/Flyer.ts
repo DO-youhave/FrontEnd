@@ -21,3 +21,15 @@ export const flyerRegister = async (data: FormData) => {
     return false;
   }
 };
+
+export const flyerUpdate = async (data: FormData, postId: number) => {
+  try {
+    const { success }: FlyerRegisterResponse = await http.post(
+      API_URLS.POST.EDIT(postId),
+      data
+    );
+    return success;
+  } catch (error) {
+    return false;
+  }
+};

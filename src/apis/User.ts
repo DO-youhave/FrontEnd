@@ -1,28 +1,37 @@
+import {
+  MyPostResponse,
+  RecentNotificationResponse,
+  UserProfileResponse,
+} from '../interfaces/user';
 import { API_URLS } from './../constants/apiUrls';
 import http from './instance';
-
-export interface Profile {
-  bookmarkCount: number;
-  commentCount: number;
-  email: string;
-  img: string;
-  nickname: string;
-  postCount: number;
-  socialType: string;
-  userId: number;
-}
-
-export interface UserProfileResponse {
-  code: string;
-  data: Profile;
-  msg: string;
-  success: boolean;
-}
 
 export const userProfile = async () => {
   try {
     const { data }: UserProfileResponse = await http.get(API_URLS.USER.PROFILE);
     return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const recentNotification = async () => {
+  try {
+    const { data }: RecentNotificationResponse = await http.get(
+      API_URLS.USER.MYPAGE.NOTIFICATION
+    );
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const myPost = async () => {
+  try {
+    const {
+      pageData: { content },
+    }: MyPostResponse = await http.get(API_URLS.USER.MYPAGE.POST);
+    return content;
   } catch (error) {
     console.error(error);
   }

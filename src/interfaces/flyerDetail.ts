@@ -1,3 +1,5 @@
+import { CategoryName } from './../constants/categorys';
+
 export interface FlyerInfoResponse {
   code: string;
   data: FlyerInfo;
@@ -6,7 +8,7 @@ export interface FlyerInfoResponse {
 }
 
 export interface FlyerInfo {
-  categoryKeyword: string;
+  categoryKeyword: CategoryName;
   commentNum: number;
   contactWay: string;
   content: string;

@@ -13,6 +13,17 @@ export const FlyerDetail = async (id: number) => {
   }
 };
 
+export const EditFlyerDetail = async (id: number) => {
+  try {
+    const { data }: FlyerInfoResponse = await http.get(
+      API_URLS.POST.GETEDIT(id)
+    );
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const deleteFlyer = (postId: number) => {
   try {
     return http.delete(API_URLS.POST.DELETE(postId));

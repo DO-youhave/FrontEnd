@@ -40,6 +40,10 @@ const FlyerDetail = () => {
     navigate(ROUTES.STREET.DETAIL(info?.categoryKeyword, '', '', ''));
   };
 
+  const goEdit = () => {
+    navigate(ROUTES.POSTING + `?postId=${postId}`);
+  };
+
   const handleImgWidth = info?.imgSecond ? 'half' : '';
   return (
     <Container
@@ -56,7 +60,7 @@ const FlyerDetail = () => {
               <div>
                 {info?.isWriter ? (
                   <DotsMenu id='mine'>
-                    <DotsMenuItem>수정</DotsMenuItem>
+                    <DotsMenuItem onClick={goEdit}>수정</DotsMenuItem>
                     <DotsMenuItem onClick={handleRemove}>삭제</DotsMenuItem>
                     <DotsMenuItem id='last' onClick={handleBookmark}>
                       {info?.mark ? '북마크취소' : '북마크하기'}

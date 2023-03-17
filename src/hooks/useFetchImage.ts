@@ -36,7 +36,7 @@ export const useFetchImage = (oldImage: string[]) => {
       setImages((prev) => [...prev, { image, url }]);
     };
     oldImage.length && oldImage.map((image) => fetchImage(image));
-  }, []);
+  }, [oldImage]);
 
   //이미지 선택 시 실행되는 작업
   useEffect(() => {
