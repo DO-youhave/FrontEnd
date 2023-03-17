@@ -1,18 +1,20 @@
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 import Flyer from '../components/shared/Flyer';
 import OAuthButton from '../components/shared/OAuthButton';
 
 const Login = () => {
+  const navigate = useNavigate();
   return (
     <Container>
       <Header>
-        <div>
+        <div onClick={() => navigate(-1)} style={{ cursor: 'pointer' }}>
           <img
             src='/img/detailBack.png'
             alt='뒤로가기'
-            width={35}
-            height={35}
+            width={32}
+            height={32}
           />
         </div>
         <div style={{ fontWeight: '600', fontSize: '18px' }}>
@@ -75,8 +77,8 @@ const Msg = styled.span`
 `;
 
 const AdjustWidth = styled.div`
-  width: 45px;
-  height: 45px;
+  width: 32px;
+  height: 32px;
 `;
 
 const Contents = styled.div`
