@@ -8,6 +8,7 @@ import MobileSearch from '../components/Street/MobileSearch';
 import PopularTags from '../components/Street/PopularTags';
 import Search from '../components/Street/Search';
 import Sort from '../components/Street/Sort';
+import { COLORS } from '../constants/colors';
 import { ROUTES } from '../constants/routes';
 
 const FlyerStreet = () => {
@@ -48,7 +49,10 @@ const FlyerStreet = () => {
           <FlyerList />
         </MainContentsInner>
       </MainContents>
-      <WriteButton src='/img/writeBtn.svg' onClick={goWrite} />
+      <WriteBtnWrap>
+        <WriteButton src='/img/writeBtn.svg' onClick={goWrite} />
+        <Balloon>전단지 쓰기</Balloon>
+      </WriteBtnWrap>
     </Container>
   );
 };
@@ -147,13 +151,48 @@ const SubTitle = styled.div`
   margin-top: 20px;
   @media screen and (max-width: 768px) {
     display: none;
-  }s
+  }
+`;
+
+const Balloon = styled.div`
+  position: absolute;
+  width: 86px;
+  height: 40px;
+  background: ${COLORS.MAIN};
+  top: -42px;
+  left: calc(50% - 43px);
+  border-radius: 10px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 400;
+  text-align: center;
+  line-height: 40px;
+  box-shadow: 0 0 15px 10px rgba(4, 150, 105, 0.1);
+  transition: opacity 0.2s;
+
+  opacity: 0;
+  &::after {
+    border-top: 10px solid ${COLORS.MAIN};
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 0px solid transparent;
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: calc(50% - 9px);
+  }
+`;
+
+const WriteBtnWrap = styled.div`
+  position: fixed;
+  bottom: 20px;
+  right: 3%;
+  &:hover ${Balloon} {
+    opacity: 1;
+  }
 `;
 
 const WriteButton = styled.img`
   width: 100px;
-  position: fixed;
-  bottom: 20px;
-  right: 3%;
   cursor: pointer;
 `;
