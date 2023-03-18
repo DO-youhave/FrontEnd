@@ -14,12 +14,12 @@ const PromotionSection = () => {
       <Rotate id='first'>
         <Flyer id='promotion'>
           <FlyerTitle>
-            에어팟2 미개봉
+            에어팟 프로 미개봉
             <br />
             사실 분<FlyerTitle id='have'>있어요?</FlyerTitle>
           </FlyerTitle>
           <Tags>
-            <span>#에어팟2</span>
+            <span>#에어팟프로</span>
             <span>#미개봉</span>
             <span>#전자기기</span>
           </Tags>
