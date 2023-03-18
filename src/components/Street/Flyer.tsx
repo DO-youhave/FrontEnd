@@ -8,11 +8,12 @@ interface FlyerProps {
   postId: number;
   id?: string;
   title: string;
-  tags: string[];
+  tags?: string[];
+  content?: string;
   imgUrl: string | null;
 }
 
-const Flyer = ({ postId, id, title, tags, imgUrl }: FlyerProps) => {
+const Flyer = ({ postId, id, title, tags, content, imgUrl }: FlyerProps) => {
   const navigate = useNavigate();
   const isLoginMember = () => {
     if (!isLogin()) {
@@ -31,12 +32,15 @@ const Flyer = ({ postId, id, title, tags, imgUrl }: FlyerProps) => {
       onClick={isLoginMember}>
       <Inner>
         <Card id='front'>
-          <Title>{title}</Title>
-          <Tags>
-            {tags.map((tag) => (
-              <Tag key={tag}>#{tag}</Tag>
-            ))}
-          </Tags>
+          <Title id={id}>{title}</Title>
+          {tags && (
+            <Tags>
+              {tags.map((tag) => (
+                <Tag key={tag}>#{tag}</Tag>
+              ))}
+            </Tags>
+          )}
+          {content && <h6>{content}</h6>}
         </Card>
 
         <Card id='back'>

@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import MyComment from './components/MyInfo/MyComment';
 import MyPosting from './components/MyInfo/MyPosting';
 import Recent from './components/MyInfo/Recent';
 import { ROUTES } from './constants/routes';
@@ -25,7 +26,7 @@ const App = () => {
             <Route index element={<Recent />} />
             <Route path={ROUTES.MY_PAGE.RECENT} element={<Recent />} />
             <Route path={ROUTES.MY_PAGE.POSTING} element={<MyPosting />} />
-            <Route path={ROUTES.MY_PAGE.COMMENT} element={<div>Comment</div>} />
+            <Route path={ROUTES.MY_PAGE.COMMENT} element={<MyComment />} />
             <Route
               path={ROUTES.MY_PAGE.BOOKMARK}
               element={<div>Bookmark</div>}
