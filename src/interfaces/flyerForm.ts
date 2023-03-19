@@ -23,6 +23,8 @@ export interface FlyerFormProps {
     handleAddress: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleSave: () => void;
     checkAll: () => boolean;
+    handleLoading: string | undefined;
+    isLoading: boolean;
     postId: string | null;
     isChatOn: boolean;
     isEmailOn: boolean;
