@@ -39,6 +39,8 @@ const useMakeFlyer = () => {
     chatting: '',
     email: '',
   });
+  const [isLoading, setIsLoading] = useState<boolean>(false); //제출버튼 클릭 시
+
   // 임시저장 데이터
   interface TmpInfo {
     category: CategoryName;
@@ -58,6 +60,9 @@ const useMakeFlyer = () => {
     chatting: address.chatting,
     email: address.email,
   };
+
+  // 제출 버튼 클릭하면 로딩
+  const handleLoading = isLoading ? 'on' : undefined;
 
   // 카카오톡 오픈채팅 주소 입력 input 띄우기
   const isChatOn = contact.includes('chatting');
@@ -79,6 +84,8 @@ const useMakeFlyer = () => {
 
   // 제출 버튼 클릭
   const handleSubmit = async () => {
+    setIsLoading(true);
+
     const data: FlyerRegisterProps = {
       postRequestDto: {
         categoryKeyword: category,
@@ -130,6 +137,8 @@ const useMakeFlyer = () => {
         alert('전단지 등록에 실패했습니다 😭');
       }
     }
+
+    setIsLoading(false);
   };
 
   // 유효성 검사
@@ -226,6 +235,10 @@ const useMakeFlyer = () => {
   }, []);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (postId) {
       const getDetail = async () => {
         const data = await EditFlyerDetail(Number(postId));
@@ -260,6 +273,8 @@ const useMakeFlyer = () => {
       handleAddress,
       checkAll,
       handleSave,
+      handleLoading,
+      isLoading,
       postId,
       isChatOn,
       isEmailOn,

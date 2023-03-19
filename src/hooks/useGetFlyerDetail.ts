@@ -3,14 +3,17 @@ import { useQuery } from 'react-query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { Bookmark, FlyerDetail, ReportDetail } from '../apis/FlyerDetail';
+import { CategoryItem } from '../constants/categorys';
+import { ROUTES } from '../constants/routes';
 import { queryClient } from '../main';
+import useRemoveFlyer from './useRemoveFlyer';
 
 const useGetFlyerDetail = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  const [openDots, setOpenDots] = useState(false);
-  const [openContact, setOpenContact] = useState(false);
+  const [openDots, setOpenDots] = useState(false); // 전단지 메뉴 on,off
+  const [openContact, setOpenContact] = useState(false); // 연락수단 on,off
   const [rows, setRows] = useState(false); // 댓글(parent) 입력 창(상) on, off
   const [rowsBottom, setRowsBottom] = useState(false); // 댓글(parent) 입력 창(하) on, off
   const postId = Number(searchParams.get('id'));
@@ -56,14 +59,38 @@ const useGetFlyerDetail = () => {
       console.error(error);
     }
   };
+
+  // 전단지 삭제
+  const { handleRemove } = useRemoveFlyer(postId);
+
+  // 전단지 카테고리 영어 데이터 => 한글화
+  const handleCategory = CategoryItem.find(
+    (item) => item.id === info?.categoryKeyword
+  )?.name;
+
+  // 상세 카테고리로 이동
+  const goCategory = () => {
+    navigate(ROUTES.STREET.DETAIL(info?.categoryKeyword, '', '', ''));
+  };
+
+  // 전단지 수정하기
+  const goEdit = () => {
+    navigate(ROUTES.POSTING + `?postId=${postId}`);
+  };
+
+  // 사용자가 사진을 두 개 설정하면 사진 width를 반반씩 쪼갬
+  const handleImgWidth = info?.imgSecond ? 'half' : '';
+
   const handleContact = () => {
     setOpenContact(!openContact);
   };
 
+  // 사용자가 입력해둔 오픈채팅방 주소로 이동
   const handleOpenChat = () => {
     if (info?.kakaoUrl) window.open(info.kakaoUrl);
   };
 
+  // 글쓴이가 입력해둔 이메일 주소 복사
   const handleCopyClipboard = async () => {
     if (info?.email) {
       await navigator.clipboard.writeText(info.email);
@@ -71,17 +98,10 @@ const useGetFlyerDetail = () => {
     }
   };
 
+  // 페이지 들어오면 top으로 이동
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  // useEffect(() => {
-  //   const getDetail = async () => {
-  //     const detail = await FlyerDetail(postId);
-  //     setInfo(detail);
-  //   };
-  //   getDetail();
-  // }, []);
 
   return {
     postId,
@@ -98,6 +118,11 @@ const useGetFlyerDetail = () => {
     handleCopyClipboard,
     handleReport,
     handleBookmark,
+    handleRemove,
+    handleCategory,
+    goCategory,
+    goEdit,
+    handleImgWidth,
     info,
   };
 };

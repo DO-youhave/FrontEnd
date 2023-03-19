@@ -12,7 +12,6 @@ const Search = () => {
         value={searchValue}
         onChange={handleChange}
         onKeyDown={handleEnter}
-        onClick={handleClick}
       />
       <SearchBtn onClick={handleClick} />
     </Container>
