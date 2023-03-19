@@ -226,6 +226,10 @@ const useMakeFlyer = () => {
   }, []);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (postId) {
       const getDetail = async () => {
         const data = await EditFlyerDetail(Number(postId));

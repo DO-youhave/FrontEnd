@@ -24,7 +24,10 @@ const FlyerStreet = () => {
     <Container>
       <PageTop>
         <Header>
-          <Title>전단지 골목</Title>
+          <Title
+            onClick={() => navigate(ROUTES.STREET.DETAIL('', '', 'DATE', ''))}>
+            전단지 골목
+          </Title>
           <SubTitle>내가 찾는 전단지를 모두 모아놓은 골목</SubTitle>
           <div style={{ display: 'flex', gap: '10px' }}>
             <Category id='mobile' />
@@ -124,7 +127,7 @@ const TagsNSort = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin: 10px 0 30px;
+  margin: 10px 0 0;
 `;
 
 const Header = styled.div`
@@ -141,6 +144,8 @@ const Header = styled.div`
 const Title = styled.div`
   font-size: 42px;
   font-weight: 600;
+  cursor: pointer;
+  width: fit-content;
   @media screen and (max-width: 768px) {
     font-size: 30px;
   }
