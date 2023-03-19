@@ -3,7 +3,10 @@ import { useQuery } from 'react-query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { Bookmark, FlyerDetail, ReportDetail } from '../apis/FlyerDetail';
+import { CategoryItem } from '../constants/categorys';
+import { ROUTES } from '../constants/routes';
 import { queryClient } from '../main';
+import useRemoveFlyer from './useRemoveFlyer';
 
 const useGetFlyerDetail = () => {
   const navigate = useNavigate();
@@ -56,6 +59,9 @@ const useGetFlyerDetail = () => {
       console.error(error);
     }
   };
+
+  const { handleRemove } = useRemoveFlyer(postId);
+
   const handleContact = () => {
     setOpenContact(!openContact);
   };
@@ -71,17 +77,23 @@ const useGetFlyerDetail = () => {
     }
   };
 
+  const handleCategory = CategoryItem.find(
+    (item) => item.id === info?.categoryKeyword
+  )?.name;
+
+  const goCategory = () => {
+    navigate(ROUTES.STREET.DETAIL(info?.categoryKeyword, '', '', ''));
+  };
+
+  const goEdit = () => {
+    navigate(ROUTES.POSTING + `?postId=${postId}`);
+  };
+
+  const handleImgWidth = info?.imgSecond ? 'half' : '';
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  // useEffect(() => {
-  //   const getDetail = async () => {
-  //     const detail = await FlyerDetail(postId);
-  //     setInfo(detail);
-  //   };
-  //   getDetail();
-  // }, []);
 
   return {
     postId,
@@ -98,6 +110,11 @@ const useGetFlyerDetail = () => {
     handleCopyClipboard,
     handleReport,
     handleBookmark,
+    handleRemove,
+    handleCategory,
+    goCategory,
+    goEdit,
+    handleImgWidth,
     info,
   };
 };
