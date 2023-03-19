@@ -1,6 +1,6 @@
 import { API_URLS } from './../constants/apiUrls';
 import { REFRESH_KEY, TOKEN_KEY } from './../constants/auth';
-import { LoginResponse } from './../interfaces/auth';
+import { ExitResponse, LoginResponse } from './../interfaces/auth';
 import {
   getLocalStorage,
   removeLocalStorage,
@@ -79,4 +79,25 @@ export const refresh = async () => {
   } catch (error) {
     console.error(error);
   }
+};
+
+export const resign = async (data: { reason: string }) => {
+  try {
+    const { success }: ExitResponse = await http.post(
+      API_URLS.USER.RESIGN,
+      data
+    );
+    if (success) {
+      removeLocalStorage(TOKEN_KEY);
+      removeLocalStorage(REFRESH_KEY);
+    }
+  } catch (error) {
+    console.error(error);
+    return {
+      success: false,
+    };
+  }
+  return {
+    success: true,
+  };
 };

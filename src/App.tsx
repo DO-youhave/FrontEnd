@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import Exit from './components/MyInfo/Exit';
 import Logout from './components/MyInfo/Logout';
 import MyComment from './components/MyInfo/MyComment';
 import MyMarked from './components/MyInfo/MyMarked';
@@ -31,7 +32,7 @@ const App = () => {
             <Route path={ROUTES.MY_PAGE.COMMENT} element={<MyComment />} />
             <Route path={ROUTES.MY_PAGE.BOOKMARK} element={<MyMarked />} />
             <Route path={ROUTES.MY_PAGE.LOGOUT} element={<Logout />} />
-            <Route path={ROUTES.MY_PAGE.EXIT} element={<div>Exit</div>} />
+            <Route path={ROUTES.MY_PAGE.EXIT} element={<Exit />} />
           </Route>
         </Route>
 

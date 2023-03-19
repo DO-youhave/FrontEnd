@@ -24,7 +24,7 @@ const Logout = () => {
 
 export default Logout;
 
-const Container = styled.div`
+export const Container = styled.div`
   display: flex;
   width: 80%;
   height: 500px;
@@ -33,12 +33,15 @@ const Container = styled.div`
   justify-content: center;
   gap: 30px;
   @media screen and (max-width: 768px) {
-    height: 200px;
     width: 100%;
+    height: 200px;
+    &#exit {
+      height: 450px;
+    }
   }
 `;
 
-const Button = styled.button`
+export const Button = styled.button`
   background-color: ${COLORS.MAIN};
   color: #fff;
   font-size: 1.2rem;
