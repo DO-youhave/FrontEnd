@@ -10,6 +10,7 @@ import Search from '../components/Street/Search';
 import Sort from '../components/Street/Sort';
 import { COLORS } from '../constants/colors';
 import { ROUTES } from '../constants/routes';
+import { isLogin } from '../utils/storage';
 
 const FlyerStreet = () => {
   const navigate = useNavigate();
@@ -49,10 +50,13 @@ const FlyerStreet = () => {
           <FlyerList />
         </MainContentsInner>
       </MainContents>
-      <WriteBtnWrap>
-        <WriteButton src='/img/writeBtn.svg' onClick={goWrite} />
-        <Balloon>전단지 쓰기</Balloon>
-      </WriteBtnWrap>
+
+      {isLogin() ? (
+        <WriteBtnWrap>
+          <WriteButton src='/img/writeBtn.svg' onClick={goWrite} />
+          <Balloon>전단지 쓰기</Balloon>
+        </WriteBtnWrap>
+      ) : undefined}
     </Container>
   );
 };

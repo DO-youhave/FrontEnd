@@ -1,13 +1,14 @@
 import styled from '@emotion/styled';
 
 import useGetFlyerList from '../../hooks/useGetFlyerList';
+import Loading from '../shared/Loading';
 import Flyer from './Flyer';
 
 const FlyerList = () => {
   const { data, isLoading, ref } = useGetFlyerList();
   const flyers = data?.pages;
 
-  if (isLoading) return <div>로딩중</div>;
+  if (isLoading) return <Loading>전단지를 가져오는 중입니다</Loading>;
   return (
     <Container>
       {flyers?.map(({ data: flyer }) =>
