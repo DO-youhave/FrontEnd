@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import MyComment from './components/MyInfo/MyComment';
+import MyMarked from './components/MyInfo/MyMarked';
 import MyPosting from './components/MyInfo/MyPosting';
 import Recent from './components/MyInfo/Recent';
 import { ROUTES } from './constants/routes';
@@ -27,10 +28,7 @@ const App = () => {
             <Route path={ROUTES.MY_PAGE.RECENT} element={<Recent />} />
             <Route path={ROUTES.MY_PAGE.POSTING} element={<MyPosting />} />
             <Route path={ROUTES.MY_PAGE.COMMENT} element={<MyComment />} />
-            <Route
-              path={ROUTES.MY_PAGE.BOOKMARK}
-              element={<div>Bookmark</div>}
-            />
+            <Route path={ROUTES.MY_PAGE.BOOKMARK} element={<MyMarked />} />
             <Route path={ROUTES.MY_PAGE.EXIT} element={<div>Exit</div>} />
           </Route>
         </Route>
