@@ -1,38 +1,59 @@
 import styled from '@emotion/styled';
 
 import useGetFlyerList from '../../hooks/useGetFlyerList';
+import Loading from '../shared/Loading';
 import Flyer from './Flyer';
 
 const FlyerList = () => {
   const { data, isLoading, ref } = useGetFlyerList();
   const flyers = data?.pages;
+  const hasResult = flyers?.find((data) => data.data)?.data;
 
-  if (isLoading) return <div>로딩중</div>;
+  console.log(flyers);
+
+  if (isLoading) return <Loading>전단지를 가져오는 중입니다</Loading>;
   return (
-    <Container>
-      {flyers?.map(({ data: flyer }) =>
-        flyer.map(({ postId, title, tags, imgUrl }) => (
-          <Flyer
-            key={postId}
-            postId={postId}
-            title={title}
-            tags={tags}
-            imgUrl={imgUrl}
-          />
-        ))
+    <div>
+      <FlyerContainer>
+        {flyers?.map(({ data: flyer }) =>
+          flyer.map(({ postId, title, tags, imgUrl }) => (
+            <Flyer
+              key={postId}
+              postId={postId}
+              title={title}
+              tags={tags}
+              imgUrl={imgUrl}
+            />
+          ))
+        )}
+
+        <div ref={ref} />
+      </FlyerContainer>
+      {hasResult?.length === 0 && (
+        <div
+          style={{
+            width: '100%',
+            height: '30vh',
+            textAlign: 'center',
+            paddingTop: '50px',
+            fontSize: '20px',
+            fontWeight: '400',
+          }}>
+          해당하는 전단지가 없습니다 😭
+        </div>
       )}
-      <div ref={ref} />
-    </Container>
+    </div>
   );
 };
 
 export default FlyerList;
 
-const Container = styled.ul`
+const FlyerContainer = styled.ul`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   width: 100%;
   gap: 65px;
+  margin-top: 60px;
   @media screen and (max-width: 1024px) {
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
