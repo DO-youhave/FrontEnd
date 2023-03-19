@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { createContext } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 
 import Menus, { menus } from '../components/MyInfo/Menus';
@@ -6,6 +7,9 @@ import MobileMenus from '../components/MyInfo/MobileMenus';
 import Profile from '../components/MyInfo/Profile';
 import { COLORS } from '../constants/colors';
 import useGetProfile from '../hooks/useGetProfile';
+import { Profile as ProfileType } from '../interfaces/user';
+
+export const profileContext = createContext<ProfileType | undefined>(undefined);
 
 const MyInfo = () => {
   const { profile } = useGetProfile();
@@ -37,7 +41,9 @@ const MyInfo = () => {
             <Menus />
           </div>
           <MobileMenus />
-          <Outlet />
+          <profileContext.Provider value={profile}>
+            <Outlet />
+          </profileContext.Provider>
         </MenuNContent>
       </Content>
     </Container>

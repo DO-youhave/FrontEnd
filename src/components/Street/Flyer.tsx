@@ -6,12 +6,14 @@ import { isLogin } from '../../utils/storage';
 
 interface FlyerProps {
   postId: number;
+  id?: string;
   title: string;
-  tags: string[];
+  tags?: string[];
+  content?: string;
   imgUrl: string | null;
 }
 
-const Flyer = ({ postId, title, tags, imgUrl }: FlyerProps) => {
+const Flyer = ({ postId, id, title, tags, content, imgUrl }: FlyerProps) => {
   const navigate = useNavigate();
   const isLoginMember = () => {
     if (!isLogin()) {
@@ -23,15 +25,22 @@ const Flyer = ({ postId, title, tags, imgUrl }: FlyerProps) => {
   };
 
   return (
-    <Container key={postId} id={imgUrl ? 'img' : ''} onClick={isLoginMember}>
+    <Container
+      key={postId}
+      className={id}
+      id={imgUrl ? 'img' : ''}
+      onClick={isLoginMember}>
       <Inner>
         <Card id='front'>
-          <Title>{title}</Title>
-          <Tags>
-            {tags.map((tag) => (
-              <Tag key={tag}>#{tag}</Tag>
-            ))}
-          </Tags>
+          <Title id={id}>{title}</Title>
+          {tags && (
+            <Tags>
+              {tags.map((tag) => (
+                <Tag key={tag}>#{tag}</Tag>
+              ))}
+            </Tags>
+          )}
+          {content && <h6>{content}</h6>}
         </Card>
 
         <Card id='back'>
@@ -80,7 +89,10 @@ const Container = styled.li`
   cursor: pointer;
   perspective: 1000px;
   background-color: transparent;
-
+  list-style: none;
+  &.myPosting {
+    height: 250px;
+  }
   @media screen and (max-width: 768px) {
     height: 250px;
     font-size: 20px;

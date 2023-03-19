@@ -12,7 +12,7 @@ const useGetMyPost = () => {
       setPost(data);
     };
     getMyPost();
-  });
+  }, []);
 
   return { post };
 };

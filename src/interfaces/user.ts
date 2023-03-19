@@ -47,3 +47,19 @@ export interface MyPostResponse {
   };
   success: boolean;
 }
+
+export interface Comment {
+  commentId: number;
+  content: string;
+  postId: number;
+  post_title: string;
+}
+
+export interface MyCommentResponse {
+  content: Comment[];
+  empty: boolean;
+  first: boolean;
+  last: boolean;
+  number: number;
+  numberOfElements: number;
+}

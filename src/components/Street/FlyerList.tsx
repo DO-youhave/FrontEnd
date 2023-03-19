@@ -9,8 +9,6 @@ const FlyerList = () => {
   const flyers = data?.pages;
   const hasResult = flyers?.find((data) => data.data)?.data;
 
-  console.log(flyers);
-
   if (isLoading) return <Loading>전단지를 가져오는 중입니다</Loading>;
   return (
     <div>

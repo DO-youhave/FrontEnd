@@ -4,6 +4,8 @@ import {
   UserProfileResponse,
 } from '../interfaces/user';
 import { API_URLS } from './../constants/apiUrls';
+import { FlyerListResponse } from './../interfaces/main';
+import { MyCommentResponse } from './../interfaces/user';
 import http from './instance';
 
 export const userProfile = async () => {
@@ -31,6 +33,28 @@ export const myPost = async () => {
     const {
       pageData: { content },
     }: MyPostResponse = await http.get(API_URLS.USER.MYPAGE.POST);
+    return content;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const myComment = async () => {
+  try {
+    const { content }: MyCommentResponse = await http.get(
+      API_URLS.USER.MYPAGE.COMMENT
+    );
+    return content;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const myMarked = async () => {
+  try {
+    const {
+      pageData: { content },
+    }: FlyerListResponse = await http.get(API_URLS.USER.MYPAGE.MARK);
     return content;
   } catch (error) {
     console.error(error);
