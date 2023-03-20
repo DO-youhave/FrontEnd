@@ -4,9 +4,9 @@ import { logout } from '../../apis/Auth';
 import { COLORS } from '../../constants/colors';
 
 const Logout = () => {
-  const handleLogout = () => {
-    logout();
-    alert('로그아웃 되었습니다. 😊');
+  const handleLogout = async () => {
+    await logout();
+    alert('로그아웃 되었습니다 😊');
     window.location.href = '/';
   };
 
