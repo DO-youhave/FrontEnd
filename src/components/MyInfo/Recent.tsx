@@ -21,7 +21,7 @@ const Recent = () => {
               회원님의 전단지에
               <br /> 새로운 댓글이 달렸어요.
             </Title>
-            <Content>{`"${commentContent}"`}</Content>
+            <Content>{`“${commentContent}”`}</Content>
             <Date>{notifiedDate}</Date>
           </Flyer>
         )
@@ -47,18 +47,21 @@ export const GridBox = styled.div`
   }
 `;
 
-const Title = styled.div`
+export const Title = styled.div`
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 600;
   margin-bottom: 20px;
 `;
 
-const Content = styled.div`
+export const Content = styled.div`
   font-size: 14px;
   font-weight: 400;
   height: 80px;
   color: #6e6e6e;
   line-height: 1.3;
+  &#comment {
+    margin-top: 30px;
+  }
 `;
 
 const Date = styled.div`

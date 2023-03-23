@@ -253,7 +253,8 @@ const useMakeFlyer = () => {
             email: data.email || '',
           });
           if (data.img) setServerImage([data.img]);
-          if (data.imgSecond) setServerImage([...serverImage, data.imgSecond]);
+          if (data.img && data.imgSecond)
+            setServerImage([data.img, data.imgSecond]);
         }
       };
       getDetail();
