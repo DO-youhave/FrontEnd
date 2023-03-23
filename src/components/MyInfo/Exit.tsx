@@ -16,11 +16,14 @@ const exitReason = [
 const Exit = () => {
   const [exit, setExit] = useState<boolean>(false);
   const [reason, setReason] = useState<string>();
+  const [etc, setEtc] = useState<string>('');
   const profile = useContext(profileContext);
   const handleClick = async () => {
     if (!exit) return setExit(true);
     if (!reason) return alert('탈퇴 사유를 선택해주세요!');
-    const { success } = await resign({ reason });
+    const { success } = await resign({
+      reason: reason === '기타 사유' ? etc : reason,
+    });
     if (success) {
       alert('탈퇴가 완료되었습니다.');
       window.location.href = '/';
@@ -38,21 +41,29 @@ const Exit = () => {
       </Text>
       {exit && (
         <ReasonList>
-          {exitReason.map(({ id, content, emoji }) => (
-            <Fragment key={id}>
-              <Input
-                id={String(id)}
-                type='radio'
-                name='exit'
-                value={content}
-                onChange={(e) => setReason(e.target.value)}
+          {exitReason.map(({ id, content, emoji }) =>
+            reason === '기타 사유' && id === 4 ? (
+              <EtcInput
+                key={id}
+                onChange={(e) => setEtc(e.target.value)}
+                autoFocus
               />
-              <Label htmlFor={String(id)}>
-                <span>{content}</span>
-                <span>{emoji}</span>
-              </Label>
-            </Fragment>
-          ))}
+            ) : (
+              <Fragment key={id}>
+                <Input
+                  id={String(id)}
+                  type='radio'
+                  name='exit'
+                  value={content}
+                  onClick={(e) => setReason(e.currentTarget.value)}
+                />
+                <Label htmlFor={String(id)}>
+                  <span>{content}</span>
+                  <span>{emoji}</span>
+                </Label>
+              </Fragment>
+            )
+          )}
         </ReasonList>
       )}
       <Button onClick={handleClick}>{!exit ? '회원' : ''}탈퇴하기</Button>
@@ -99,4 +110,17 @@ const Input = styled.input`
     background-color: ${COLORS.MAIN};
     color: #fff;
   }
+`;
+
+const EtcInput = styled.input`
+  width: 100%;
+  box-sizing: border-box;
+  padding: 15px 20px;
+  border-radius: 15px;
+  font-weight: 400;
+  box-shadow: 0px 2px 20px 2px rgba(0, 0, 0, 0.1);
+  outline: none;
+  border: 2px solid ${COLORS.MAIN};
+  background: url('/img/pen.svg') no-repeat 95% 50%;
+  background-size: 18px;
 `;
