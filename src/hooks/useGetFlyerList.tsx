@@ -9,7 +9,7 @@ import useGetParams from './useGetParams';
 const useGetFlyerList = () => {
   const { searchValue: search, sort, category, tag } = useGetParams();
   const { ref, inView } = useInView();
-  const params: FlyerListParams = new Object();
+  const params: FlyerListParams = {};
   if (search) params.search = search;
   if (sort) params.sort = sort;
   if (category) params.category = category;
