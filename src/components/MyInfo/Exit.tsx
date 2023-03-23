@@ -65,7 +65,7 @@ export default Exit;
 const Text = styled.div`
   font-weight: 400;
   line-height: 1.5;
-  text-align: left;
+  text-align: center;
   width: 400px;
   @media screen and (max-width: 768px) {
     width: 100%;
