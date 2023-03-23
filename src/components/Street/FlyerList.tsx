@@ -51,7 +51,7 @@ const FlyerContainer = styled.ul`
   }
   @media screen and (max-width: 576px) {
     grid-template-columns: repeat(2, 1fr);
-    gap: 0px 20px;
+    gap: 20px;
   }
 `;
 
