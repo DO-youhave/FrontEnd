@@ -98,7 +98,7 @@ const Container = styled.li`
     font-size: 20px;
   }
   @media screen and (max-width: 576px) {
-    height: 200px;
+    height: 240px;
     font-size: 16px;
   }
   &#img {
@@ -116,6 +116,9 @@ const Title = styled.div`
   justify-content: center;
   @media screen and (max-width: 768px) {
     height: 60px;
+  }
+  @media screen and (max-width: 576px) {
+    font-size: 16px;
   }
 `;
 
