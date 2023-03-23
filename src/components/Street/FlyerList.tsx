@@ -7,7 +7,7 @@ import Flyer from './Flyer';
 const FlyerList = () => {
   const { data, isLoading, ref } = useGetFlyerList();
   const flyers = data?.pages;
-  const hasResult = flyers?.find((data) => data.data)?.data;
+  const hasResult = flyers?.find((data) => data.data)?.data; // 해당 전단지가 있는지 여부
 
   if (isLoading) return <Loading>전단지를 가져오는 중입니다</Loading>;
   return (
@@ -28,17 +28,7 @@ const FlyerList = () => {
         <div ref={ref} />
       </FlyerContainer>
       {hasResult?.length === 0 && (
-        <div
-          style={{
-            width: '100%',
-            height: '30vh',
-            textAlign: 'center',
-            paddingTop: '50px',
-            fontSize: '20px',
-            fontWeight: '400',
-          }}>
-          해당하는 전단지가 없습니다 😭
-        </div>
+        <NoneFlyer>해당하는 전단지가 없습니다 😭</NoneFlyer>
       )}
     </div>
   );
@@ -63,4 +53,13 @@ const FlyerContainer = styled.ul`
     grid-template-columns: repeat(2, 1fr);
     gap: 0px 20px;
   }
+`;
+
+const NoneFlyer = styled.div`
+  width: 100%;
+  height: 30vh;
+  text-align: center;
+  padding-top: 50px;
+  font-size: 20px;
+  font-weight: 400;
 `;
