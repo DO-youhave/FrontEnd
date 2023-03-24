@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { Profile, userProfile } from './../apis/User';
+import { Profile } from '../interfaces/user';
+import { userProfile } from './../apis/User';
 
 const useGetProfile = () => {
   const [profile, setProfile] = useState<Profile>();

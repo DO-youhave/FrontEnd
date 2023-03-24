@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
+import { EditFlyerDetail } from '../apis/FlyerDetail';
 import { CategoryItem, CategoryName } from '../constants/categorys';
 import { FlyerRegisterProps } from '../interfaces/flyerForm';
 import {
@@ -17,15 +18,16 @@ import {
   checkTags,
   checkTitle,
 } from '../utils/validateFlyerForm';
-import { flyerRegister } from './../apis/Flyer';
+import { flyerRegister, flyerUpdate } from './../apis/Flyer';
 import { ROUTES } from './../constants/routes';
 import { useFetchImage } from './useFetchImage';
 
 const useMakeFlyer = () => {
   const navigate = useNavigate();
-  const image = useFetchImage([
-    /* 서버에서 불러오는 이미지 */
-  ]);
+  const [flyerParams] = useSearchParams();
+  const postId = flyerParams.get('postId');
+  const [serverImage, setServerImage] = useState<string[]>([]);
+  const image = useFetchImage(serverImage);
   const { images } = image;
   const [category, setCategory] = useState<CategoryName>('전체');
   const [title, setTitle] = useState<string>('');
@@ -37,6 +39,8 @@ const useMakeFlyer = () => {
     chatting: '',
     email: '',
   });
+  const [isLoading, setIsLoading] = useState<boolean>(false); //제출버튼 클릭 시
+
   // 임시저장 데이터
   interface TmpInfo {
     category: CategoryName;
@@ -56,6 +60,9 @@ const useMakeFlyer = () => {
     chatting: address.chatting,
     email: address.email,
   };
+
+  // 제출 버튼 클릭하면 로딩
+  const handleLoading = isLoading ? 'on' : undefined;
 
   // 카카오톡 오픈채팅 주소 입력 input 띄우기
   const isChatOn = contact.includes('chatting');
@@ -77,6 +84,8 @@ const useMakeFlyer = () => {
 
   // 제출 버튼 클릭
   const handleSubmit = async () => {
+    setIsLoading(true);
+
     const data: FlyerRegisterProps = {
       postRequestDto: {
         categoryKeyword: category,
@@ -92,24 +101,44 @@ const useMakeFlyer = () => {
     };
 
     const formData = new FormData();
-    formData.append('imageFile', data.imageFile);
-    formData.append('imageFileSecond', data.imageFileSecond);
-    formData.append(
-      'postRequestDto',
-      new Blob([JSON.stringify(data.postRequestDto)], {
-        type: 'application/json',
-      })
-    );
+    if (!postId) {
+      formData.append('imageFile', data.imageFile);
+      formData.append('imageFileSecond', data.imageFileSecond);
+      formData.append(
+        'postRequestDto',
+        new Blob([JSON.stringify(data.postRequestDto)], {
+          type: 'application/json',
+        })
+      );
+    } else {
+      formData.append('updateImage', data.imageFile);
+      formData.append('updateImageSecond', data.imageFileSecond);
+      formData.append(
+        'postUpdateRequestDto',
+        new Blob([JSON.stringify(data.postRequestDto)], {
+          type: 'application/json',
+        })
+      );
+    }
     if (checkAll()) {
-      const success = await flyerRegister(formData);
+      const success = !postId
+        ? await flyerRegister(formData)
+        : await flyerUpdate(formData, Number(postId));
       if (success) {
-        alert('전단지가 등록되었습니다!');
-        removeLocalStorage('tmp');
-        navigate(ROUTES.STREET.ROOT);
+        if (!postId) {
+          alert('전단지가 등록되었습니다!');
+          removeLocalStorage('tmp');
+          navigate(ROUTES.STREET.ROOT, { replace: true });
+        } else {
+          alert('전단지가 수정되었습니다!');
+          navigate(ROUTES.FLYER.DETAIL(Number(postId)), { replace: true });
+        }
       } else {
         alert('전단지 등록에 실패했습니다 😭');
       }
     }
+
+    setIsLoading(false);
   };
 
   // 유효성 검사
@@ -205,6 +234,33 @@ const useMakeFlyer = () => {
     }, 500);
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    if (postId) {
+      const getDetail = async () => {
+        const data = await EditFlyerDetail(Number(postId));
+        if (data) {
+          setCategory(data.categoryKeyword);
+          setTitle(data.title);
+          setMainText(data.content);
+          setTagList(data.tags);
+          setContact(data.contactWay.split(','));
+          setAddress({
+            chatting: data.kakaoUrl || '',
+            email: data.email || '',
+          });
+          if (data.img) setServerImage([data.img]);
+          if (data.img && data.imgSecond)
+            setServerImage([data.img, data.imgSecond]);
+        }
+      };
+      getDetail();
+    }
+  }, []);
+
   return {
     category: { backPage, handleChangeRadio, category },
     form: {
@@ -218,6 +274,9 @@ const useMakeFlyer = () => {
       handleAddress,
       checkAll,
       handleSave,
+      handleLoading,
+      isLoading,
+      postId,
       isChatOn,
       isEmailOn,
       suggestTags,

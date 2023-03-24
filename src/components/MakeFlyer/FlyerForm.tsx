@@ -18,6 +18,9 @@ const FlyerForm = ({ controller, mobile }: FlyerFormProps) => {
     handleSubmit,
     handleAddress,
     handleSave,
+    handleLoading,
+    isLoading,
+    postId,
     image,
     isChatOn,
     isEmailOn,
@@ -36,10 +39,13 @@ const FlyerForm = ({ controller, mobile }: FlyerFormProps) => {
     <Container>
       <BackArrow onClick={backPage} />
       <TitleNButtons>
-        <FormTitle>전단지 만들기</FormTitle>
+        <FormTitle>{postId ? '전단지 수정하기' : '전단지 만들기'}</FormTitle>
         <ButtonContainer>
-          <SaveBtn onClick={handleSave}>임시 저장</SaveBtn>
-          <PostBtn onClick={handleSubmit}>전단지 붙이기</PostBtn>
+          {!postId && <SaveBtn onClick={handleSave}>임시 저장</SaveBtn>}
+          <PostBtn id={handleLoading} onClick={handleSubmit}>
+            전단지 붙이기
+          </PostBtn>
+          {isLoading && <PostBtn id='loading'>전단지 붙이는 중...</PostBtn>}
         </ButtonContainer>
       </TitleNButtons>
       <CategoryContainer>
@@ -238,6 +244,20 @@ const PostBtn = styled.button`
   border-radius: 6px;
   margin-left: 15px;
   cursor: pointer;
+
+  &#on {
+    display: none;
+  }
+
+  &#loading {
+    cursor: default;
+    background: none;
+    color: ${COLORS.MAIN};
+    padding: 10px 15px;
+    font-weight: 600;
+    border: 1px solid ${COLORS.MAIN};
+  }
+
   @media screen and (max-width: 768px) {
     padding: 10px;
     margin-left: 0;

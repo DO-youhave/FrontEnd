@@ -6,6 +6,7 @@ const kakaoCallbackUrl = import.meta.env.VITE_KAKAO_CALLBACK_URL;
 
 export const ROUTES = {
   HOME: '/', // 메인 페이지
+  LOGIN: '/login', // 로그인 페이지
   STREET: {
     ROOT: '/street', // 골목 페이지
     DETAIL: (

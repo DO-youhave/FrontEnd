@@ -8,8 +8,16 @@ import { isLogin } from '../utils/storage';
 const Header = () => {
   const navigate = useNavigate();
   const { pathname: path } = useLocation();
-  const { HOME, STREET, POSTING, MY_PAGE } = ROUTES;
+  const { HOME, STREET, POSTING, MY_PAGE, LOGIN } = ROUTES;
   const background = path.includes(MY_PAGE.ROOT) ? COLORS.MAIN : 'none';
+  const isLoginMember = () => {
+    if (!isLogin()) {
+      alert('로그인을 하면 전단지를 붙일 수 있어요 🙀');
+      navigate(LOGIN);
+    } else {
+      navigate(POSTING);
+    }
+  };
   return (
     <Container
       id={path === HOME ? 'fix' : ''}
@@ -30,9 +38,9 @@ const Header = () => {
             전단지 골목 가기
           </Menu>
         )}
-        <Menu onClick={() => navigate(POSTING)}>전단지 붙이기</Menu>
+        <Menu onClick={isLoginMember}>전단지 붙이기</Menu>
         {!isLogin() ? (
-          <Menu>로그인 / 회원가입</Menu>
+          <Menu onClick={() => navigate(LOGIN)}>로그인 / 회원가입</Menu>
         ) : (
           <Menu onClick={() => navigate(MY_PAGE.ROOT + '/' + MY_PAGE.RECENT)}>
             마이페이지

@@ -15,11 +15,7 @@ export const menus: { id: string; name: string }[] = [
 
 const Menus = () => {
   const navigate = useNavigate();
-  const handleClick = (id: string) => {
-    const isLogout = id === 'logout';
-    if (isLogout) return alert('로그아웃');
-    navigate(id);
-  };
+  const handleClick = (id: string) => navigate(id);
 
   return (
     <Navigation>

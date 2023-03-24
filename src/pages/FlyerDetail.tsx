@@ -1,12 +1,8 @@
 import styled from '@emotion/styled';
-import { useNavigate } from 'react-router-dom';
 
 import Comments from '../components/FlyerDetail/Comments';
-import { CategoryItem } from '../constants/categorys';
 import { COLORS } from '../constants/colors';
-import { ROUTES } from '../constants/routes';
 import useGetFlyerDetail from '../hooks/useGetFlyerDetail';
-import useRemoveFlyer from '../hooks/useRemoveFlyer';
 import { timeForToday } from '../utils/timeForToday';
 
 const FlyerDetail = () => {
@@ -25,22 +21,14 @@ const FlyerDetail = () => {
     handleCopyClipboard,
     handleReport,
     handleBookmark,
+    handleRemove,
+    handleCategory,
+    goCategory,
+    goEdit,
+    handleImgWidth,
     info,
   } = useGetFlyerDetail();
 
-  const navigate = useNavigate();
-
-  const { handleRemove } = useRemoveFlyer(postId);
-
-  const handleCategory = CategoryItem.find(
-    (item) => item.id === info?.categoryKeyword
-  )?.name;
-
-  const goCategory = () => {
-    navigate(ROUTES.STREET.DETAIL(info?.categoryKeyword, '', '', ''));
-  };
-
-  const handleImgWidth = info?.imgSecond ? 'half' : '';
   return (
     <Container
       onClick={() => {
@@ -56,7 +44,7 @@ const FlyerDetail = () => {
               <div>
                 {info?.isWriter ? (
                   <DotsMenu id='mine'>
-                    <DotsMenuItem>수정</DotsMenuItem>
+                    <DotsMenuItem onClick={goEdit}>수정</DotsMenuItem>
                     <DotsMenuItem onClick={handleRemove}>삭제</DotsMenuItem>
                     <DotsMenuItem id='last' onClick={handleBookmark}>
                       {info?.mark ? '북마크취소' : '북마크하기'}
