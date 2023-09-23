@@ -4,15 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import { COLORS } from '../../constants/colors';
 import { ROUTES } from '../../constants/routes';
 import useCountNumber from '../../hooks/useCountNumber';
-import useGetCount from '../../hooks/useGetCount';
+// import useGetCount from '../../hooks/useGetCount';
 import { isLogin } from '../../utils/storage';
 import Flyer from '../shared/Flyer';
 import OAuthButton from '../shared/OAuthButton';
 
 const MainSection = () => {
   const navigate = useNavigate();
-  const number = useGetCount();
-  const count = useCountNumber(number);
+  // const number = useGetCount();
+  const count = useCountNumber(6);
   const goStreet = () => navigate(ROUTES.STREET.DETAIL('', '', 'DATE', ''));
 
   return (
